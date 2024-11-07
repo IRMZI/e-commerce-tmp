@@ -6,3 +6,5 @@ MongoDb
 -- Painel https://cloud.mongodb.com/v2/672ccbef6787b31d5aaf55c9#/overview
 MONGO_CS="mongodb+srv://romarizrafael:<db_password>@campestre-cluster.ijock.mongodb.net/?retryWrites=true&w=majority&appName=campestre-cluster"
 MONGO_DB_NAME="campestre"
+
+HB6aEIfDbXXKYquk

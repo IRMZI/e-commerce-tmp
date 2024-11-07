@@ -7,8 +7,8 @@ export const Mongo = {
             // cria o client do mongoDb recebendo um caminho
             const client = new MongoClient(mongoConnectionString)
 
-            await client.connect()
             // define o banco de dados
+            await client.connect()
             const db = client.db(mongoDbName)
 
             this.client = client
@@ -16,7 +16,7 @@ export const Mongo = {
 
             return 'connected to mongo'
         } catch (error) {
-            return {  text: "Error during mongo connection - Erro durante conexão com o mongo"}
+            return {  text: "Error during mongo connection - Erro durante conexão com o mongo", error}
         }
         
     }
