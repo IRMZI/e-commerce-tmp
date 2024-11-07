@@ -2,6 +2,7 @@ import express from 'express'
 import cors from 'cors'
 import { Mongo } from './database/mongo.js'
 import { config } from 'dotenv'
+import authRouter from './auth/auth.js'
 config()
 
 // função de inicialização da aplicação
@@ -24,6 +25,8 @@ async function Main() {
             body: "Welcome to Cogumelos campestre"
         })
     })
+    // Utiliza a rota "/auth" 
+    app.use('/auth', authRouter)
     app.listen(port, () => {
         console.log(`Server running on: https://${hostname}:${port}`)
     })
