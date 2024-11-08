@@ -25,7 +25,7 @@ passport.use(new localStrategy(
     }
 
     // Recupera o salt armazenado no usuário para verificar a senha
-    const saltBuffer = user.salt.Buffer
+    const saltBuffer = user.salt.buffer 
 
     // Gera o hash da senha fornecida usando o salt armazenado
     crypto.pbkdf2(password, saltBuffer, 310000, 16,'sha256', (err, hashedPassword) => {
@@ -48,7 +48,7 @@ passport.use(new localStrategy(
 // Cria o roteador de autenticação para gerenciar rotas de login e cadastro
 const authRouter = express.Router()
 
-// Rota de cadastro de usuário
+// Rota de cadastro
 authRouter.post('/signup', async (req, res) => {
     const checkUser = await Mongo.db
     .collection(collectionName)
@@ -107,6 +107,45 @@ authRouter.post('/signup', async (req, res) => {
             })
         }
     } )
+})
+
+// Rota de login 
+authRouter.post('/login', (req, res) => {
+    // Define que vai utilizar a estratégia local para authenticar
+    passport.authenticate('local', (error, user) =>{
+        // Erro de authenticação
+        if(error){
+            return res.status(500).send({
+                success: false,
+                statusCode: 500,
+                body: {
+                    text: "Error during login authentication / Erro durante a authenticação de login",
+                    error
+                }
+            })
+        }
+        // Erro de usuário não existente
+        if(!user){
+            return res.status(400).send({
+                success: false,
+                statusCode: 400,
+                body: {
+                    text: "User not found / usuário inexistente ",
+                }
+            })
+        }
+        // Define o token e retorna o usuário logado
+        const token = jwt.sign(user, 'secret')
+        return res.status(200).send({
+            success: true,
+            statusCode: 200,
+            body: {
+                text: "User logged in / usuário logado ",
+                user,
+                token
+            }
+        })
+    })(req, res)
 })
 
 

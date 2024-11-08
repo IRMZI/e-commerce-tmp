@@ -3,6 +3,7 @@ import cors from 'cors'
 import { Mongo } from './database/mongo.js'
 import { config } from 'dotenv'
 import authRouter from './auth/auth.js'
+import usersRouter from './routes/users.js'
 config()
 
 // função de inicialização da aplicação
@@ -17,7 +18,6 @@ async function Main() {
     // parse pra json da resposta do servidor
     app.use(express.json()) 
     app.use(cors())
-    
     app.get('/',(req, res) => {
         res.send({
             success:true,
@@ -27,6 +27,8 @@ async function Main() {
     })
     // Utiliza a rota "/auth" 
     app.use('/auth', authRouter)
+    // Utiliza a rota "/Users"  
+    app.use('/users', usersRouter)
     app.listen(port, () => {
         console.log(`Server running on: https://${hostname}:${port}`)
     })
