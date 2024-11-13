@@ -4,7 +4,7 @@ import { Mongo } from "../database/mongo.js";
 const collectionName = 'orders';
 
 export default class OrdersDataAccess {
-    // Método para obter todos os produtos
+    // Método para obter todos os pedidos
     async getOrders() {
         const result = await Mongo.db
             .collection(collectionName)
@@ -47,12 +47,82 @@ export default class OrdersDataAccess {
                         as: 'orderItems.itemDetails',
                     }
                 },
+                {
+                    // Engloba pelos orderItems
+                    $group: {
+                        _id: '$_id',
+                        userDetails: {$first: '$userDetails' },
+                        orderItems: {$push: '$orderItems' },
+                        pickupStatus: {$first: '$pickupStatus' },
+                        pickupTime: {$first: '$pickupTime' }
+                    }
+                }
             ])
             .toArray();
         return result;
     }
     
-    // Método para adicionar um novo produto
+    async getOrdersByUserId(userId) {
+        const result = await Mongo.db
+            .collection(collectionName)
+            .aggregate([
+                {
+                    $match: { userId: new ObjectId(userId) }
+                },
+                {
+                    // filtra a tabela de itens do pedido
+                    $lookup: {
+                        from: 'orderItems',
+                        localField: '_id',
+                        foreignField: 'orderId',
+                        as: 'orderItems',
+                    }
+                },
+                {
+                    //filtra a tabela de usuários
+                    $lookup: {
+                        from: 'users',
+                        localField: 'userId',
+                        foreignField: '_id',
+                        as: 'userDetails',
+                    }
+                },
+                {
+                    // escode informações
+                    $project:{
+                        'userDetails.password':0,
+                        'userDetails.salt':0,
+                    }
+                },
+                {
+                    // direciona pra tabela itens do pedido
+                    $unwind:'$orderItems'
+                },
+                {
+                    //filtra a tabela de produtos
+                    $lookup: {
+                        from: 'products',
+                        localField: 'orderItems.productId',
+                        foreignField: '_id',
+                        as: 'orderItems.itemDetails',
+                    }
+                },
+                {
+                    // Engloba pelos orderItems
+                    $group: {
+                        _id: '$_id',
+                        userDetails: {$first: '$userDetails' },
+                        orderItems: {$push: '$orderItems' },
+                        pickupStatus: {$first: '$pickupStatus' },
+                        pickupTime: {$first: '$pickupTime' }
+                    }
+                }
+            ])
+            .toArray();
+        return result;
+    }
+
+    // Método para adicionar um novo pedidos
     async addOrder(orderData) {
         const { items, ...orderDataRest } = orderData
         orderDataRest.createdAt = new Date()
@@ -78,21 +148,30 @@ export default class OrdersDataAccess {
         return result;
     }
        
-    // Método para excluir um produto pelo ID
+    // Método para excluir um pedidos pelo ID
     async deleteOrder(orderId) {
-        const result = await Mongo.db
+        const itemsToDelete = await Mongo.db
+        .collection('orderItems')
+        .deleteMany({ orderId: new ObjectId(orderId) })
+
+        const orderToDelete = await Mongo.db
             .collection(collectionName)
-            .findOneAndDelete({ _id: new ObjectId(orderId) }); // Exclui o produto pelo ID
+            .findOneAndDelete({ _id: new ObjectId(orderId) }); // Exclui o pedidos pelo ID
+
+        const result = {
+            itemsToDelete,
+            orderToDelete
+        }
         return result;
     }
 
-    // Método para atualizar um produto pelo ID
+    // Método para atualizar um pedidos pelo ID
     async updateOrder(orderId, orderData) {
         const result = await Mongo.db
             .collection(collectionName)
             .findOneAndUpdate(
                 { _id: new ObjectId(orderId) },
-                { $set: orderData } // Atualiza os dados do produto com as novas informações
+                { $set: orderData } // Atualiza os dados do pedidos com as novas informações
             );
         return result;
     }
