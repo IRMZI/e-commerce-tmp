@@ -8,7 +8,15 @@ export default class OrdersDataAccess {
     async getOrders() {
         const result = await Mongo.db
             .collection(collectionName)
-            .find({})
+            .aggregate([{
+                $lookup: {
+                    from: 'ordersItems',
+                    localField: '_id',
+                    foreignField: '_orderId',
+                    as: 'orderItems',
+                }
+            }
+            ])
             .toArray();
         return result;
     }
@@ -33,7 +41,7 @@ export default class OrdersDataAccess {
         })
         const result = await Mongo.db
             .collection('orderItems')
-            .insertMany(orderData); // Insere o produto na coleção
+            .insertMany(items); // Insere o produto na coleção
         return result;
     }
        
