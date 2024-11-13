@@ -1,0 +1,31 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import url('https://fonts.googleapis.com/css2?family=Koulen&family=Teko:wght@500&display=swap');
+
+.font-koulen {
+    font-family: 'Koulen', cursive;
+}
+
+.font-teko {
+    font-family: 'Teko', sans-serif;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Cormorant:wght@500;700&display=swap');
+
+.font-cormorant {
+    font-family: 'Cormorant', serif;
+}
+
+.light {
+    --background: 255, 255, 255;
+    --text: 77, 77, 77;
+    background: rgba(var(--background))
+}
+
+.dark {
+    --background: 77, 77, 77;
+    --text: 255, 255, 255;
+
+    background: rgba(var(--background))
+}
