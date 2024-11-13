@@ -8,14 +8,45 @@ export default class OrdersDataAccess {
     async getOrders() {
         const result = await Mongo.db
             .collection(collectionName)
-            .aggregate([{
-                $lookup: {
-                    from: 'ordersItems',
-                    localField: '_id',
-                    foreignField: '_orderId',
-                    as: 'orderItems',
-                }
-            }
+            .aggregate([
+                {
+                    // filtra a tabela de itens do pedido
+                    $lookup: {
+                        from: 'orderItems',
+                        localField: '_id',
+                        foreignField: 'orderId',
+                        as: 'orderItems',
+                    }
+                },
+                {
+                    //filtra a tabela de usuários
+                    $lookup: {
+                        from: 'users',
+                        localField: 'userId',
+                        foreignField: '_id',
+                        as: 'userDetails',
+                    }
+                },
+                {
+                    // escode informações
+                    $project:{
+                        'userDetails.password':0,
+                        'userDetails.salt':0,
+                    }
+                },
+                {
+                    // direciona pra tabela itens do pedido
+                    $unwind:'$orderItems'
+                },
+                {
+                    //filtra a tabela de produtos
+                    $lookup: {
+                        from: 'products',
+                        localField: 'orderItems.productId',
+                        foreignField: '_id',
+                        as: 'orderItems.itemDetails',
+                    }
+                },
             ])
             .toArray();
         return result;
@@ -27,16 +58,18 @@ export default class OrdersDataAccess {
         orderDataRest.createdAt = new Date()
         orderDataRest.pickupStatus = "pending"
         orderDataRest.userId = new ObjectId(orderDataRest.userId)
+
         const newOrder = await Mongo.db
         .collection(collectionName)
         .insertOne(orderDataRest)
+        
         if(!newOrder.insertedId) {
             throw new Error('order cannot be inserted')
         }
 
         // permite utilizar cada item do objeto, tratando os itens do pedido
         items.map((item) =>{
-            item.productId = new ObjectId(orderDataRest.productId)
+            item.productId = new ObjectId(item.productId)
             item.orderId = new ObjectId(newOrder.insertedId)
         })
         const result = await Mongo.db
