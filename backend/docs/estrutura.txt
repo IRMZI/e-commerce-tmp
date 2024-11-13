@@ -7,4 +7,9 @@ MongoDb
 MONGO_CS="mongodb+srv://romarizrafael:<db_password>@campestre-cluster.ijock.mongodb.net/?retryWrites=true&w=majority&appName=campestre-cluster"
 MONGO_DB_NAME="campestre"
 
-HB6aEIfDbXXKYquk
+HB6aEIfDbXXKYquk -> senha mongodb
+
+-> começa sempre criando os dataAccess
+--> dentro dos dataAccess estão as classes principais para acesso ao banco de dados
+---> criar sempre relacionado a collection do mongodb
+-> depois criar os controllers e routes

@@ -5,6 +5,7 @@ import { config } from 'dotenv'
 import authRouter from './auth/auth.js'
 import usersRouter from './routes/users.js'
 import productsRouter from './routes/products.js'
+import ordersRouter from './routes/orders.js'
 config()
 
 // função de inicialização da aplicação
@@ -32,6 +33,8 @@ async function Main() {
     app.use('/users', usersRouter)
     // Utiliza a rota "/Users"  
     app.use('/products', productsRouter)
+    // Utiliza a rota "/Orders"  
+    app.use('/orders', ordersRouter)
     app.listen(port, () => {
         console.log(`Server running on: https://${hostname}:${port}`)
     })
