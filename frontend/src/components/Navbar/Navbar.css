@@ -1,0 +1,73 @@
+.NavbarContainer {
+    display: flex;
+    align-items: center;
+    background-color: rgb(229 231 235);
+    height: 96px;
+}
+
+.NavbarItems {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    max-width: 1280px;
+    margin: 0 auto;
+}
+
+.logo {
+    width: 5em;
+}
+
+.navbarLink {
+    font: bold;
+    color: black;
+    font-family: 'Cormorant';
+    font-size: x-large;
+}
+
+.navbarLinksContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1em;
+    padding: 0.5em;
+}
+
+.mobileNavbarItems {
+    display: none;
+}
+
+.mobileNavbarBtns {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1em;
+    font-size: xx-large;
+    padding: 0.5em;
+}
+
+.drawer {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: 2em;
+    gap: 0.5em;
+    background-color: rgb(229 231 235);
+    font: bold;
+    color: black;
+    font-family: 'Cormorant';
+    font-size: x-large;
+}
+
+@media screen and (max-width: 600px) {
+    .NavbarItems {
+        display: none;
+    }
+
+    .mobileNavbarItems {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+    }
+}
