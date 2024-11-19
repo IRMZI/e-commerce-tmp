@@ -3,11 +3,22 @@ import { useNavigate } from "react-router-dom";
 import { TextField, Button } from "@material-ui/core";
 import "./auth.css";
 import authServices from "../../services/auth";
+import { HiLogin } from "react-icons/hi";
 export default function Auth() {
   // -> define o estado do tipo de formulario para login por padrão
   const [formType, setFormType] = useState("login");
   // -> define os dados do formulário como null por padrão
-  const [formData, setFormData] = useState(null);
+  const [formData, setFormData] = useState({
+    fullname: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+    address: {
+      street: "",
+      number: "",
+      city: "",
+    },
+  });
   // -> define as funções login e signup
   const { login, signup, authLoading } = authServices();
   const navigate = useNavigate();
@@ -19,7 +30,17 @@ export default function Auth() {
   }, [authData]);
   // -> função para alterar entre login e registro
   const handleChangeFormType = () => {
-    setFormData(null);
+    setFormData({
+      fullname: "",
+      email: "",
+      password: "",
+      confirmPassword: "",
+      address: {
+        street: "",
+        number: "",
+        city: "",
+      },
+    });
     if (formType === "login") {
       setFormType("signup");
     } else {
@@ -29,8 +50,22 @@ export default function Auth() {
 
   // -> função para detectar a mudança nos campos do formulário
   const handleFormDataChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-    console.log(formData);
+    const { name, value } = e.target;
+
+    if (["street", "number", "city"].includes(name)) {
+      setFormData((prevState) => ({
+        ...prevState,
+        address: {
+          ...prevState.address,
+          [name]: value,
+        },
+      }));
+    } else {
+      setFormData((prevState) => ({
+        ...prevState,
+        [name]: value,
+      }));
+    }
   };
   // -> função de envio do formulário
   const handleSubmitForm = (e) => {
@@ -78,7 +113,11 @@ export default function Auth() {
               variant="outlined"
               onChange={handleFormDataChange}
             ></TextField>
-            <Button type="submit">Entrar</Button>
+            <button type="submit">
+              {" "}
+              Entrar
+              <HiLogin />
+            </button>
           </form>
         </>
       ) : null}
@@ -121,7 +160,38 @@ export default function Auth() {
               variant="outlined"
               onChange={handleFormDataChange}
             ></TextField>
-            <Button type="submit">Registrar</Button>
+            <TextField
+              required
+              label="Rua"
+              type="text"
+              name="street"
+              variant="outlined"
+              value={formData.address.street}
+              onChange={handleFormDataChange}
+            />
+            <TextField
+              required
+              label="Número"
+              type="number"
+              name="number"
+              variant="outlined"
+              value={formData.address.number}
+              onChange={handleFormDataChange}
+            />
+            <TextField
+              required
+              label="Cidade"
+              type="text"
+              name="city"
+              variant="outlined"
+              value={formData.address.city}
+              onChange={handleFormDataChange}
+            />
+
+            <button type="submit">
+              Registrar
+              <HiLogin />
+            </button>
           </form>
         </>
       ) : null}

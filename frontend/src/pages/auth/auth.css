@@ -6,3 +6,8 @@ form {
     justify-content: center;
     gap: 0.5em;
 }
+
+.reg-button {
+    font-size: x-large;
+    font: bolder
+}

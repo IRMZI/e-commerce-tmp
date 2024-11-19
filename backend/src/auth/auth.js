@@ -85,7 +85,12 @@ authRouter.post('/signup', async (req, res) => {
             fullname: req.body.fullname,
             email: req.body.email,
             password: hashedPassword,
-            salt
+            salt,
+            address: {
+                street: req.body.address.street,
+                number: req.body.address.number,
+                city: req.body.address.city,
+            },
         })
         // Verifica se o usuário foi inserido com sucesso
         if(result.insertedId){

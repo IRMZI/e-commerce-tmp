@@ -1,0 +1,204 @@
+/* Estilo Geral */
+.hero-section {
+    height: 60vh;
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    background-image: url('../../assets/BG.jpg');
+    text-shadow: 1px 2px 2px black;
+}
+
+.hero-title {
+    font-size: 6rem;
+    font-family: 'Koulen', sans-serif;
+    text-align: center;
+    margin-bottom: 1rem;
+    border-bottom: 4px solid white;
+    padding-bottom: 0.5rem;
+}
+
+.hero-subtitle {
+    font-size: 3rem;
+    font-family: 'Teko', sans-serif;
+    text-align: center;
+}
+
+/* Seção Sobre Nós */
+.about-us-section {
+    display: flex;
+    flex-direction: row;
+    /* Imagem ao lado do texto */
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.about-us-image {
+    width: 100%;
+    max-width: 600px;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin: 0 auto;
+}
+
+.about-us-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    margin-top: 1rem;
+}
+
+.about-us-title {
+    font-size: 2rem;
+    font-weight: bold;
+    font-family: 'Cormorant', serif;
+    text-align: center;
+    width: 100%;
+    margin-bottom: 1.5rem;
+}
+
+.about-us-description {
+    font-size: 1.25rem;
+    font-weight: 500;
+    font-family: 'Cormorant', serif;
+    margin-bottom: 1.5rem;
+}
+
+.text-highlight {
+    color: #38a169;
+    font-weight: bold;
+}
+
+.values-section {
+    margin-top: 1rem;
+}
+
+.values-title {
+    font-size: 1.75rem;
+    font-weight: bold;
+    font-family: 'Cormorant', serif;
+    width: 100%;
+    margin-bottom: 1.5rem;
+}
+
+.values-description {
+    font-size: 1.25rem;
+    font-weight: 500;
+    font-family: 'Cormorant', serif;
+    margin-bottom: 1.5rem;
+}
+
+/* Seção de Contatos */
+.contact-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #f1f1f1;
+    flex-direction: row;
+    /* Botões lado a lado em telas grandes */
+    justify-content: center;
+    gap: 2rem;
+    padding: 2rem;
+}
+
+.contact-section .contact-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem 1.5rem;
+    font-size: 1.25rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    border-radius: 0.375rem;
+    width: 100%;
+    max-width: 20rem;
+    transition: background-color 0.3s;
+    margin-bottom: 1rem;
+}
+
+.contact-section .whatsapp-button {
+    background-color: #38a169;
+    color: white;
+}
+
+.contact-section .whatsapp-button:hover {
+    background-color: #2f855a;
+}
+
+.contact-section .instagram-button {
+    background-color: #d53f8c;
+    color: white;
+}
+
+.contact-section .instagram-button:hover {
+    background-color: #b83280;
+}
+
+.contact-section .contact-button .icon {
+    margin-right: 0.75rem;
+    font-size: 2rem;
+}
+
+
+/* Responsividade para telas menores */
+@media screen and (max-width: 900px) {
+    .about-us-section {
+        flex-direction: column;
+        /* Alinha a imagem acima do texto */
+    }
+
+    .about-us-image {
+        max-width: 100%;
+        /* Imagem ocupa toda a largura disponível */
+    }
+
+    .about-us-content {
+        align-items: center;
+        /* Centraliza o texto no celular */
+        text-align: center;
+        margin-top: 1rem;
+        padding-left: 0;
+        /* Remove espaçamento lateral */
+    }
+
+    .about-us-title {
+        font-size: 2rem;
+    }
+
+    .about-us-description,
+    .values-description {
+        font-size: 1rem;
+    }
+
+    .values-title {
+        font-size: 1.5rem;
+    }
+
+    .contact-section {
+        flex-direction: row;
+        gap: 2rem;
+    }
+
+    .contact-section {
+        flex-direction: column;
+        /* Botões um abaixo do outro em telas pequenas */
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .contact-section .contact-button {
+        max-width: 90%;
+        /* Botões ocuparão mais espaço em telas pequenas */
+    }
+
+    .contact-section .contact-button .icon {
+        font-size: 1.75rem;
+    }
+}

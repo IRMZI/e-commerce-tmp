@@ -1,0 +1,47 @@
+.pageContainer {
+    padding: 0.5em;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+}
+
+.orderContainer {
+    background-color: rgb(229 231 235);
+    padding: 0.5em;
+    border-radius: 1em;
+}
+
+
+.ordersContainer {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.5em;
+}
+
+.pickupStatus {
+    align-items: center;
+    justify-content: center;
+    border-radius: 0.5em;
+    width: fit-content;
+    padding: 0.2em;
+    font-size: medium;
+}
+
+.pending {
+    background-color: #d6c918;
+}
+
+.completed {
+    background-color: #9ad618;
+}
+
+.canceled {
+    background-color: #ff0000;
+}
+
+
+@media screen and (max-width: 800px) {
+    .ordersContainer {
+        grid-template-columns: repeat(1, 1fr);
+    }
+}

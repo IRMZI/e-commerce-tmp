@@ -22,4 +22,32 @@
 
 #root {
   font-size: x-large;
+  min-height: 100vh;
+  background-color: #f1f1f1;
+}
+
+main {
+  max-width: 1280px;
+  margin: 0 auto;
+  min-height: 100vh;
+  font: Cormorant;
+}
+
+button {
+  width: fit-content;
+  gap: 0.5em;
+  align-items: center;
+  justify-content: center;
+  background-color: #22C55E;
+  border: none;
+  padding: 1em;
+  border-radius: 0.5em;
+  cursor: pointer;
+  display: flex;
+  font-size: medium;
+}
+
+p {
+  display: flex;
+  gap: 0.5em;
 }
