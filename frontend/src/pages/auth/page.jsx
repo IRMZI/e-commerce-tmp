@@ -4,6 +4,7 @@ import { TextField, Button } from "@material-ui/core";
 import "./auth.css";
 import authServices from "../../services/auth";
 import { HiLogin } from "react-icons/hi";
+import Loading from "../loading/page";
 export default function Auth() {
   // -> define o estado do tipo de formulario para login por padrão
   const [formType, setFormType] = useState("login");
@@ -85,7 +86,7 @@ export default function Auth() {
   };
 
   if (authLoading) {
-    return <h1>Loading</h1>;
+    return <Loading />;
   }
   return (
     // -> Usa renderização condicional para mostrar a pagina de login ou registro

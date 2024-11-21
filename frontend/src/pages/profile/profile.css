@@ -39,6 +39,10 @@
     background-color: #ff0000;
 }
 
+.productsLink {
+    color: black;
+    text-decoration: underline;
+}
 
 @media screen and (max-width: 800px) {
     .ordersContainer {

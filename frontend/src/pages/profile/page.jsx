@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import authServices from "../../services/auth";
 import orderServices from "../../services/order";
 import "./profile.css";
+import { Link } from "react-router-dom";
+import Loading from "../loading/page";
 import {
   HiLogout,
   HiOutlineClock,
@@ -27,7 +29,7 @@ export default function Profile() {
   if (orderLoading) {
     return (
       <>
-        <h1>loading...</h1>
+        <Loading />
       </>
     );
   }
@@ -75,7 +77,7 @@ export default function Profile() {
               <h3>Data de entrega estimada: {order.pickupTime}</h3>
               {order.orderItems.map((item) => (
                 <div key={item._id}>
-                  <h4>{item.itemDetails[0].name}</h4>
+                  <h4>{item.itemDetails[0]}</h4>
                   <p>Quantity: {item.quantity}</p>
                 </div>
               ))}
@@ -83,7 +85,12 @@ export default function Profile() {
           ))}
         </div>
       ) : (
-        <div>Você não possui pedidos</div>
+        <div>
+          <p>Você não possui pedidos</p>
+          <Link to={"/products"} className="productsLink">
+            Clique aqui para ver nossos produtos!
+          </Link>
+        </div>
       )}
     </div>
   );

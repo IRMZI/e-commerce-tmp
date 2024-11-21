@@ -56,13 +56,13 @@ export default function Navbar() {
       </div>
       <Drawer anchor="right" open={openMenu} onClose={handlerOpenMenu}>
         <div className="drawer">
-          <Link to="/" className="navbarLink">
+          <Link to="/" className="navbarLink" onClick={handlerOpenMenu}>
             Home
           </Link>
-          <Link to="/products" className="navbarLink">
+          <Link to="/products" className="navbarLink" onClick={handlerOpenMenu}>
             Produtos
           </Link>
-          <Link to="/profile" className="navbarLink">
+          <Link to="/profile" className="navbarLink" onClick={handlerOpenMenu}>
             Conta
           </Link>
         </div>

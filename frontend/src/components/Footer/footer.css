@@ -1,0 +1,66 @@
+.footer {
+    padding: 2rem 0;
+    background-color: rgb(229 231 235);
+    text-align: center;
+}
+
+.footerContainer {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.logo {
+    display: block;
+    margin: 0 auto 1rem;
+    width: 6rem;
+}
+
+.linksContainer {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.social-link {
+    color: inherit;
+    transition: color 0.3s;
+}
+
+.social-link.facebook:hover {
+    color: #1877f2;
+    /* Azul do Facebook */
+}
+
+.social-link.instagram:hover {
+    color: #e4405f;
+    /* Rosa do Instagram */
+}
+
+.social-link.whatsapp:hover {
+    color: #25d366;
+    /* Verde do WhatsApp */
+}
+
+.textContainer {
+    /* Centraliza o texto */
+    display: flex;
+    justify-content: center;
+    gap: 0.1em;
+}
+
+.footer-text {
+    font-size: 0.875rem;
+    line-height: 1.5;
+    margin: 0;
+}
+
+.footer-link {
+    text-decoration: underline;
+    color: inherit;
+    transition: color 0.3s;
+}
+
+.footer-link:hover {
+    color: #9ca3af;
+}
