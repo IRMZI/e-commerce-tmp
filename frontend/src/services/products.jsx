@@ -4,9 +4,9 @@ export default function productsServices() {
   const [refetchProducts, setRefetchProducts] = useState(true);
   const [productsList, setProductsList] = useState([]);
   const url = "http://localhost:3000/products";
-  const getUserProducts = (userId) => {
+  const getAvailablesProducts = (userId) => {
     setProductsLoading(true);
-    fetch(`${url}/userproducts/${userId}`, {
+    fetch(`${url}/availables`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -26,10 +26,15 @@ export default function productsServices() {
         console.log(error);
       })
       .finally(() => {
-        setProductLoading(false);
+        setProductsLoading(false);
         setRefetchProducts(false);
       });
   };
 
-  return { getUserProducts, productsLoading, refetchProducts, productsList };
+  return {
+    getAvailablesProducts,
+    productsLoading,
+    refetchProducts,
+    productsList,
+  };
 }

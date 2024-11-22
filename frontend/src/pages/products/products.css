@@ -1,0 +1,15 @@
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    /* 3 colunas em telas maiores */
+    gap: 1.5rem;
+    padding: 2rem;
+    justify-content: center;
+}
+
+@media screen and (max-width: 900px) {
+    .grid-container {
+        grid-template-columns: 1fr;
+        justify-items: center;
+    }
+}
