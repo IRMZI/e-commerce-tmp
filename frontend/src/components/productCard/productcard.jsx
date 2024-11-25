@@ -1,9 +1,11 @@
 import "./productCard.css";
 import { HiShoppingCart } from "react-icons/hi";
 import { useState } from "react";
+import { useCartContext } from "../../contexts/useCartContext";
 
 export default function ProductCard({ productData }) {
   const [quantity, setQuantity] = useState(1);
+  const { addToCart } = useCartContext(); // Hook para acessar o contexto
 
   const incrementQuantity = () => {
     setQuantity((prev) => prev + 1);
@@ -16,7 +18,11 @@ export default function ProductCard({ productData }) {
   };
 
   const handleAddToCart = () => {
-    console.log(`Added ${quantity} of ${productData.name} to the cart.`);
+    const itemToAdd = {
+      ...productData,
+      quantity,
+    };
+    addToCart(itemToAdd); // Adiciona ao carrinho
   };
 
   return (

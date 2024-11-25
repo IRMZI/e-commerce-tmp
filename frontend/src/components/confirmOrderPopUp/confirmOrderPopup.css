@@ -1,0 +1,43 @@
+.popupContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    padding: 1em;
+    color: #004643;
+}
+
+.confirmBtns {
+    display: flex;
+    gap: .5em;
+}
+
+.tooltip {
+    position: relative;
+    cursor: pointer;
+    color: inherit;
+    text-decoration: underline;
+}
+
+.tooltipText {
+    visibility: hidden;
+    width: 250px;
+    /* Ajuste conforme necessário */
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    border-radius: 4px;
+    padding: 5px;
+    position: absolute;
+    z-index: 1;
+    top: 125%;
+    /* Posiciona abaixo do texto */
+    left: 50%;
+    transform: translateX(-50%);
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.tooltip:hover .tooltipText {
+    visibility: visible;
+    opacity: 1;
+}

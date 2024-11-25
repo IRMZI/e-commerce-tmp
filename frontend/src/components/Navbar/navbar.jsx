@@ -45,13 +45,16 @@ export default function Navbar() {
             className="logo"
           ></img>
         </Link>
-        <div className="mobileNavbarBtns">
-          <Link to="/cart">
-            <HiShoppingCart className="navbarLink" />{" "}
+        <div className="mobileNavbarItems">
+          <Link to={"/"}>
+            <img className="logo" src="/imgs/logo.png" alt="" />
           </Link>
-          <Link to="/profile">
-            <HiMenu onClick={handlerOpenMenu}></HiMenu>
-          </Link>
+          <div className="mobileNavbarBtns">
+            <Link to={"/cart"}>
+              <HiShoppingCart className="navbarLink" />
+            </Link>
+            <HiMenu className="navbarLink" onClick={handlerOpenMenu} />
+          </div>
         </div>
       </div>
       <Drawer anchor="right" open={openMenu} onClose={handlerOpenMenu}>

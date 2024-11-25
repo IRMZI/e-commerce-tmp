@@ -44,6 +44,19 @@
     text-decoration: underline;
 }
 
+.orderItemsContainer {
+    background-color: white;
+    padding: 0.5em;
+    border: 1px solid #828080;
+    border-radius: 1em;
+}
+
+.addressContainer {
+    display: flex;
+    gap: 0.5em;
+}
+
+
 @media screen and (max-width: 800px) {
     .ordersContainer {
         grid-template-columns: repeat(1, 1fr);

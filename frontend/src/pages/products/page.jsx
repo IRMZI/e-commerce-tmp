@@ -16,15 +16,6 @@ export default function Products() {
     }
   }, [refetchProducts]);
 
-  const [productSelected, setProductSelected] = useState(null);
-  const handleProductsSelected = (product) => {
-    setProductSelected(product);
-  };
-
-  const handleClosePopup = () => {
-    setProductSelected(null);
-  };
-
   if (productsLoading) {
     return (
       <>
@@ -32,18 +23,11 @@ export default function Products() {
       </>
     );
   }
-  console.log(productsList);
   return (
     <>
       <div className="grid-container">
         {productsList.map((product) => (
-          <div
-            key={product._id}
-            className="cardContainer"
-            onClick={() => {
-              handleProductsSelected(product);
-            }}
-          >
+          <div key={product._id} className="cardContainer">
             <ProductCard productData={product} />
           </div>
         ))}

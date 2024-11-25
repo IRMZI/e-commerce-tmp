@@ -36,11 +36,15 @@
     display: none;
 }
 
+.mobileNavbarItems {
+    display: none;
+}
+
 .mobileNavbarBtns {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 1em;
+    gap: 0.5em;
     font-size: xx-large;
     padding: 0.5em;
 }
@@ -58,6 +62,29 @@
     font-size: x-large;
 }
 
+
+.navbarLink {
+    position: relative;
+    text-decoration: none;
+    color: black;
+    transition: all 0.3s ease;
+}
+
+.navbarLink::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: #22C55E;
+    transition: width 0.3s ease;
+}
+
+.navbarLink:hover::after {
+    width: 100%;
+}
+
 @media screen and (max-width: 600px) {
     .NavbarItems {
         display: none;
@@ -65,8 +92,8 @@
 
     .mobileNavbarItems {
         display: flex;
-        justify-content: space-between;
         align-items: center;
+        justify-content: space-between;
         width: 100%;
     }
 }

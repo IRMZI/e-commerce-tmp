@@ -66,14 +66,43 @@
     display: flex;
     align-items: center;
     gap: 5px;
+    background-color: #28a745;
     color: white;
     border: none;
     padding: 10px 15px;
     font-size: 14px;
     border-radius: 5px;
     cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
 }
 
 .add-to-cart-btn:hover {
-    background-color: #1da74f;
+    background-color: #218838;
+}
+
+.add-to-cart-btn:active {
+    transform: scale(0.95);
+}
+
+.added-feedback {
+    background-color: #155724;
+    color: white;
+    font-size: 14px;
+    padding: 5px 10px;
+    border-radius: 5px;
+    margin-top: 10px;
+    animation: fadeOut 2s forwards;
+}
+
+/* Feedback fade-out animation */
+@keyframes fadeOut {
+    0% {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    100% {
+        opacity: 0;
+        transform: scale(1.1);
+    }
 }

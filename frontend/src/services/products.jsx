@@ -30,9 +30,14 @@ export default function productsServices() {
         setRefetchProducts(false);
       });
   };
+  const getProductNameById = (productId) => {
+    const product = productsList.find((item) => item.id === productId);
+    return product ? product.name : "Product not found";
+  };
 
   return {
     getAvailablesProducts,
+    getProductNameById,
     productsLoading,
     refetchProducts,
     productsList,
