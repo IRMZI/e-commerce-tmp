@@ -35,4 +35,23 @@ export default class UsersControllers {
             return serverError(error); 
         }
     }
+     // Método para atualizar o endereço de um usuário
+     async updateUserAddress(userId, addressData) {
+        try {
+            // Validação do endereço (você pode personalizar conforme necessário)
+            if (!addressData || !addressData.street || !addressData.city || !addressData.number) {
+                return { success: false, statusCode: 400, body: { error: 'Endereço inválido, endereço obtido:', addressData} };
+            }
+
+            // Atualiza apenas o endereço do usuário
+            const result = await this.dataAccess.updateUserAddress(userId, addressData);
+            if (!result) {
+                return { success: false, statusCode: 404, body: { error: 'Usuário não encontrado.' } };
+            }
+
+            return { success: true, statusCode: 200, body: { message: 'Endereço atualizado com sucesso.' } };
+        } catch (error) {
+            return { success: false, statusCode: 500, body: { error: error.message } };
+        }
+    }
 }

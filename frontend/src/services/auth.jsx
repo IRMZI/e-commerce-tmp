@@ -59,5 +59,6 @@ export default function authServices() {
   const logout = () => {
     localStorage.removeItem("auth");
   };
+
   return { signup, login, logout, authLoading };
 }

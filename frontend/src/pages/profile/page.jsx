@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import authServices from "../../services/auth";
 import orderServices from "../../services/order";
+import addressServices from "../../services/address";
 import { TextField } from "@material-ui/core";
 import "./profile.css";
 import { Link } from "react-router-dom";
@@ -17,7 +18,7 @@ export default function Profile() {
   const { logout } = authServices();
   const { getUserOrders, orderLoading, refetchOrders, ordersList } =
     orderServices();
-
+  const { updateUserAddress, addressLoading } = addressServices();
   const navigate = useNavigate();
   const authData = JSON.parse(localStorage.getItem("auth"));
   const [isEditing, setIsEditing] = useState(false);
@@ -51,13 +52,21 @@ export default function Profile() {
     setIsEditing(true);
   };
 
-  const handleSaveAddress = () => {
-    // Enviar a alteração do endereço para o servidor (adicione a lógica de atualização)
-    // Exemplo de envio da alteração (você pode criar o serviço ou API para isso):
-    // updateAddress(editedAddress);
-
-    setIsEditing(false);
-    // Aqui você pode chamar a função que envia a alteração para o servidor
+  const handleSaveAddress = async () => {
+    try {
+      const userId = authData?.user?._id; // ID do usuário
+      const result = await updateUserAddress(userId, editedAddress);
+      if (result.success) {
+        setIsEditing(false);
+        alert("Endereço atualizado com sucesso! faça login novamente");
+        logout();
+        return navigate("/auth");
+      } else {
+        console.error(result.message || "Erro ao atualizar o endereço.");
+      }
+    } catch (error) {
+      alert("Houve um problema ao salvar o endereço.");
+    }
   };
 
   const handleChange = (e) => {
@@ -71,6 +80,14 @@ export default function Profile() {
       <div>
         <h1>{authData?.user?.fullname}</h1>
         <h3>{authData?.user?.email}</h3>
+        <h3>{authData?.user?._id}</h3>
+        {authData?.user?.isAdmin && (
+          <div className="adminPanelMessage">
+            <button className="adminButton" onClick={() => navigate("/admin")}>
+              Acessar o Painel de Admin!
+            </button>
+          </div>
+        )}
         <div>
           {isEditing ? (
             <div className="addressContainer">

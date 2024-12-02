@@ -56,6 +56,30 @@
     gap: 0.5em;
 }
 
+.adminButton {
+    background-color: #ff4d4d;
+    /* Vermelho */
+    color: #fff;
+    /* Texto branco */
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.adminButton:hover {
+    background-color: #d93636;
+    /* Vermelho mais escuro no hover */
+}
+
+.adminButton:active {
+    background-color: #b12a2a;
+    /* Efeito ao clicar */
+}
+
 
 @media screen and (max-width: 800px) {
     .ordersContainer {

@@ -8,6 +8,11 @@ import Cart from "./pages/cart/page.jsx";
 import Profile from "./pages/profile/page.jsx";
 import Products from "./pages/products/page.jsx";
 import Auth from "./pages/auth/page.jsx";
+import AdminPanel from "./pages/adminPanel/page.jsx";
+import Dashboard from "./pages/adminPanel/dashboard/dashboard.jsx";
+import AdminOrders from "./pages/adminPanel/orders/orders.jsx";
+import AdminUsers from "./pages/adminPanel/users/users.jsx";
+import AdminProducts from "./pages/adminPanel/products/products.jsx";
 
 const pages = createBrowserRouter([
   {
@@ -33,6 +38,16 @@ const pages = createBrowserRouter([
       {
         path: "/auth",
         element: <Auth />,
+      },
+      {
+        path: "/admin", // Rota principal do admin
+        element: <AdminPanel />,
+        children: [
+          { path: "dashboard", element: <Dashboard /> }, // Rota relativa
+          { path: "users", element: <AdminUsers /> }, // Rota relativa
+          { path: "orders", element: <AdminOrders /> }, // Rota relativa
+          { path: "products", element: <AdminProducts /> }, // Rota relativa
+        ],
       },
     ],
   },

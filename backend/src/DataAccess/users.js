@@ -51,4 +51,31 @@ export default class usersDataAccess {
             return result;
         }
     }
+    // Método para atualizar o endereço de um usuário
+    async updateUserAddress(userId, addressData) {
+    try {
+        // Validação do endereço (pode ser personalizada conforme necessário)
+        if (!addressData || !addressData.street || !addressData.city || !addressData.number) {
+            return { success: false, statusCode: 400, body: { error: 'Endereço inválido.' } };
+        }
+
+        // Tenta atualizar o endereço do usuário
+        const result = await Mongo.db.collection(collectionName).findOneAndUpdate(
+            { _id: new ObjectId(userId) }, // Filtro para encontrar o usuário
+            { $set: { address: addressData } }, // Atualiza apenas o campo de endereço
+            { returnDocument: 'after' } // Retorna o documento atualizado
+        );
+
+        // Se o usuário não for encontrado, retorna erro 404
+        if (!result.value) {
+            return { success: false, statusCode: 404, body: { error: 'Usuário não encontrado.' } };
+        }
+
+        // Retorna o sucesso com o documento atualizado
+        return { success: true, statusCode: 200, body: { message: 'Endereço atualizado com sucesso.', data: result.value } };
+    } catch (error) {
+        // Retorna erro em caso de falha
+        return { success: false, statusCode: 500, body: { error: error.message } };
+    }
+}
 }
