@@ -11,3 +11,9 @@ form {
     font-size: x-large;
     font: bolder
 }
+
+.error-message {
+    color: red;
+    margin-top: 10px;
+    font-size: 14px;
+}

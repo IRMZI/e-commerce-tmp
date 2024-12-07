@@ -59,7 +59,7 @@ authRouter.post('/signup', async (req, res) => {
             success: false,
             statusCode: 500,
             body: {
-                text: "User already exists / usuário ja existente"
+                text: "Usuário já existente"
             }
         })
     }
@@ -73,7 +73,7 @@ authRouter.post('/signup', async (req, res) => {
                 success: false,
                 statusCode: 500,
                 body: {
-                    text: "Error on cryto password / erro na encryptação da senha",
+                    text: "Erro na encryptação da senha",
                     err: err
                 }
             })  
@@ -86,6 +86,7 @@ authRouter.post('/signup', async (req, res) => {
             email: req.body.email,
             password: hashedPassword,
             salt,
+            zipcode: req.body.zipcode,
             address: {
                 street: req.body.address.street,
                 number: req.body.address.number,
@@ -105,7 +106,7 @@ authRouter.post('/signup', async (req, res) => {
                 success: true,
                 statusCode: 200,
                 body: {
-                text: "User registered / Usuário registrado",
+                text: "Usuário registrado",
                 token,
                 user,
                 logged: true
@@ -125,7 +126,7 @@ authRouter.post('/login', (req, res) => {
                 success: false,
                 statusCode: 500,
                 body: {
-                    text: "Error during login authentication / Erro durante a authenticação de login",
+                    text: "Erro durante a authenticação de login",
                     error
                 }
             })
@@ -136,7 +137,7 @@ authRouter.post('/login', (req, res) => {
                 success: false,
                 statusCode: 400,
                 body: {
-                    text: "Credentials uncorrect / credenciais incorretas ",
+                    text: "Credenciais incorretas ",
                 }
             })
         }
@@ -146,7 +147,7 @@ authRouter.post('/login', (req, res) => {
             success: true,
             statusCode: 200,
             body: {
-                text: "User logged in / usuário logado ",
+                text: "Usuário logado ",
                 user,
                 token
             }

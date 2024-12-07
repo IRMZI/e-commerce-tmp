@@ -1,0 +1,124 @@
+/* Estilo Geral da Product Section */
+.product-section {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  border-radius: 10px;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+  padding-bottom: 0.5em;
+  padding-top: 0.5em;
+}
+
+/* Título da Seção */
+.product-section-title {
+  font-size: 2.5rem;
+  color: #22C55E;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.product-section-description {
+  font-size: 1.25rem;
+  color: #6d4c41;
+  font-family: 'Roboto', sans-serif;
+  text-align: center;
+  line-height: 1.8;
+  max-width: 800px;
+  margin-bottom: 2rem;
+  font-weight: bold;
+}
+
+/* Contêiner de Destaque */
+.product-highlight {
+  display: flex;
+  gap: 3rem;
+  flex-wrap: wrap;
+  width: 100%;
+  max-width: 1200px;
+  margin-bottom: 2.5rem;
+}
+
+/* Imagem do Produto */
+.product-highlight-image {
+  width: 100%;
+  max-width: 600px;
+  height: auto;
+  border-radius: 0.5rem;
+}
+
+/* Texto do Produto */
+.product-highlight-text {
+  flex: 1;
+  max-width: 600px;
+  justify-content: center;
+  align-items: flex-start;
+  text-align: left;
+  gap: 1.5rem;
+}
+
+.product-highlight-title {
+  font-size: 1.5rem;
+  color: #22C55E;
+  font-weight: bold;
+  text-align: center;
+}
+
+.product-highlight-text p {
+  font-size: 1.25rem;
+  color: #6d4c41;
+  line-height: 1.8;
+  font-family: 'Roboto', sans-serif;
+}
+
+/* Botão de Ação */
+.product-view-all-button {
+  background-color: #22C55E;
+  color: white;
+  padding: 1rem 2rem;
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  border-radius: 2rem;
+  box-shadow: 0 4px 15px rgba(139, 195, 74, 0.4);
+  transition: transform 0.3s, background-color 0.3s, box-shadow 0.3s;
+  text-align: center;
+  cursor: pointer;
+}
+
+.product-view-all-button:hover {
+  background-color: #14813c;
+  transform: translateY(-5px);
+  box-shadow: 0 6px 25px rgba(85, 139, 47, 0.5);
+}
+
+/* Responsividade */
+@media screen and (max-width: 900px) {
+  .product-highlight {
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+  }
+
+  .product-highlight-image,
+  .product-highlight-text {
+    max-width: 100%;
+    text-align: center;
+  }
+
+  .product-highlight-title {
+    font-size: 1.75rem;
+  }
+
+  .product-highlight-text p {
+    font-size: 1.1rem;
+    line-height: 1.6;
+  }
+
+  .product-view-all-button {
+    max-width: 90%;
+    font-size: 1.25rem;
+  }
+}

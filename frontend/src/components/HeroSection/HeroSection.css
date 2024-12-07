@@ -1,0 +1,149 @@
+.hero {
+  height: 80vh;
+  background-image: url('/hero-bg.jpg');
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 2rem;
+  text-align: center;
+  /* Centraliza o conteúdo em telas menores */
+}
+
+.hero-content {
+  max-width: 800px;
+  color: black;
+}
+
+.hero-content h1 {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  color: black;
+}
+
+.hero-content h1 .highlight-flavor {
+  color: #ff6347;
+  font-weight: bold;
+}
+
+.hero-content h1 .highlight-mushrooms {
+  color: #22C55E;
+  font-weight: bold;
+}
+
+.hero-content p {
+  font-size: 1.5rem;
+  margin-bottom: 2rem;
+  color: black;
+}
+
+.cta-buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.primary-button,
+.secondary-button {
+  padding: 1rem 2rem;
+  border-radius: 4px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.primary-button {
+  color: white;
+  border: none;
+}
+
+.secondary-button {
+  color: white;
+  background-color: #8b5e3c;
+}
+
+.primary-button:hover,
+.secondary-button:hover {
+  transform: translateY(-2px);
+}
+
+/* Media Queries */
+
+/* Telas pequenas (smartphones) */
+@media (max-width: 768px) {
+  .hero {
+    height: auto;
+    padding: 2rem 1rem;
+  }
+
+  .hero-content h1 {
+    font-size: 2rem;
+    /* Reduz o tamanho do título */
+  }
+
+  .hero-content p {
+    font-size: 1.2rem;
+    /* Texto menor */
+  }
+
+  .cta-buttons {
+    flex-direction: column;
+    /* Empilha os botões verticalmente */
+    gap: 0.5rem;
+  }
+
+  .primary-button,
+  .secondary-button {
+    padding: 0.8rem 1.5rem;
+    /* Botões menores */
+  }
+}
+
+/* Telas médias (tablets e dispositivos maiores) */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .hero-content h1 {
+    font-size: 2.5rem;
+    /* Tamanho intermediário do título */
+  }
+
+  .hero-content p {
+    font-size: 1.4rem;
+    /* Texto ligeiramente menor */
+  }
+
+  .cta-buttons {
+    gap: 0.8rem;
+    /* Menor espaço entre os botões */
+  }
+
+  .primary-button,
+  .secondary-button {
+    padding: 0.9rem 1.8rem;
+  }
+}
+
+/* Telas grandes (desktops) */
+@media (min-width: 1025px) {
+  .hero-content h1 {
+    font-size: 3rem;
+    /* Tamanho original para desktops */
+  }
+
+  .hero-content p {
+    font-size: 1.5rem;
+  }
+
+  .cta-buttons {
+    flex-direction: row;
+    /* Mantém os botões lado a lado */
+    gap: 1rem;
+  }
+
+  .primary-button,
+  .secondary-button {
+    padding: 1rem 2rem;
+    /* Tamanho padrão dos botões */
+  }
+}

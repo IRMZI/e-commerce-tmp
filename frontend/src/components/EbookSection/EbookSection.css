@@ -1,0 +1,86 @@
+.ebook-section {
+  padding: 4rem 2rem;
+  background-color: #f9f9f9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4rem;
+}
+
+.ebook-content {
+  max-width: 500px;
+}
+
+.ebook-info h2 {
+  color: #333;
+  margin-bottom: 0.5rem;
+}
+
+.ebook-info h3 {
+  color: #8b5e3c;
+  margin-bottom: 2rem;
+}
+
+.benefits {
+  list-style: none;
+  margin-bottom: 2rem;
+}
+
+.benefits li {
+  margin-bottom: 0.5rem;
+  color: #666;
+}
+
+.ebook-form form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.ebook-form input {
+  padding: 0.8rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+.ebook-form button {
+  padding: 1rem;
+  background-color: #8b5e3c;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.ebook-form button:hover {
+  background-color: #6d4b2f;
+}
+
+.ebook-image img {
+  height: auto;
+}
+
+.highlight {
+  color: #ff5722;
+  /* Cor vibrante para destacar as palavras */
+  font-weight: bold;
+}
+
+.greenHighlight {
+  color: #16b450;
+  /* Cor vibrante para destacar as palavras */
+  font-weight: bold;
+}
+
+@media (max-width: 768px) {
+  .ebook-section {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .ebook-image img {
+    max-width: 300px;
+  }
+}

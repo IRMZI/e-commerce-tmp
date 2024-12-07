@@ -13,7 +13,7 @@ import Dashboard from "./pages/adminPanel/dashboard/dashboard.jsx";
 import AdminOrders from "./pages/adminPanel/orders/orders.jsx";
 import AdminUsers from "./pages/adminPanel/users/users.jsx";
 import AdminProducts from "./pages/adminPanel/products/products.jsx";
-
+import Ebook from "./pages/lpEbook/page.jsx";
 const pages = createBrowserRouter([
   {
     path: "/",
@@ -38,6 +38,10 @@ const pages = createBrowserRouter([
       {
         path: "/auth",
         element: <Auth />,
+      },
+      {
+        path: "/ebook",
+        element: <Ebook />,
       },
       {
         path: "/admin", // Rota principal do admin

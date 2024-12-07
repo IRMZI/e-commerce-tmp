@@ -14,16 +14,26 @@ export default function authServices() {
     })
       .then((response) => response.json())
       .then((result) => {
-        console.log(result);
         if (result.success && result.body.token) {
           localStorage.setItem(
             "auth",
             JSON.stringify({ token: result.body.token, user: result.body.user })
           );
+        } else {
+          // Salva a mensagem de erro no localStorage
+          localStorage.setItem(
+            "authError",
+            result.body.text || "Erro desconhecido"
+          );
         }
       })
       .catch((error) => {
-        console.log(error);
+        const errorMessage =
+          (error.response &&
+            error.response.data &&
+            error.response.data.body.text) ||
+          "Erro de conexão com o servidor";
+        localStorage.setItem("authError", errorMessage); // Salva a mensagem no localStorage
       })
       .finally(() => {
         setAuthLoading(false);
@@ -47,10 +57,21 @@ export default function authServices() {
             "auth",
             JSON.stringify({ token: result.body.token, user: result.body.user })
           );
+        } else {
+          // Salva a mensagem de erro no localStorage
+          localStorage.setItem(
+            "authError",
+            result.body.text || "Erro desconhecido"
+          );
         }
       })
       .catch((error) => {
-        console.log(error);
+        const errorMessage =
+          (error.response &&
+            error.response.data &&
+            error.response.data.body.text) ||
+          "Erro de conexão com o servidor";
+        localStorage.setItem("authError", errorMessage); // Salva a mensagem no localStorage
       })
       .finally(() => {
         setAuthLoading(false);

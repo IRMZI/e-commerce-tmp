@@ -1,5 +1,5 @@
 import "./Navbar.css";
-import { HiMenu } from "react-icons/hi";
+import { HiMenu, HiBookOpen } from "react-icons/hi";
 import { HiShoppingCart, HiUserCircle } from "react-icons/hi2";
 import { Drawer } from "@mui/material";
 import { useState } from "react";
@@ -27,7 +27,10 @@ export default function Navbar() {
             Home
           </Link>
           <Link to="/products" className="navbarLink">
-            Produtos
+            Cogumelos
+          </Link>
+          <Link to="/products" className="navbarLink">
+            História
           </Link>
           <Link to="/cart">
             <HiShoppingCart className="navbarLink" />
@@ -35,6 +38,9 @@ export default function Navbar() {
           <Link to="/profile">
             <HiUserCircle className="navbarLink" />
           </Link>
+          <button className="ebook-button">
+            Baixe nosso E-book! <HiBookOpen />
+          </button>
         </div>
       </div>
       <div className="mobileNavbarItems">
