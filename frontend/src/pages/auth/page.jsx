@@ -6,6 +6,7 @@ import authServices from "../../services/auth";
 import { HiLogin } from "react-icons/hi";
 import Loading from "../loading/page";
 import { z } from "zod";
+
 export default function Auth() {
   const [formType, setFormType] = useState("login");
   const [formData, setFormData] = useState({
@@ -14,6 +15,7 @@ export default function Auth() {
     password: "",
     confirmPassword: "",
     zipcode: "",
+    phone: "",
     address: {
       street: "",
       number: "",
@@ -27,14 +29,12 @@ export default function Auth() {
   const { login, signup, authLoading } = authServices();
   const authData = JSON.parse(localStorage.getItem("auth"));
 
-  // Navegar se já estiver autenticado
   useEffect(() => {
     if (authData) {
       navigate("/profile");
     }
   }, [authData, navigate]);
 
-  // Monitorar erros de autenticação no localStorage
   useEffect(() => {
     if (authError) {
       setErrorMessage(authError); // Atualizar mensagem de erro
@@ -48,6 +48,7 @@ export default function Auth() {
       password: "",
       confirmPassword: "",
       zipcode: "",
+      phone: "",
       address: {
         street: "",
         number: "",
@@ -55,12 +56,13 @@ export default function Auth() {
       },
     });
     setErrorMessage("");
-    localStorage.removeItem("authError"); // Remove o erro do localStorage
+    localStorage.removeItem("authError");
     setFormType(formType === "login" ? "signup" : "login");
   };
 
-  const handleFormDataChange = (e) => {
+  const handleFormDataChange = async (e) => {
     const { name, value } = e.target;
+
     if (["street", "number", "city"].includes(name)) {
       setFormData((prevState) => ({
         ...prevState,
@@ -69,14 +71,50 @@ export default function Auth() {
           [name]: value,
         },
       }));
+    } else if (name === "phone") {
+      // Formatar telefone automaticamente
+      const formattedPhone = value
+        .replace(/\D/g, "") // Remove caracteres não numéricos
+        .replace(/^(\d{2})(\d{4,5})(\d{4}).*/, "$1 $2-$3"); // Aplica formato
+      setFormData((prevState) => ({
+        ...prevState,
+        phone: formattedPhone,
+      }));
+    } else if (name === "zipcode") {
+      // Formatar e validar CEP automaticamente
+      const formattedZipcode = value
+        .replace(/\D/g, "") // Remove caracteres não numéricos
+        .replace(/(\d{5})(\d{3}).*/, "$1-$2"); // Aplica o formato 00000-000
+      setFormData((prevState) => ({
+        ...prevState,
+        [name]: formattedZipcode,
+      }));
+
+      // Realizar a validação do CEP ao atingir o comprimento adequado
+      if (formattedZipcode.length === 9) {
+        try {
+          const data = await validateZipcode(formattedZipcode); // Chama a função de validação do CEP
+          setFormData((prevState) => ({
+            ...prevState,
+            address: {
+              ...prevState.address,
+              street: data.street || "",
+              city: data.city || "",
+            },
+          }));
+        } catch (err) {
+          setErrorMessage("CEP inválido ou não encontrado.");
+        }
+      }
     } else {
       setFormData((prevState) => ({
         ...prevState,
         [name]: value,
       }));
     }
-    setErrorMessage(""); // Limpa a mensagem exibida
-    localStorage.removeItem("authError"); // Remove o erro do localStorage
+
+    setErrorMessage("");
+    localStorage.removeItem("authError");
   };
 
   const formSchema = z
@@ -101,6 +139,13 @@ export default function Auth() {
         .string()
         .regex(/^\d{5}-\d{3}$/, "O CEP deve estar no formato 99999-999")
         .nonempty("O CEP é obrigatório"),
+      phone: z
+        .string()
+        .regex(
+          /^51 \d{4,5}-\d{4}$/,
+          "O telefone deve estar no formato 51 XXXXX-XXXX ou 51 XXXX-XXXX"
+        )
+        .nonempty("O número de telefone é obrigatório"),
       address: z.object({
         street: z.string().nonempty("A rua é obrigatória"),
         number: z.string().nonempty("O número é obrigatório"),
@@ -114,8 +159,8 @@ export default function Auth() {
 
   const handleSubmitForm = (e) => {
     e.preventDefault();
-    setErrorMessage(""); // Limpar mensagens anteriores
-    localStorage.removeItem("authError"); // Limpar erros de autenticação anteriores
+    setErrorMessage("");
+    localStorage.removeItem("authError");
     try {
       if (formType === "login") {
         const loginData = {
@@ -223,6 +268,14 @@ export default function Auth() {
               name="zipcode"
               variant="outlined"
               value={formData.zipcode}
+              onChange={handleFormDataChange}
+            />
+            <TextField
+              required
+              label="Telefone"
+              name="phone"
+              variant="outlined"
+              value={formData.phone}
               onChange={handleFormDataChange}
             />
             <TextField

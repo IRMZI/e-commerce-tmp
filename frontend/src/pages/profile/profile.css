@@ -1,88 +1,87 @@
-.pageContainer {
-    padding: 0.5em;
+.profile-container {
     display: flex;
     flex-direction: column;
-    gap: 0.5em;
+    gap: 20px;
+    padding: 20px;
 }
 
-.orderContainer {
-    background-color: rgb(229 231 235);
-    padding: 0.5em;
-    border-radius: 1em;
+.user-card {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
 }
 
-
-.ordersContainer {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 0.5em;
+.orders-card {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
 }
 
-.pickupStatus {
-    align-items: center;
-    justify-content: center;
-    border-radius: 0.5em;
-    width: fit-content;
-    padding: 0.2em;
-    font-size: medium;
+.user-card h1,
+.orders-card h2 {
+    color: #333;
+    margin-bottom: 10px;
 }
 
-.pending {
-    background-color: #d6c918;
+.address-section {
+    margin-top: 20px;
 }
 
-.completed {
-    background-color: #9ad618;
-}
-
-.canceled {
-    background-color: #ff0000;
-}
-
-.productsLink {
-    color: black;
-    text-decoration: underline;
-}
-
-.orderItemsContainer {
-    background-color: white;
-    padding: 0.5em;
-    border: 1px solid #828080;
-    border-radius: 1em;
-}
-
-.addressContainer {
+.address-form {
     display: flex;
-    gap: 0.5em;
+    flex-wrap: wrap;
+    gap: 10px;
 }
 
-.adminButton {
-    background-color: #ff4d4d;
-    /* Vermelho */
-    color: #fff;
-    /* Texto branco */
+.address-form .save-btn,
+.edit-btn,
+.logout-btn,
+.admin-btn {
+    background-color: #007bff;
     border: none;
-    padding: 10px 20px;
-    font-size: 16px;
-    font-weight: bold;
+    color: #fff;
+    padding: 10px 15px;
     border-radius: 5px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
 }
 
-.adminButton:hover {
-    background-color: #d93636;
-    /* Vermelho mais escuro no hover */
+.orders-table-wrapper {
+    overflow-x: auto;
 }
 
-.adminButton:active {
-    background-color: #b12a2a;
-    /* Efeito ao clicar */
+.orders-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.orders-table th,
+.orders-table td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ccc;
+}
+
+.orders-table th {
+    background-color: #f8f8f8;
 }
 
 
-@media screen and (max-width: 800px) {
-    .ordersContainer {
-        grid-template-columns: repeat(1, 1fr);
+.pickup-status.completed {
+    color: green;
+}
+
+.pickup-status.pending {
+    color: orange;
+}
+
+.pickup-status.canceled {
+    color: red;
+}
+
+@media (min-width: 768px) {
+    .profile-container {
+        grid-template-columns: 1fr 2fr;
     }
 }

@@ -1,14 +1,63 @@
+// EbookSection.jsx
 import React, { useState } from "react";
-import ebook from "../../assets/ebookMockUp.png";
+import leadService from "../../services/lead";
 import "./EbookSection.css";
+import ebook from "../../assets/ebookMockUp.png";
+const ESTADOS_BRASIL = [
+  "AC",
+  "AL",
+  "AP",
+  "AM",
+  "BA",
+  "CE",
+  "DF",
+  "ES",
+  "GO",
+  "MA",
+  "MT",
+  "MS",
+  "MG",
+  "PA",
+  "PB",
+  "PR",
+  "PE",
+  "PI",
+  "RJ",
+  "RN",
+  "RS",
+  "RO",
+  "RR",
+  "SC",
+  "SP",
+  "SE",
+  "TO",
+];
 
 const EbookSection = () => {
-  const [formData, setFormData] = useState({ name: "", email: "" });
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    state: "",
+  });
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState(false);
+  const { createLead } = leadService();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle form submission
-    console.log("Form submitted:", formData);
+    setLoading(true);
+    setError("");
+
+    try {
+      await createLead(formData);
+      setSuccess(true);
+      setFormData({ name: "", email: "", state: "" });
+    } catch (error) {
+      setError("Erro ao enviar formulário. Tente novamente.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleChange = (e) => {
@@ -51,25 +100,52 @@ const EbookSection = () => {
           </ul>
         </div>
         <div className="ebook-form">
-          <form onSubmit={handleSubmit}>
-            <input
-              type="text"
-              name="name"
-              placeholder="Seu Nome Completo"
-              value={formData.name}
-              onChange={handleChange}
-              required
-            />
-            <input
-              type="email"
-              name="email"
-              placeholder="Seu E-mail"
-              value={formData.email}
-              onChange={handleChange}
-              required
-            />
-            <button type="submit">Receba seu E-book Gratuitamente!</button>
-          </form>
+          {success ? (
+            <div className="success-message">
+              <h3>Obrigado pelo cadastro!</h3>
+              <p>Seu e-book será enviado para seu email em instantes.</p>
+            </div>
+          ) : (
+            <form onSubmit={handleSubmit}>
+              <input
+                type="text"
+                name="name"
+                placeholder="Seu Nome Completo"
+                value={formData.name}
+                onChange={handleChange}
+                required
+                disabled={loading}
+              />
+              <input
+                type="email"
+                name="email"
+                placeholder="Seu E-mail"
+                value={formData.email}
+                onChange={handleChange}
+                required
+                disabled={loading}
+              />
+              <select
+                name="state"
+                value={formData.state}
+                onChange={handleChange}
+                required
+                disabled={loading}
+                className="state-select"
+              >
+                <option value="">Selecione seu estado</option>
+                {ESTADOS_BRASIL.map((estado) => (
+                  <option key={estado} value={estado}>
+                    {estado}
+                  </option>
+                ))}
+              </select>
+              {error && <p className="error-message">{error}</p>}
+              <button type="submit" disabled={loading}>
+                {loading ? "Enviando..." : "Receba seu E-book Gratuitamente!"}
+              </button>
+            </form>
+          )}
         </div>
       </div>
       <div className="ebook-image">

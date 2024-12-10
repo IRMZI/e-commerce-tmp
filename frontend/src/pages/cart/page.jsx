@@ -7,7 +7,8 @@ import ConfirmOrderPopup from "../../components/confirmOrderPopUp/confirmOrderPo
 import orderServices from "../../services/order";
 
 export default function Cart() {
-  const { cartItems, updateCartItems, removeFromCart } = useCartContext();
+  const { cartItems, updateCartItems, removeFromCart, clearCart } =
+    useCartContext();
   const [confirmPopupOpen, setConfirmPopupOpen] = useState(false);
   const { sendOrder } = orderServices();
 
@@ -23,7 +24,6 @@ export default function Cart() {
       return item;
     });
     updateCartItems(updatedCartItems);
-    console.log(updatedCartItems);
   };
   if (!cartItems.length) {
     return (
@@ -48,6 +48,7 @@ export default function Cart() {
     });
     sendOrder(orderData);
     setConfirmPopupOpen(!confirmPopupOpen);
+    clearCart();
   };
   return (
     <>

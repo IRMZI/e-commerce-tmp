@@ -1,6 +1,6 @@
 .hero {
   height: 80vh;
-  background-image: url('/hero-bg.jpg');
+  background-image: url('../../assets/hero.jpg');
   background-size: cover;
   background-position: center;
   display: flex;
@@ -8,19 +8,47 @@
   justify-content: center;
   padding: 0 2rem;
   text-align: center;
+  text-shadow: 1px 2px 2px black;
   /* Centraliza o conteúdo em telas menores */
 }
 
 .hero-content {
   max-width: 800px;
-  color: black;
 }
 
 .hero-content h1 {
   font-size: 3rem;
   margin-bottom: 1rem;
-  color: black;
 }
+
+.hero-title {
+  color: white;
+  font-size: 6rem;
+  font-family: 'Koulen', sans-serif;
+  text-align: center;
+  margin-bottom: 1rem;
+  border-bottom: 4px solid white;
+  padding-bottom: 0.5rem;
+}
+
+.hero-subtitle {
+  font-size: 3rem;
+  font-family: 'Teko', sans-serif;
+  text-align: center;
+  color: white;
+}
+
+/* Ajustando os destaques para o novo estilo */
+.hero-title .highlight-flavor {
+  color: #ff6347;
+  font-weight: bold;
+}
+
+.hero-title .highlight-mushrooms {
+  color: #22C55E;
+  font-weight: bold;
+}
+
 
 .hero-content h1 .highlight-flavor {
   color: #ff6347;
@@ -35,7 +63,6 @@
 .hero-content p {
   font-size: 1.5rem;
   margin-bottom: 2rem;
-  color: black;
 }
 
 .cta-buttons {

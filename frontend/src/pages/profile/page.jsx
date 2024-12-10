@@ -7,18 +7,12 @@ import { TextField } from "@material-ui/core";
 import "./profile.css";
 import { Link } from "react-router-dom";
 import Loading from "../loading/page";
-import {
-  HiLogout,
-  HiOutlineClock,
-  HiOutlineCheckCircle,
-  HiOutlineXCircle,
-  HiPencil,
-} from "react-icons/hi";
+import { HiLogout } from "react-icons/hi";
 export default function Profile() {
   const { logout } = authServices();
   const { getUserOrders, orderLoading, refetchOrders, ordersList } =
     orderServices();
-  const { updateUserAddress, addressLoading } = addressServices();
+  const { updateUserAddress } = addressServices();
   const navigate = useNavigate();
   const authData = JSON.parse(localStorage.getItem("auth"));
   const [isEditing, setIsEditing] = useState(false);
@@ -26,6 +20,7 @@ export default function Profile() {
     street: authData?.user?.address?.street || "",
     number: authData?.user?.address?.number || "",
     city: authData?.user?.address?.city || "",
+    zipcode: authData?.user?.zipcode || "",
   });
 
   useEffect(() => {
@@ -56,10 +51,10 @@ export default function Profile() {
     try {
       const userId = authData?.user?._id; // ID do usuário
       const result = await updateUserAddress(userId, editedAddress);
+      alert(result);
       if (result.success) {
         setIsEditing(false);
         alert("Endereço atualizado com sucesso! faça login novamente");
-        logout();
         return navigate("/auth");
       } else {
         console.error(result.message || "Erro ao atualizar o endereço.");
@@ -74,110 +69,125 @@ export default function Profile() {
     setEditedAddress((prev) => ({ ...prev, [name]: value }));
   };
 
-  console.log(ordersList);
   return (
-    <div className="pageContainer font-cormorant">
-      <div>
-        <h1>{authData?.user?.fullname}</h1>
-        <h3>{authData?.user?.email}</h3>
-        <h3>{authData?.user?._id}</h3>
-        {authData?.user?.isAdmin && (
-          <div className="adminPanelMessage">
-            <button className="adminButton" onClick={() => navigate("/admin")}>
-              Acessar o Painel de Admin!
-            </button>
-          </div>
-        )}
-        <div>
+    <div className="profile-container">
+      <section className="user-card">
+        <h1>{authData?.user?.fullname || "Usuário não identificado"}</h1>
+        <p>
+          <strong>Email:</strong>{" "}
+          {authData?.user?.email || "Email não disponível"}
+        </p>
+        <p>
+          <strong>Telefone:</strong>{" "}
+          {authData?.user?.phone || "Telefone não disponível"}
+        </p>
+        <p>
+          <strong>ID:</strong> {authData?.user?._id || "ID não disponível"}
+        </p>
+        <p>
+          <strong>CEP:</strong> {authData?.user?.zipcode || "CEP não informado"}
+        </p>
+        <div className="address-section">
+          <h3>Endereço</h3>
           {isEditing ? (
-            <div className="addressContainer">
+            <form className="address-form">
               <TextField
-                type="text"
                 name="street"
                 value={editedAddress.street}
                 onChange={handleChange}
-                placeholder="Rua"
+                label="Rua"
               />
               <TextField
-                type="text"
                 name="number"
                 value={editedAddress.number}
                 onChange={handleChange}
-                placeholder="Número"
+                label="Número"
               />
               <TextField
-                type="text"
                 name="city"
                 value={editedAddress.city}
                 onChange={handleChange}
-                placeholder="Cidade"
+                label="Cidade"
               />
-              <button onClick={handleSaveAddress}>Salvar</button>
-            </div>
+              <TextField
+                name="zipcode"
+                value={editedAddress.zipcode}
+                onChange={handleChange}
+                label="CEP"
+              />
+              <button onClick={handleSaveAddress} className="save-btn">
+                Salvar
+              </button>
+            </form>
           ) : (
-            <div className="addressContainer">
-              <h3>
-                {authData?.user?.address?.street},{" "}
-                {authData?.user?.address?.number} -{" "}
-                {authData?.user?.address?.city}
-              </h3>
-              <a onClick={handleEditAddress}>
-                <HiPencil />
-              </a>
+            <div className="address-display">
+              <p>
+                {authData?.user?.address?.street || "Rua não informada"},
+                {authData?.user?.address?.number || "Número não informado"} -
+                {authData?.user?.address?.city || "Cidade não informada"}
+              </p>
+              <button onClick={handleEditAddress} className="edit-btn">
+                Editar Endereço
+              </button>
             </div>
           )}
         </div>
-      </div>
+        {authData?.user?.isAdmin && (
+          <button className="admin-btn">Painel de Admin</button>
+        )}
+      </section>
 
-      <button onClick={handleLogout}>
-        Logout <HiLogout />
-      </button>
-
-      {ordersList.length > 0 ? (
-        <div className="ordersContainer">
-          {ordersList.map((order) => (
-            <div key={order._id} className="orderContainer">
-              {order.pickupStatus === "pending" ? (
-                <p className="pickupStatus pending font-koulen">
-                  <HiOutlineClock />
-                  Pendente
-                </p>
-              ) : null}
-              {order.pickupStatus === "completed" ? (
-                <p className="pickupStatus completed font-koulen">
-                  <HiOutlineCheckCircle />
-                  Entregue
-                </p>
-              ) : null}
-              {order.pickupStatus === "canceled" ? (
-                <p className="pickupStatus canceled font-koulen">
-                  <HiOutlineXCircle />
-                  Cancelado
-                </p>
-              ) : null}
-              <h3>Número do pedido: {order._id}</h3>
-              <h3>Melhor horário para entrega: {order.pickupTime}</h3>
-              <div className="orderItemsContainer">
-                {order.orderItems.map((item) => (
-                  <div key={item._id}>
-                    <h4>
-                      {item.itemDetails[0]?.name || "Detalhes indisponíveis"}
-                    </h4>
-                    <p>Quantidade: {item.quantity}</p>
-                  </div>
+      <section className="orders-card">
+        <h2>Pedidos</h2>
+        {ordersList.length > 0 ? (
+          <div className="orders-table-wrapper">
+            <table className="orders-table">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Status</th>
+                  <th>Data</th>
+                  <th>Itens</th>
+                  <th>Ações</th>
+                </tr>
+              </thead>
+              <tbody>
+                {ordersList.map((order) => (
+                  <tr key={order._id}>
+                    <td>{order._id}</td>
+                    <td className={`pickup-status ${order.pickupStatus}`}>
+                      {order.pickupStatus}
+                    </td>
+                    <td>{order.pickupTime || "Não informado"}</td>
+                    <td>
+                      {order.orderItems.map((item) => (
+                        <div key={item._id}>
+                          <strong>
+                            {item.itemDetails[0]?.name || "Indisponível"}
+                          </strong>
+                          <span> - Quantidade: {item.quantity}</span>
+                        </div>
+                      ))}
+                    </td>
+                    <td>
+                      <button className="details-btn">Ver Detalhes</button>
+                    </td>
+                  </tr>
                 ))}
-              </div>
-            </div>
-          ))}
-        </div>
-      ) : (
-        <div>
-          <p>Você não possui pedidos</p>
-          <Link to={"/products"} className="productsLink">
-            Clique aqui para ver nossos produtos!
-          </Link>
-        </div>
-      )}
+              </tbody>
+            </table>
+          </div>
+        ) : (
+          <p>
+            Você não possui pedidos.{" "}
+            <Link to="/products">Veja nossos produtos!</Link>
+          </p>
+        )}
+      </section>
+
+      <button onClick={handleLogout} className="logout-btn">
+        Sair <HiLogout />
+      </button>
     </div>
   );
 }

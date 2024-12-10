@@ -16,12 +16,10 @@ export default function addressServices() {
     })
       .then((response) => response.json())
       .then((result) => {
-        console.log(result);
         return result;
       })
       .catch((error) => {
         console.error(error);
-        throw error;
       })
       .finally(() => {
         setAddressLoading(false);

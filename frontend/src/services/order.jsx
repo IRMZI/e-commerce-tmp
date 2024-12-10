@@ -3,6 +3,7 @@ import { useState } from "react";
 export default function orderServices() {
   const [orderLoading, setOrderLoading] = useState(false);
   const [ordersList, setOrdersList] = useState([]);
+  const [refetchOrders, setRefetchOrders] = useState(true);
   const url = "http://localhost:3000/orders";
 
   // Função para buscar todos os pedidos
@@ -28,6 +29,7 @@ export default function orderServices() {
       })
       .finally(() => {
         setOrderLoading(false);
+        setRefetchOrders(false);
       });
   };
 
@@ -54,6 +56,7 @@ export default function orderServices() {
       })
       .finally(() => {
         setOrderLoading(false);
+        setRefetchOrders(false);
       });
   };
 
@@ -145,5 +148,6 @@ export default function orderServices() {
     deleteOrder,
     orderLoading,
     ordersList,
+    refetchOrders,
   };
 }

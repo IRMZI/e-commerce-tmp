@@ -5,16 +5,22 @@ const CartContext = createContext();
 export function CartProvider({ children }) {
   const [cartItems, setCartItems] = useState([]);
   const addToCart = (itemToAdd) => {
-    const checkItemAlready = cartItems.find((cartItem) => {
-      return cartItem._id === itemToAdd._id;
+    setCartItems((prevCartItems) => {
+      const existingItem = prevCartItems.find(
+        (cartItem) => cartItem._id === itemToAdd._id
+      );
+      if (existingItem) {
+        // Incrementa a quantidade do item existente
+        return prevCartItems.map((cartItem) =>
+          cartItem._id === itemToAdd._id
+            ? { ...cartItem, quantity: cartItem.quantity + itemToAdd.quantity }
+            : cartItem
+        );
+      } else {
+        // Adiciona um novo item ao carrinho
+        return [...prevCartItems, itemToAdd];
+      }
     });
-    if (!checkItemAlready) {
-      setCartItems([...cartItems, itemToAdd]);
-      console.log("item adicionado no carrinho");
-    } else {
-      console.log("item ja adicionado no carrinho", checkItemAlready);
-    }
-    console.log(cartItems);
   };
   const updateCartItems = (items) => {
     setCartItems(items);
@@ -25,6 +31,10 @@ export function CartProvider({ children }) {
     });
     setCartItems(cartItemsCleared);
   };
+  const clearCart = () => {
+    setCartItems([]);
+  };
+
   return (
     <CartContext.Provider
       value={{
@@ -32,6 +42,7 @@ export function CartProvider({ children }) {
         addToCart,
         removeFromCart,
         updateCartItems,
+        clearCart,
       }}
     >
       {children}

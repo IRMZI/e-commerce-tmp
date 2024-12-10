@@ -1,17 +1,20 @@
 import "./Navbar.css";
-import { HiMenu, HiBookOpen } from "react-icons/hi";
+import { HiMenu, HiBookOpen, HiOutlineHome } from "react-icons/hi";
 import { HiShoppingCart, HiUserCircle } from "react-icons/hi2";
+import { BiHistory } from "react-icons/bi";
+import { GiSlicedMushroom } from "react-icons/gi";
 import { Drawer } from "@mui/material";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { useCartContext } from "../../contexts/useCartContext";
 export default function Navbar() {
-  // inicializa o menu como false
   const [openMenu, setOpenMenu] = useState(false);
   const handlerOpenMenu = () => {
-    // inverte o valor do menu
     setOpenMenu(!openMenu);
   };
 
+  const { cartItems } = useCartContext();
+  const totalItems = cartItems.reduce((sum, item) => sum + item.quantity, 0);
   return (
     <nav className="NavbarContainer">
       <div className="NavbarItems">
@@ -20,7 +23,7 @@ export default function Navbar() {
             src="/logo-campestre.png"
             alt="logomarca-campestre"
             className="logo"
-          ></img>
+          />
         </Link>
         <div className="navbarLinksContainer">
           <Link to="/" className="navbarLink">
@@ -29,18 +32,23 @@ export default function Navbar() {
           <Link to="/products" className="navbarLink">
             Cogumelos
           </Link>
-          <Link to="/products" className="navbarLink">
+          <Link to="/history" className="navbarLink">
             História
           </Link>
-          <Link to="/cart">
-            <HiShoppingCart className="navbarLink" />
+          <Link to="/cart" className="navbarLink">
+            <div className="cartIconWithBadge">
+              <HiShoppingCart />
+              {totalItems > 0 && <span className="badge">{totalItems}</span>}
+            </div>
           </Link>
-          <Link to="/profile">
-            <HiUserCircle className="navbarLink" />
+          <Link to="/profile" className="navbarLink">
+            <HiUserCircle />
           </Link>
-          <button className="ebook-button">
-            Baixe nosso E-book! <HiBookOpen />
-          </button>
+          <Link to="/ebook">
+            <button className="ebook-button">
+              Baixe nosso E-book! <HiBookOpen />
+            </button>
+          </Link>
         </div>
       </div>
       <div className="mobileNavbarItems">
@@ -49,30 +57,39 @@ export default function Navbar() {
             src="/logo-campestre.png"
             alt="logomarca-campestre"
             className="logo"
-          ></img>
+          />
         </Link>
-        <div className="mobileNavbarItems">
-          <Link to={"/"}>
-            <img className="logo" src="/imgs/logo.png" alt="" />
+        <div className="mobileNavbarBtns">
+          <Link to="/cart" className="navbarLink">
+            <div className="cartIconWithBadge">
+              <HiShoppingCart />
+              {totalItems > 0 && <span className="badge">{totalItems}</span>}
+            </div>
           </Link>
-          <div className="mobileNavbarBtns">
-            <Link to={"/cart"}>
-              <HiShoppingCart className="navbarLink" />
-            </Link>
-            <HiMenu className="navbarLink" onClick={handlerOpenMenu} />
-          </div>
+          <HiMenu className="navbarLink" onClick={handlerOpenMenu} />
         </div>
       </div>
       <Drawer anchor="right" open={openMenu} onClose={handlerOpenMenu}>
         <div className="drawer">
-          <Link to="/" className="navbarLink" onClick={handlerOpenMenu}>
+          <Link to="/" className="drawerLink" onClick={handlerOpenMenu}>
+            <HiOutlineHome className="drawerIcon" />
             Home
           </Link>
-          <Link to="/products" className="navbarLink" onClick={handlerOpenMenu}>
-            Produtos
+          <Link to="/products" className="drawerLink" onClick={handlerOpenMenu}>
+            <GiSlicedMushroom className="drawerIcon" />
+            Cogumelos
           </Link>
-          <Link to="/profile" className="navbarLink" onClick={handlerOpenMenu}>
+          <Link to="/history" className="drawerLink" onClick={handlerOpenMenu}>
+            <BiHistory className="drawerIcon" />
+            História
+          </Link>
+          <Link to="/profile" className="drawerLink" onClick={handlerOpenMenu}>
+            <HiUserCircle className="drawerIcon" />
             Conta
+          </Link>
+          <Link to="/ebook" className="drawerLink" onClick={handlerOpenMenu}>
+            <HiBookOpen className="drawerIcon" />
+            Baixe nosso E-book!
           </Link>
         </div>
       </Drawer>
