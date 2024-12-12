@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { TextField, Button } from "@material-ui/core";
+import { TextField } from "@material-ui/core";
 import "./auth.css";
 import authServices from "../../services/auth";
+import addressServices from "../../services/address";
 import { HiLogin } from "react-icons/hi";
 import Loading from "../loading/page";
 import { z } from "zod";
@@ -28,7 +29,7 @@ export default function Auth() {
   const authError = localStorage.getItem("authError");
   const { login, signup, authLoading } = authServices();
   const authData = JSON.parse(localStorage.getItem("auth"));
-
+  const { validateAddress } = addressServices();
   useEffect(() => {
     if (authData) {
       navigate("/profile");
@@ -93,7 +94,7 @@ export default function Auth() {
       // Realizar a validação do CEP ao atingir o comprimento adequado
       if (formattedZipcode.length === 9) {
         try {
-          const data = await validateZipcode(formattedZipcode); // Chama a função de validação do CEP
+          const data = await validateAddress(formattedZipcode); // Chama a função de validação do CEP
           setFormData((prevState) => ({
             ...prevState,
             address: {

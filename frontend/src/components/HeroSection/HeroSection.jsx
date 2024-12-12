@@ -14,8 +14,15 @@ const HeroSection = () => {
           Receitas exclusivas e produtos frescos, direto para sua mesa.
         </p>
         <div className="cta-buttons">
-          <button className="primary-button">Compre Agora</button>
-          <button className="secondary-button">Baixe o E-book Gratuito</button>
+          <button
+            onClick={() => {
+              document.getElementById("ebook-section").scrollIntoView({
+                behavior: "smooth",
+              });
+            }}
+          >
+            Baixe o E-book Gratuito
+          </button>
         </div>
       </div>
     </section>

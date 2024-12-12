@@ -23,6 +23,7 @@ export default function ConfirmOrderPopup({ open, onClose, onConfirm }) {
           userId: authData?.user?._id,
           pickupTime: formData?.pickupTime,
           address: authData?.user?.address,
+          createDate: new Date().toLocaleDateString(),
         };
 
         onConfirm(orderData);

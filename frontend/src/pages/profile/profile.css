@@ -1,54 +1,24 @@
-.profile-container {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    padding: 20px;
+/* Reset e estilos base */
+.orders-section {
+    margin: 24px 0;
+    color: #2c3e50;
 }
 
-.user-card {
-    background-color: #fff;
+/* Container principal com layout responsivo */
+.orders-container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 16px;
+}
+
+/* Estilos da tabela */
+.orders-table-container {
+    display: none;
+    background: #ffffff;
     border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-}
-
-.orders-card {
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-}
-
-.user-card h1,
-.orders-card h2 {
-    color: #333;
-    margin-bottom: 10px;
-}
-
-.address-section {
-    margin-top: 20px;
-}
-
-.address-form {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-}
-
-.address-form .save-btn,
-.edit-btn,
-.logout-btn,
-.admin-btn {
-    background-color: #007bff;
-    border: none;
-    color: #fff;
-    padding: 10px 15px;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-.orders-table-wrapper {
-    overflow-x: auto;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
 }
 
 .orders-table {
@@ -58,30 +28,231 @@
 
 .orders-table th,
 .orders-table td {
-    padding: 10px;
+    padding: 16px;
     text-align: left;
-    border-bottom: 1px solid #ccc;
+    border-bottom: 1px solid #eaeaea;
 }
 
 .orders-table th {
-    background-color: #f8f8f8;
+    background-color: #f8f9fa;
+    font-weight: 600;
 }
 
+/* Estilos dos cartões */
+.order-card-container {
 
-.pickup-status.completed {
-    color: green;
+    display: grid;
+    grid-gap: 16px;
+    padding: 8px;
 }
 
-.pickup-status.pending {
-    color: orange;
+.order-card {
+    max-width: 94%;
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 16px;
+    transition: all 0.3s ease;
 }
 
-.pickup-status.canceled {
-    color: red;
+.order-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
 
-@media (min-width: 768px) {
-    .profile-container {
-        grid-template-columns: 1fr 2fr;
+.order-card h3 {
+    margin: 0 0 8px;
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.order-card p {
+    margin: 8px 0;
+    line-height: 1.4;
+}
+
+.card-itens {
+    font-size: small;
+}
+
+/* Status badges com design moderno */
+.status-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    text-transform: capitalize;
+    transition: all 0.3s ease;
+}
+
+.status-badge.pending {
+    background-color: rgba(241, 196, 15, 0.1);
+    color: #f1c40f;
+}
+
+.status-badge.scheduled {
+    background-color: rgba(74, 144, 226, 0.1);
+    color: #4a90e2;
+}
+
+.status-badge.completed {
+    background-color: rgba(46, 204, 113, 0.1);
+    color: #2ecc71;
+}
+
+.status-badge.canceled {
+    background-color: rgba(231, 76, 60, 0.1);
+    color: #e74c3c;
+}
+
+/* Estilo geral da seção de endereço */
+.address-section {
+    margin: 20px;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.section-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.section-header .section-icon {
+    font-size: 24px;
+    margin-right: 10px;
+    color: #32cd32;
+}
+
+.section-header h2 {
+    font-size: 20px;
+    color: #333;
+    margin: 0;
+}
+
+.logout-button {
+    float: right;
+    background-color: #e40c0c;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-weight: bold;
+}
+
+.logout-button:hover {
+    background-color: #ff6347;
+}
+
+/* Estilo do formulário */
+.modern-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.form-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.modern-input {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 14px;
+    background-color: #fff;
+}
+
+.modern-input:focus {
+    border-color: #1e90ff;
+    outline: none;
+    box-shadow: 0 0 5px rgba(30, 144, 255, 0.5);
+}
+
+.save-button {
+    background-color: #32cd32;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.save-button:hover {
+    background-color: #3cb371;
+}
+
+/* Estilo da exibição do endereço */
+.address-display {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.address-text {
+    font-size: 16px;
+    color: #333;
+    margin: 0;
+}
+
+.edit-button {
+    background-color: #32cd32;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-weight: bold;
+}
+
+.edit-button:hover {
+    background-color: #30b81e;
+}
+
+/* Media Queries */
+@media screen and (min-width: 768px) {
+    .orders-table-container {
+        display: block;
     }
+
+    .order-card-container {
+        display: none;
+    }
+}
+
+/* Animações suaves */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.order-card {
+    animation: fadeIn 0.3s ease-out;
 }

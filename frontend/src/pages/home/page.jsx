@@ -36,7 +36,7 @@ export default function Home() {
             sabor, frescor e excelência em cada colheita. No centro do nosso
             trabalho está a
             <span className="text-highlight">
-              <strong>produção sustentável e artesanal</strong>
+              <strong> produção sustentável e artesanal</strong>
             </span>
             , garantindo produtos frescos diretamente ao consumidor.
           </h2>

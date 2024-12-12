@@ -68,7 +68,7 @@ const EbookSection = () => {
   };
 
   return (
-    <section className="ebook-section">
+    <section id="ebook-section" className="ebook-section">
       <div className="ebook-content">
         <div className="ebook-info">
           <h2>
