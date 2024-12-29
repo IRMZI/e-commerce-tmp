@@ -1,12 +1,12 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { TextField } from "@material-ui/core";
 import "./auth.css";
 import authServices from "../../services/auth";
 import addressServices from "../../services/address";
 import { HiLogin } from "react-icons/hi";
 import Loading from "../loading/page";
 import { z } from "zod";
+import { TextField } from "@mui/material";
 
 export default function Auth() {
   const [formType, setFormType] = useState("login");
