@@ -127,6 +127,7 @@ export default function Profile() {
       }
     }
   };
+  console.log(ordersList)
   return (
     <div className="modern-profile-container">
       <div className="profile-header">
@@ -142,6 +143,9 @@ export default function Profile() {
         <section className="info-card">
           <div className="info-group">
             <div className="info-item">
+            <button onClick={handleLogout} className="logout-button">
+              <HiLogout /> Sair
+            </button>
               <p>{authData?.user?._id}</p>
               <FaEnvelope className="info-icon" />
               <div>
@@ -163,9 +167,6 @@ export default function Profile() {
               <FaMapMarkerAlt className="section-icon" />
               <h2>Endereço</h2>
             </div>
-            <button onClick={handleLogout} className="logout-button">
-              <HiLogout /> Sair
-            </button>
             {isEditing ? (
               <form className="modern-form">
                 <div className="form-group">
@@ -239,9 +240,8 @@ export default function Profile() {
               </div>
             )}
           </div>
-
           {authData?.user?.isAdmin && (
-            <Link to="/admin">
+            <Link to="/admin/dashboard">
               <button className="admin-button">Painel de Admin</button>
             </Link>
           )}
@@ -317,10 +317,10 @@ export default function Profile() {
                 <p>
                   <strong>Itens:</strong>
                   {order.orderItems.map((item) => (
-                    <div key={item._id} className="card-itens">
+                    <span key={item._id} className="card-itens">
                       {item.itemDetails[0]?.name || "Indisponível"} x
                       {item.quantity}
-                    </div>
+                    </span>
                   ))}
                 </p>
                 <p>

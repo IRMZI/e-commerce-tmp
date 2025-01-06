@@ -15,10 +15,11 @@ export default class OrdersControllers {
             return serverError(error); 
         }
     }
-    // Método para obter todos os pedidos
+
+    // Método para obter pedidos de um usuário pelo ID
     async getOrdersByUserId(userId) {
         try {
-            const orders = await this.dataAccess.getOrdersByUserId(userId); // Obtém todos os pedidos
+            const orders = await this.dataAccess.getOrdersByUserId(userId); // Obtém todos os pedidos do usuário
             return ok(orders); 
         } catch (error) {
             return serverError(error); 
@@ -52,6 +53,37 @@ export default class OrdersControllers {
             return ok(result); 
         } catch (error) {
             return serverError(error); 
+        }
+    }
+
+    // Método para adicionar um item a um pedido
+    async addItemToOrder(orderId, itemData) {
+        try {
+            const result = await this.dataAccess.addItemToOrder(orderId, itemData); // Adiciona o item ao pedido
+            return ok(result);
+        } catch (error) {
+            return serverError(error);
+        }
+    }
+
+    // Método para atualizar a quantidade de um item em um pedido
+    async updateItemQuantity(orderId, itemId, quantity) {
+        try {
+            const result = await this.dataAccess.updateItemQuantity(orderId, itemId, quantity); // Atualiza a quantidade do item
+            return ok(result);
+        } catch (error) {
+            console.error('Erro ao atualizar a quantidade do item:', error); // Log erro
+            return serverError(error);
+        }
+    }
+
+    // Método para remover um item de um pedido
+    async removeItemFromOrder(orderId, itemId) {
+        try {
+            const result = await this.dataAccess.removeItemFromOrder(orderId, itemId); // Remove o item do pedido
+            return ok(result);
+        } catch (error) {
+            return serverError(error);
         }
     }
 }

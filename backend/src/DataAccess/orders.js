@@ -10,7 +10,6 @@ export default class OrdersDataAccess {
       .collection(collectionName)
       .aggregate([
         {
-          // filtra a tabela de itens do pedido
           $lookup: {
             from: "orderItems",
             localField: "_id",
@@ -19,7 +18,6 @@ export default class OrdersDataAccess {
           },
         },
         {
-          //filtra a tabela de usuários
           $lookup: {
             from: "users",
             localField: "userId",
@@ -28,18 +26,15 @@ export default class OrdersDataAccess {
           },
         },
         {
-          // escode informações
           $project: {
             "userDetails.password": 0,
             "userDetails.salt": 0,
           },
         },
         {
-          // direciona pra tabela itens do pedido
           $unwind: "$orderItems",
         },
         {
-          //filtra a tabela de produtos
           $lookup: {
             from: "products",
             localField: "orderItems.productId",
@@ -48,13 +43,13 @@ export default class OrdersDataAccess {
           },
         },
         {
-          // Engloba pelos orderItems
           $group: {
             _id: "$_id",
             userDetails: { $first: "$userDetails" },
             orderItems: { $push: "$orderItems" },
             pickupStatus: { $first: "$pickupStatus" },
             pickupTime: { $first: "$pickupTime" },
+            deliveryDate: { $first: "$deliveryDate" } 
           },
         },
       ])
@@ -62,6 +57,7 @@ export default class OrdersDataAccess {
     return result;
   }
 
+  // Método para obter os pedidos de um usuário pelo ID
   async getOrdersByUserId(userId) {
     const result = await Mongo.db
       .collection(collectionName)
@@ -70,7 +66,6 @@ export default class OrdersDataAccess {
           $match: { userId: new ObjectId(userId) },
         },
         {
-          // filtra a tabela de itens do pedido
           $lookup: {
             from: "orderItems",
             localField: "_id",
@@ -79,7 +74,6 @@ export default class OrdersDataAccess {
           },
         },
         {
-          //filtra a tabela de usuários
           $lookup: {
             from: "users",
             localField: "userId",
@@ -88,18 +82,15 @@ export default class OrdersDataAccess {
           },
         },
         {
-          // escode informações
           $project: {
             "userDetails.password": 0,
             "userDetails.salt": 0,
           },
         },
         {
-          // direciona pra tabela itens do pedido
           $unwind: "$orderItems",
         },
         {
-          //filtra a tabela de produtos
           $lookup: {
             from: "products",
             localField: "orderItems.productId",
@@ -108,7 +99,6 @@ export default class OrdersDataAccess {
           },
         },
         {
-          // Engloba pelos orderItems
           $group: {
             _id: "$_id",
             userDetails: { $first: "$userDetails" },
@@ -116,6 +106,7 @@ export default class OrdersDataAccess {
             pickupStatus: { $first: "$pickupStatus" },
             pickupTime: { $first: "$pickupTime" },
             createDate: { $first: "$createDate" },
+            deliveryDate: { $first: "$deliveryDate" } 
           },
         },
       ])
@@ -123,7 +114,7 @@ export default class OrdersDataAccess {
     return result;
   }
 
-  // Método para adicionar um novo pedidos
+  // Método para adicionar um novo pedido
   async addOrder(orderData) {
     const { items, ...orderDataRest } = orderData;
     orderDataRest.createdAt = new Date();
@@ -138,7 +129,6 @@ export default class OrdersDataAccess {
       throw new Error("order cannot be inserted");
     }
 
-    // permite utilizar cada item do objeto, tratando os itens do pedido
     items.map((item) => {
       item.productId = new ObjectId(item.productId);
       item.orderId = new ObjectId(newOrder.insertedId);
@@ -147,7 +137,7 @@ export default class OrdersDataAccess {
     return result;
   }
 
-  // Método para excluir um pedidos pelo ID
+  // Método para excluir um pedido pelo ID
   async deleteOrder(orderId) {
     const itemsToDelete = await Mongo.db
       .collection("orderItems")
@@ -155,7 +145,7 @@ export default class OrdersDataAccess {
 
     const orderToDelete = await Mongo.db
       .collection(collectionName)
-      .findOneAndDelete({ _id: new ObjectId(orderId) }); // Exclui o pedidos pelo ID
+      .findOneAndDelete({ _id: new ObjectId(orderId) });
 
     const result = {
       itemsToDelete,
@@ -164,12 +154,41 @@ export default class OrdersDataAccess {
     return result;
   }
 
-  // Método para atualizar um pedidos pelo ID
+  // Método para atualizar um pedido pelo ID
   async updateOrder(orderId, orderData) {
     const result = await Mongo.db.collection(collectionName).findOneAndUpdate(
       { _id: new ObjectId(orderId) },
-      { $set: orderData } // Atualiza os dados do pedidos com as novas informações
+      { $set: orderData } // Atualiza os dados do pedido com as novas informações
     );
+    return result;
+  }
+
+  // Método para adicionar um item a um pedido
+  async addItemToOrder(orderId, itemData) {
+    itemData.productId = new ObjectId(itemData.productId);
+    itemData.orderId = new ObjectId(orderId);
+
+    const result = await Mongo.db.collection("orderItems").insertOne(itemData); // Adiciona o item à coleção de items
+    return result;
+  }
+
+  async updateItemQuantity(orderId, itemId, quantity) {
+    const result = await Mongo.db
+      .collection("orderItems")
+      .findOneAndUpdate(
+        { orderId: new ObjectId(orderId), _id: new ObjectId(itemId) },
+        { $set: { quantity: quantity } }, // Atualiza a quantidade do item no pedido
+        { returnDocument: "after" } // Retorna o documento atualizado
+      );
+  
+    return result.value; // Retorna o documento atualizado
+  }
+  
+  // Método para remover um item de um pedido
+  async removeItemFromOrder(orderId, itemId) {
+    const result = await Mongo.db
+      .collection("orderItems")
+      .deleteOne({ orderId: new ObjectId(orderId), _id: new ObjectId(itemId) }); // Remove o item da coleção
     return result;
   }
 }

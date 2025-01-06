@@ -1,93 +1,93 @@
 .admin-orders-container {
-    background-color: #f9f9f9;
-    padding: 20px;
-    margin: 0 auto;
-    box-sizing: border-box;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .admin-orders-container h2 {
-    text-align: center;
-    color: #333;
-    font-size: 24px;
-    margin-bottom: 20px;
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 20px;
+  color: #333;
 }
 
-.admin-orders-table {
-    width: 100%;
-    background-color: #fff;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    padding: 20px;
-    margin-bottom: 30px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    border-collapse: collapse;
+.admin-orders-separator {
+  margin: 20px 0;
+  border: 1px solid #ddd;
 }
 
-.admin-orders-table th,
-.admin-orders-table td {
-    padding: 15px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 20px;
+  justify-content: center;
 }
 
-.admin-orders-table th {
-    background-color: #f4f4f4;
-    color: #444;
-    font-weight: bold;
-    font-size: 16px;
+.filters input {
+  flex: 1 1 300px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
 }
 
-.admin-orders-table td input,
-.admin-orders-table td select {
-    font-size: 14px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    padding: 10px;
-    width: 100%;
-    box-sizing: border-box;
+.filters select {
+  flex: 1 1 200px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
 }
 
 .admin-orders-save-button,
 .admin-orders-delete-button {
-    padding: 8px 15px;
-    border-radius: 4px;
-    font-size: 14px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    border: none;
+  padding: 8px 12px;
+  margin: 5px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
 .admin-orders-save-button {
-    background-color: #4caf50;
-    color: white;
+  background-color: #4caf50;
+  color: white;
 }
 
 .admin-orders-save-button:hover {
-    background-color: #45a049;
+  background-color: #45a049;
 }
 
 .admin-orders-delete-button {
-    background-color: #e53935;
-    color: white;
+  background-color: #f44336;
+  color: white;
 }
 
 .admin-orders-delete-button:hover {
-    background-color: #d32f2f;
-}
-
-.admin-orders-separator {
-    margin: 30px 0;
-    height: 2px;
-    background-color: #ddd;
+  background-color: #d32f2f;
 }
 
 /* Responsividade */
 @media (max-width: 768px) {
+  .filters {
+    flex-direction: column;
+    gap: 15px;
+  }
 
-    .admin-orders-table td input,
-    .admin-orders-table td select {
-        font-size: 12px;
-        padding: 8px;
-    }
+  .admin-orders-save-button,
+  .admin-orders-delete-button {
+    padding: 6px 10px;
+    margin: 3px;
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .admin-orders-save-button,
+  .admin-orders-delete-button {
+    padding: 5px 8px;
+    margin: 2px;
+    font-size: 10px;
+  }
 }
