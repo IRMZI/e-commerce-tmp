@@ -232,7 +232,7 @@ export default function Profile() {
                   {authData?.user?.address?.street || "Rua não informada"},
                   {authData?.user?.address?.number || "Número não informado"} -
                   {authData?.user?.address?.city || "Cidade não informada"},
-                  {authData?.user?.address?.zipcode || "CEP não informado"}
+                  {authData?.user?.zipcode || "CEP não informado"}
                 </p>
                 <button onClick={handleEditAddress} className="edit-button">
                   <FaEdit /> Editar Endereço

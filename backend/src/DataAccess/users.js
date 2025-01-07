@@ -14,6 +14,14 @@ export default class usersDataAccess {
         return result;
     }
 
+    // Método para obter um usuário pelo ID
+    async getUserById(userId) {
+        const result = await Mongo.db
+            .collection(collectionName)
+            .findOne({ _id: new ObjectId(userId) });
+        return result;
+    }
+
     // Método para excluir um usuário pelo ID
     async deleteUser(userId) {
         const result = await Mongo.db

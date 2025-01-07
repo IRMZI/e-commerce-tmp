@@ -16,6 +16,16 @@ export default class UsersControllers {
         }
     }
 
+    // Método para obter um usuário pelo ID
+    async getUserById(userId) {
+        try {
+            const user = await this.dataAccess.getUserById(userId); // Obtém o usuário pelo ID
+            return ok(user); 
+        } catch (error) {
+            return serverError(error); 
+        }
+    }
+
     // Método para excluir um usuário
     async deleteUser(userId) {
         try {

@@ -33,6 +33,30 @@ export default function usersServices() {
       });
   };
 
+  // Função para buscar um usuário específico
+  const getUserById = async (id) => {
+    setUserLoading(true);
+    try {
+      const response = await fetch(`${url}/${id}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*",
+        },
+      });
+      const result = await response.json();
+      if (response.ok) {
+        return result.body; // Retorna os dados do usuário
+      } else {
+        console.error("Erro ao obter usuário:", result);
+      }
+    } catch (error) {
+      console.error("Erro na requisição:", error);
+    } finally {
+      setUserLoading(false);
+    }
+  };
+
   // Função para atualizar um usuário específico
   const updateUser = async (id, updatedUserData) => {
     setUserLoading(true);
@@ -85,6 +109,7 @@ export default function usersServices() {
     getUsers,
     updateUser,
     deleteUser,
+    getUserById,
     userLoading,
     refetchUsers,
     usersList,
