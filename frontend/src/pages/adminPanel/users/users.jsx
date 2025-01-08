@@ -78,10 +78,18 @@ export default function AdminUsers() {
     setSelectedUser(null);
   };
 
-  const toggleAdmin = (id) => {
+  const toggleAdmin = async (id) => {
     const userToUpdate = editedUsers.find((user) => user._id === id);
-    userToUpdate.isAdmin = !userToUpdate.isAdmin;
-    handleSave(id);
+    if (userToUpdate) {
+      userToUpdate.isAdmin = !userToUpdate.isAdmin;
+      await updateUser(id, userToUpdate); // Call service to update user
+      setEditedUsers((prev) =>
+        prev.map((user) => (user._id === id ? userToUpdate : user))
+      );
+      if (selectedUser && selectedUser._id === id) {
+        setSelectedUser(userToUpdate);
+      }
+    }
   };
 
   const filteredUsers = editedUsers.filter((user) => {

@@ -1,0 +1,50 @@
+.dashboard-container {
+  padding: 20px;
+}
+
+.kpis {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.kpi {
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 20px;
+  flex: 1;
+  min-width: 200px;
+  text-align: center;
+}
+
+.kpi h3 {
+  margin: 0 0 10px 0;
+  color: #333;
+}
+
+.kpi p {
+  font-size: 1.5rem;
+  color: #555;
+}
+
+.charts {
+  margin-top: 40px;
+}
+
+.top-products {
+  margin-top: 40px;
+}
+
+.top-products ul {
+  list-style: none;
+  padding: 0;
+}
+
+.top-products li {
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 10px;
+  margin-bottom: 10px;
+}

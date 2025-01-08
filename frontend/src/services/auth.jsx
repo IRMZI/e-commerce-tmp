@@ -47,7 +47,7 @@ export default function authServices() {
         "Content-Type": "application/json",
         "Access-Control-Allow-Origin": "*",
       },
-      body: JSON.stringify(formData),
+      body: JSON.stringify(formData), 
     })
       .then((response) => response.json())
       .then((result) => {

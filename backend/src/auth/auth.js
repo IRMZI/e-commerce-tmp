@@ -25,7 +25,7 @@ passport.use(
       }
 
       // Recupera o salt armazenado no usuário para verificar a senha
-      const saltBuffer = user.salt.buffer;
+      const saltBuffer = Buffer.from(user.salt.buffer); // Ensure salt is a Buffer
 
       // Gera o hash da senha fornecida usando o salt armazenado
       crypto.pbkdf2(
@@ -98,7 +98,7 @@ authRouter.post("/signup", async (req, res) => {
         fullname: req.body.fullname,
         email: req.body.email,
         password: hashedPassword,
-        salt,
+        salt: salt, // Ensure salt is stored correctly
         zipcode: req.body.zipcode,
         phone: req.body.phone,
         address: {
@@ -106,6 +106,7 @@ authRouter.post("/signup", async (req, res) => {
           number: req.body.address.number,
           city: req.body.address.city,
         },
+        createdAt: new Date(), // Add creation date
       });
       // Verifica se o usuário foi inserido com sucesso
       if (result.insertedId) {
