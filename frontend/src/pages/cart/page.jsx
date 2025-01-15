@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import "./Cart.css";
 import { HiTrash } from "react-icons/hi";
 import { useState } from "react";
-import ConfirmOrderPopup from "../../components/confirmOrderPopUp/confirmOrderPopup";
+import ConfirmOrderPopup from "../../components/confirmOrderPopUp/confirmOrderpopup";
 import orderServices from "../../services/order";
 
 export default function Cart() {
@@ -50,6 +50,7 @@ export default function Cart() {
     setConfirmPopupOpen(!confirmPopupOpen);
     clearCart();
   };
+  const totalPrice = cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
   return (
     <>
       <div className="cartContainer">
@@ -76,6 +77,7 @@ export default function Cart() {
                     +
                   </button>
                 </div>
+                <p className="itemWeight">Peso: 200g</p>
                 <p className="itemCategory">Categoria: {item.category}</p>
                 <button
                   className="quantityButton"
@@ -87,7 +89,8 @@ export default function Cart() {
             </div>
           ))}
         </section>
-        <div className="confirmContainer">
+        <div className="cartSummary">
+          <h2>Total: R$ {totalPrice.toFixed(2)}</h2>
           <button className="confirmButton" onClick={handleOpenPopup}>
             Confirmar pedido!
           </button>

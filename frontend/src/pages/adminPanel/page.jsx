@@ -72,6 +72,18 @@ export default function AdminPanel() {
               Produtos
             </Link>
           </li>
+          <li
+            className={`menuItem leads ${
+              activeSection === "/admin/leads" ? "active" : ""
+            }`}
+          >
+            <Link
+              to="/admin/leads"
+              onClick={() => handleSectionChange("/admin/leads")}
+            >
+              Leads
+            </Link>
+          </li>
         </ul>
       </nav>
 

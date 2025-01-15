@@ -52,4 +52,24 @@ export default class LeadsController {
       return serverError(error);
     }
   }
+
+  // Método para atualizar o status do lead
+  async updateLeadStatus(leadId, status) {
+    try {
+      const result = await this.dataAccess.updateLeadStatus(leadId, status);
+      return ok(result);
+    } catch (error) {
+      return serverError(error);
+    }
+  }
+
+  // Método para deletar leads frios
+  async deleteColdLeads() {
+    try {
+      const result = await this.dataAccess.deleteColdLeads();
+      return ok(result);
+    } catch (error) {
+      return serverError(error);
+    }
+  }
 }

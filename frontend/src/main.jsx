@@ -13,6 +13,7 @@ import Dashboard from "./pages/adminPanel/dashboard/dashboard.jsx";
 import AdminOrders from "./pages/adminPanel/orders/orders.jsx";
 import AdminUsers from "./pages/adminPanel/users/users.jsx";
 import AdminProducts from "./pages/adminPanel/products/products.jsx";
+import AdminLeads from "./pages/adminPanel/leads/leads.jsx";  
 import Ebook from "./pages/lpEbook/page.jsx";
 const pages = createBrowserRouter([
   {
@@ -51,6 +52,7 @@ const pages = createBrowserRouter([
           { path: "users", element: <AdminUsers /> }, // Rota relativa
           { path: "orders", element: <AdminOrders /> }, // Rota relativa
           { path: "products", element: <AdminProducts /> }, // Rota relativa
+          { path: "leads", element: <AdminLeads /> }, // Rota relativa
         ],
       },
     ],

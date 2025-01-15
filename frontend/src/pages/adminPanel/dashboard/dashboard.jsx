@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react";
 import ordersService from "../../../services/order";
 import usersService from "../../../services/users";
 import productsServices from "../../../services/products";
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, BarChart, Bar, AreaChart, Area } from "recharts";
+import { FaShoppingCart, FaUserPlus, FaClipboardList, FaCheckCircle, FaTimesCircle } from "react-icons/fa";
 import "./dashboard.css";
 
 export default function Dashboard() {
@@ -10,15 +11,18 @@ export default function Dashboard() {
   const { getUsers, usersList, userLoading } = usersService();
   const { getAvailablesProducts, productsList, getProductNameById } = productsServices();
   const [kpis, setKpis] = useState({
-    dailySales: 0,
-    weeklySales: 0,
-    monthlySales: 0,
     newUsers: 0,
     pendingOrders: 0,
     completedOrders: 0,
     canceledOrders: 0,
     topProducts: [],
+    grossRevenue: 0,
   });
+  const [activeTab, setActiveTab] = useState("kpis");
+
+  const handleTabClick = (tab) => {
+    setActiveTab(tab);
+  };
 
   useEffect(() => {
     getOrders();
@@ -27,35 +31,30 @@ export default function Dashboard() {
   }, []);
 
   useEffect(() => {
-    if (ordersList.length > 0 && usersList.length > 0) {
+    if (ordersList.length > 0) {
       calculateKpis(ordersList, usersList);
     }
   }, [ordersList, usersList]);
 
   const calculateKpis = (orders, users) => {
     const today = new Date();
-    const dailySales = orders.filter(order => new Date(order.createDate).toDateString() === today.toDateString()).length;
-    const weeklySales = orders.filter(order => {
-      const orderDate = new Date(order.createDate);
-      const weekStart = new Date(today.setDate(today.getDate() - today.getDay()));
-      return orderDate >= weekStart && orderDate <= today;
-    }).length;
-    const monthlySales = orders.filter(order => new Date(order.createDate).getMonth() === today.getMonth()).length;
+    const completedOrders = orders.filter(order => order.pickupStatus === "completed");
     const newUsers = users.filter(user => new Date(user.createdAt).getMonth() === today.getMonth()).length;
     const pendingOrders = orders.filter(order => order.pickupStatus === "pending").length;
-    const completedOrders = orders.filter(order => order.pickupStatus === "completed").length;
     const canceledOrders = orders.filter(order => order.pickupStatus === "canceled").length;
-    const topProducts = calculateTopProducts(orders);
+    const topProducts = calculateTopProducts(completedOrders);
+    const grossRevenue = completedOrders.reduce((total, order) => total + (order.orderItems ? order.orderItems.reduce((sum, item) => {
+      const product = productsList.find(product => product._id === item.productId);
+      return sum + ((product?.price || 0) * item.quantity);
+    }, 0) : 0), 0);
 
     setKpis({
-      dailySales,
-      weeklySales,
-      monthlySales,
       newUsers,
       pendingOrders,
-      completedOrders,
+      completedOrders: completedOrders.length,
       canceledOrders,
       topProducts,
+      grossRevenue,
     });
   };
 
@@ -80,68 +79,105 @@ export default function Dashboard() {
     }));
   };
 
-  const salesData = ordersList.map(order => ({
-    date: order.createDate,
-    sales: order.orderItems ? order.orderItems.reduce((total, item) => total + item.quantity, 0) : 0,
-  }));
+  const salesData = ordersList
+    .filter(order => order.pickupStatus === "completed")
+    .map(order => ({
+      date: order.createDate,
+      sales: order.orderItems ? order.orderItems.reduce((total, item) => total + item.quantity, 0) : 0,
+    }));
+
+  const topProductsData = kpis.topProducts.map(product => ({
+    name: product.productName,
+    sales: product.count,
+  })).sort((a, b) => b.sales - a.sales);
 
   if (orderLoading || userLoading) {
-    return <div>Loading...</div>;
+    return <div className="loading-container">Loading...</div>;
   }
-
+  console.log(ordersList)
   return (
     <div className="dashboard-container">
       <h2>Bem-vindo ao Dashboard</h2>
-      <div className="kpis">
-        <div className="kpi">
-          <h3>Vendas Diárias</h3>
-          <p>{kpis.dailySales}</p>
-        </div>
-        <div className="kpi">
-          <h3>Vendas Semanais</h3>
-          <p>{kpis.weeklySales}</p>
-        </div>
-        <div className="kpi">
-          <h3>Vendas Mensais</h3>
-          <p>{kpis.monthlySales}</p>
-        </div>
-        <div className="kpi">
-          <h3>Novos Usuários</h3>
-          <p>{kpis.newUsers}</p>
-        </div>
-        <div className="kpi">
-          <h3>Pedidos Pendentes</h3>
-          <p>{kpis.pendingOrders}</p>
-        </div>
-        <div className="kpi">
-          <h3>Pedidos Concluídos</h3>
-          <p>{kpis.completedOrders}</p>
-        </div>
-        <div className="kpi">
-          <h3>Pedidos Cancelados</h3>
-          <p>{kpis.canceledOrders}</p>
+      <div className="tabs">
+        <div className={`tab ${activeTab === "kpis" ? "active" : ""}`} onClick={() => handleTabClick("kpis")}>
+          KPIs
         </div>
       </div>
-      <div className="charts">
-        <h3>Vendas por Período</h3>
-        <ResponsiveContainer width="100%" height={400}>
-          <LineChart data={salesData}>
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="date" />
-            <YAxis />
-            <Tooltip />
-            <Legend />
-            <Line type="monotone" dataKey="sales" stroke="#8884d8" />
-          </LineChart>
-        </ResponsiveContainer>
-      </div>
-      <div className="top-products">
-        <h3>Produtos Mais Vendidos</h3>
-        <ul>
-          {kpis.topProducts.map(product => (
-            <li key={product.productId}>{product.productName} (ID: {product.productId}): {product.count}</li>
-          ))}
-        </ul>
+      <div className={`kpis ${activeTab === "kpis" ? "active" : ""}`}>
+        <div className="kpis">
+          <div className="kpi">
+            <FaUserPlus className="kpi-icon" />
+            <h3>Novos Usuários</h3>
+            <p>{kpis.newUsers}</p>
+          </div>
+          <div className="kpi">
+            <FaClipboardList className="kpi-icon" />
+            <h3>Pedidos Pendentes</h3>
+            <p>{kpis.pendingOrders}</p>
+          </div>
+          <div className="kpi">
+            <FaCheckCircle className="kpi-icon" />
+            <h3>Pedidos Concluídos</h3>
+            <p>{kpis.completedOrders}</p>
+          </div>
+          <div className="kpi">
+            <FaTimesCircle className="kpi-icon" />
+            <h3>Pedidos Cancelados</h3>
+            <p>{kpis.canceledOrders}</p>
+          </div>
+          <div className="kpi">
+            <FaShoppingCart className="kpi-icon" />
+            <h3>Faturamento Bruto</h3>
+            <p>{kpis.grossRevenue.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</p>
+          </div>
+        </div>
+        <div className="top-products">
+          <h3>Produtos Mais Vendidos</h3>
+          <ResponsiveContainer width="100%" height={300}>
+            <BarChart data={topProductsData}>
+              <XAxis dataKey="name" />
+              <YAxis />
+              <Tooltip />
+              <Bar dataKey="sales" fill="#8884d8" />
+            </BarChart>
+          </ResponsiveContainer>
+        </div>
+        <div className="charts">
+          <div className="chart-container">
+            <h3 className="chart-title">Vendas por Período</h3>
+            <ResponsiveContainer width="100%" height={300}>
+              <LineChart data={salesData}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="date" />
+                <YAxis />
+                <Tooltip />
+                <Legend />
+                <Line type="monotone" dataKey="sales" stroke="#8884d8" />
+              </LineChart>
+            </ResponsiveContainer>
+          </div>
+          <div className="chart-container">
+            <h3 className="chart-title">Vendas Diárias</h3>
+            <ResponsiveContainer width="100%" height={300}>
+              <BarChart data={salesData}>
+                <XAxis dataKey="date" />
+                <Tooltip />
+                <Bar dataKey="sales" fill="#8884d8" />
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+          <div className="chart-container">
+            <h3 className="chart-title">Vendas Mensais</h3>
+            <ResponsiveContainer width="100%" height={300}>
+              <AreaChart data={salesData}>
+                <XAxis dataKey="date" />
+                <YAxis />
+                <Tooltip />
+                <Area type="monotone" dataKey="sales" stroke="#8884d8" fill="#8884d8" />
+              </AreaChart>
+            </ResponsiveContainer>
+          </div>
+        </div>
       </div>
     </div>
   );

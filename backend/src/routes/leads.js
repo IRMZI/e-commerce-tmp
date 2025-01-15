@@ -14,4 +14,14 @@ leadsRouter.post('/', async (req, res) => {
     res.status(statusCode).send({ success, statusCode, body })
 })
 
+leadsRouter.put('/:id/status', async (req, res) => {
+    const { success, statusCode, body } = await leadsControllers.updateLeadStatus(req.params.id, req.body.status)
+    res.status(statusCode).send({ success, statusCode, body })
+})
+
+leadsRouter.delete('/cold-leads', async (req, res) => {
+    const { success, statusCode, body } = await leadsControllers.deleteColdLeads()
+    res.status(statusCode).send({ success, statusCode, body })
+})
+
 export default leadsRouter

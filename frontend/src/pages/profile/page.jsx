@@ -136,6 +136,9 @@ export default function Profile() {
             <FaUser />
             <h1>{authData?.user?.fullname || "Usuário não identificado"}</h1>
           </div>
+          <button onClick={handleLogout} className="logout-button">
+            <HiLogout /> Sair
+          </button>
         </div>
       </div>
 
@@ -143,10 +146,6 @@ export default function Profile() {
         <section className="info-card">
           <div className="info-group">
             <div className="info-item">
-            <button onClick={handleLogout} className="logout-button">
-              <HiLogout /> Sair
-            </button>
-              <p>{authData?.user?._id}</p>
               <FaEnvelope className="info-icon" />
               <div>
                 <h3>Email</h3>

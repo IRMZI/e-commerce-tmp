@@ -18,12 +18,14 @@ body {
 }
 
 .btnSeeProducts {
+    background-color: #4CAF50;
     color: white;
     padding: 10px 20px;
     font-size: 1rem;
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    transition: background-color 0.3s;
 }
 
 .btnSeeProducts:hover {
@@ -88,6 +90,12 @@ body {
     color: #555;
 }
 
+.itemWeight {
+    font-size: 1rem;
+    margin: 5px 0;
+    color: #555;
+}
+
 .trashIcon {
     color: #e74c3c;
     font-size: 1.5rem;
@@ -127,5 +135,26 @@ body {
 }
 
 .confirmButton {
-    font: bolder;
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    font-size: 1rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.confirmButton:hover {
+    background-color: #45a049;
+}
+
+.cartSummary {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.cartSummary h2 {
+    font-size: 1.5rem;
+    color: #333;
 }

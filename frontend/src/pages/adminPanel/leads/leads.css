@@ -1,0 +1,137 @@
+.leads-container {
+  padding: 20px;
+  background-color: #f4f4f9;
+  min-height: 100vh;
+}
+
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.filter-container {
+  margin-bottom: 20px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.leads-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.lead-card {
+  background-color: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 20px;
+  flex: 1;
+  min-width: 200px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.leads-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #ffffff;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.leads-table th,
+.leads-table td {
+  border: 1px solid #ddd;
+  padding: 12px;
+  text-align: left;
+}
+
+.leads-table th {
+  background-color: #f4f4f4;
+  color: #333;
+  font-weight: bold;
+}
+
+.leads-table td {
+  color: #555;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.page-button {
+  background-color: #ffffff;
+  border: 1px solid #ddd;
+  padding: 10px 15px;
+  margin: 0 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  color: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.page-button.active {
+  background-color: #007bff;
+  color: #ffffff;
+  transform: scale(1.1);
+}
+
+.page-button:hover {
+  background-color: #f4f4f4;
+  transform: scale(1.05);
+}
+
+.delete-cold-leads-button {
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  font-size: 14px;
+  cursor: pointer;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.delete-cold-leads-button:hover {
+  background-color: #c0392b;
+}
+
+.filter-container label {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+select {
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background-color: #ffffff;
+  color: #333;
+  font-size: 14px;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+select:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+  outline: none;
+}
+
+select option {
+  padding: 10px;
+  background-color: #ffffff;
+  color: #333;
+}

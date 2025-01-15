@@ -80,6 +80,7 @@ export default function AdminOrders() {
   };
 
   const formatDate = (date) => {
+    if (!date) return "Data não disponível";
     const [year, month, day] = date.split("-");
     return `${day}/${month}/${year}`;
   };
@@ -134,7 +135,7 @@ export default function AdminOrders() {
   if (orderLoading) {
     return <Loading />;
   }
-
+  console.log(ordersList)
   return (
     <div className="admin-orders-container">
       <h2>Gerenciamento de Pedidos</h2>
@@ -164,7 +165,7 @@ export default function AdminOrders() {
             key={order._id}
             onClick={() => handleOpenEditDialog(order)}
           >
-            <ListItemText primary={`Pedido ID: ${order._id}`} />
+            <ListItemText primary={`Pedido ID: ${order._id} - Data de Criação: ${order.createDate ? order.createDate : "Data não disponível"}`} />
           </ListItem>
         ))}
       </List>

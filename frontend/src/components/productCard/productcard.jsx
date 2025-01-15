@@ -36,6 +36,7 @@ export default function ProductCard({ productData }) {
         <h4 className="card-title">{productData.name}</h4>
         <p className="card-description">{productData.description}</p>
         <h4 className="card-price">R$ {productData.price}</h4>
+        <p className="card-weight">Peso: 200g</p>
 
         <div className="quantity-controls">
           <button className="quantity-btn" onClick={decrementQuantity}>

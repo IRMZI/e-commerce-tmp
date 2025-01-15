@@ -44,6 +44,17 @@ export default class LeadsDataAccess {
                     { $set: { status, updatedAt: new Date() } },
                     { returnDocument: 'after' }
                 );
+            return { success: true, statusCode: 200, body: { data: result.value } };
+        } catch (error) {
+            return { success: false, statusCode: 500, body: { error: error.message } };
+        }
+    }
+
+    async deleteColdLeads() {
+        try {
+            const result = await Mongo.db
+                .collection(collectionName)
+                .deleteMany({ leadType: 'cold-lead' });
             return { success: true, statusCode: 200, body: { data: result } };
         } catch (error) {
             return { success: false, statusCode: 500, body: { error: error.message } };
