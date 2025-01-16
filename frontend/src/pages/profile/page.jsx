@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import authServices from "../../services/auth";
 import orderServices from "../../services/order";
 import addressServices from "../../services/address";
+import usersServices from "../../services/users"; // Import usersServices
 import "./profile.css";
 import { Link } from "react-router-dom";
 import Loading from "../loading/page";
@@ -20,13 +21,19 @@ export default function Profile() {
   const { logout } = authServices();
   const { getUserOrders, orderLoading, refetchOrders, ordersList } =
     orderServices();
-  const { updateUserAddress, validateAddress } = addressServices();
+  const { validateAddress } = addressServices();
+  const { updateUser } = usersServices(); // Destructure updateUser from usersServices
   const navigate = useNavigate();
   const authData = JSON.parse(localStorage.getItem("auth"));
   const cepSchema = z
     .string()
     .nonempty("O CEP não pode estar vazio.")
     .regex(/\d{5}-\d{3}/, "O CEP deve estar no formato 12345-678");
+  const phoneSchema = z
+    .string()
+    .nonempty("O telefone é obrigatório.")
+    .regex(/^\d{2} \d{4,5}-\d{4}$/, "O telefone deve estar no formato 51 XXXXX-XXXX ou 51 XXXX-XXXX");
+
   const addressSchema = z.object({
     street: z.string().nonempty("A rua é obrigatória."),
     number: z.string().nonempty("O número é obrigatório."),
@@ -37,13 +44,17 @@ export default function Profile() {
       .regex(/\d{5}-\d{3}/, "O CEP deve estar no formato 12345-678"),
   });
 
-  const [isEditing, setIsEditing] = useState(false);
+  const [isEditingAddress, setIsEditingAddress] = useState(false);
+  const [isEditingPhone, setIsEditingPhone] = useState(false);
+  const [isEditingEmail, setIsEditingEmail] = useState(false);
   const [editedAddress, setEditedAddress] = useState({
     street: authData?.user?.address?.street || "",
     number: authData?.user?.address?.number || "",
     city: authData?.user?.address?.city || "",
     zipcode: authData?.user?.address?.zipcode || "",
   });
+  const [editedPhone, setEditedPhone] = useState(authData?.user?.phone || "");
+  const [editedEmail, setEditedEmail] = useState(authData?.user?.email || "");
   const [errors, setErrors] = useState({});
 
   useEffect(() => {
@@ -64,7 +75,7 @@ export default function Profile() {
   };
 
   const handleEditAddress = () => {
-    setIsEditing(true);
+    setIsEditingAddress(true);
   };
 
   const handleSaveAddress = async () => {
@@ -72,9 +83,9 @@ export default function Profile() {
       addressSchema.parse(editedAddress);
 
       const userId = authData?.user?._id;
-      const result = await updateUserAddress(userId, editedAddress);
+      const result = await updateUser(userId, { address: editedAddress });
       if (result.success) {
-        setIsEditing(false);
+        setIsEditingAddress(false);
         alert("Endereço atualizado com sucesso! faça login novamente");
         logout();
         return navigate("/auth");
@@ -94,13 +105,59 @@ export default function Profile() {
     }
   };
 
+  const handleSavePhone = async () => {
+    try {
+      phoneSchema.parse(editedPhone);
+      const userId = authData?.user?._id;
+      const result = await updateUser(userId, { phone: editedPhone });
+      if (result.success) {
+        setIsEditingPhone(false);
+        alert("Telefone atualizado com sucesso! faça login novamente");
+        logout();
+        return navigate("/auth");
+      } else {
+        console.error(result.message || "Erro ao atualizar o telefone.");
+      }
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        setErrors({ phone: error.errors[0]?.message });
+      } else {
+        console.log("Houve um problema ao salvar o telefone.", error);
+      }
+    }
+  };
+
+  const handleSaveEmail = async () => {
+    try {
+      const userId = authData?.user?._id;
+      const result = await updateUser(userId, { email: editedEmail });
+      if (result.success) {
+        setIsEditingEmail(false);
+        alert("Email atualizado com sucesso! Faça login novamente.");
+        logout();
+        return navigate("/auth");
+      } else {
+        console.error(result.message || "Erro ao atualizar o email.");
+      }
+    } catch (error) {
+      console.log("Houve um problema ao salvar o email.", error);
+    }
+  };
+
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setEditedAddress((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-    setErrors((prev) => ({ ...prev, [name]: null })); // Clear error on change
+    if (name === "phone") {
+      setEditedPhone(value);
+      setErrors((prev) => ({ ...prev, phone: null }));
+    } else if (name === "email") {
+      setEditedEmail(value);
+    } else {
+      setEditedAddress((prev) => ({
+        ...prev,
+        [name]: value,
+      }));
+      setErrors((prev) => ({ ...prev, [name]: null }));
+    }
   };
 
   const handleCepBlur = async (e) => {
@@ -149,14 +206,67 @@ export default function Profile() {
               <FaEnvelope className="info-icon" />
               <div>
                 <h3>Email</h3>
-                <p>{authData?.user?.email || "Email não disponível"}</p>
+                {isEditingEmail ? (
+                  <div className="form-group">
+                    <input
+                      type="email"
+                      name="email"
+                      value={editedEmail}
+                      onChange={handleChange}
+                      placeholder="Email"
+                      className="modern-input"
+                    />
+                    <button
+                      type="button"
+                      onClick={handleSaveEmail}
+                      className="save-button"
+                    >
+                      Salvar Email
+                    </button>
+                  </div>
+                ) : (
+                  <p>
+                    {authData?.user?.email || "Email não disponível"}
+                    <button onClick={() => setIsEditingEmail(true)} className="edit-button">
+                      <FaEdit /> Editar Email
+                    </button>
+                  </p>
+                )}
               </div>
             </div>
             <div className="info-item">
               <FaPhone className="info-icon" />
               <div>
                 <h3>Telefone</h3>
-                <p>{authData?.user?.phone || "Telefone não disponível"}</p>
+                {isEditingPhone ? (
+                  <div className="form-group">
+                    <input
+                      type="text"
+                      name="phone"
+                      value={editedPhone}
+                      onChange={handleChange}
+                      placeholder="Telefone"
+                      className="modern-input"
+                    />
+                    {errors.phone && (
+                      <span className="error-message">{errors.phone}</span>
+                    )}
+                    <button
+                      type="button"
+                      onClick={handleSavePhone}
+                      className="save-button"
+                    >
+                      Salvar Telefone
+                    </button>
+                  </div>
+                ) : (
+                  <p>
+                    {authData?.user?.phone || "Telefone não disponível"}
+                    <button onClick={() => setIsEditingPhone(true)} className="edit-button">
+                      <FaEdit /> Editar Telefone
+                    </button>
+                  </p>
+                )}
               </div>
             </div>
           </div>
@@ -166,7 +276,7 @@ export default function Profile() {
               <FaMapMarkerAlt className="section-icon" />
               <h2>Endereço</h2>
             </div>
-            {isEditing ? (
+            {isEditingAddress ? (
               <form className="modern-form">
                 <div className="form-group">
                   <input

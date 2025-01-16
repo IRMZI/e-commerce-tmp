@@ -113,6 +113,30 @@
     animation: fadeOut 2s forwards;
 }
 
+.global-notification {
+    position: fixed;
+    top: 10px;
+    right: -200px; /* Start off-screen */
+    background-color: #28a745;
+    color: white;
+    padding: 5px 10px; /* Reduced padding */
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    font-size: 0.9rem; /* Reduced font size */
+    animation: slideIn 0.5s forwards, fadeOut 3s forwards 2.5s;
+}
+
+/* Slide-in and fade-out animations */
+@keyframes slideIn {
+    0% {
+        right: -200px;
+    }
+    100% {
+        right: 10px;
+    }
+}
+
 /* Feedback fade-out animation */
 @keyframes fadeOut {
     0% {
