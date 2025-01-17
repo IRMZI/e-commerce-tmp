@@ -15,6 +15,7 @@ import AdminUsers from "./pages/adminPanel/users/users.jsx";
 import AdminProducts from "./pages/adminPanel/products/products.jsx";
 import AdminLeads from "./pages/adminPanel/leads/leads.jsx";  
 import Ebook from "./pages/lpEbook/page.jsx";
+import History from "./pages/history/page.jsx";
 const pages = createBrowserRouter([
   {
     path: "/",
@@ -43,6 +44,10 @@ const pages = createBrowserRouter([
       {
         path: "/ebook",
         element: <Ebook />,
+      },
+      {
+        path: "/history",
+        element: <History />,
       },
       {
         path: "/admin", // Rota principal do admin

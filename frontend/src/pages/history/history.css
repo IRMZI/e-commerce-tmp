@@ -1,0 +1,44 @@
+body {
+  font-family: 'Roboto', sans-serif;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.MuiTimeline-root {
+  padding: 0;
+}
+
+.MuiTimelineItem-root {
+  min-height: 120px;
+}
+
+.MuiTimelineContent-root {
+  padding: 12px 16px;
+}
+
+.MuiTypography-h6 {
+  font-weight: bold;
+}
+
+.MuiTimelineDot-root {
+  box-shadow: none;
+}
+
+.MuiBox-root {
+  background-color: #f5f5f5;
+  border-radius: 8px;
+  padding: 20px;
+  margin: 20px auto;
+  max-width: 800px;
+}
+
+.MuiPaper-root {
+  transition: transform 0.3s ease-in-out;
+}
+
+.MuiPaper-root:hover {
+  transform: scale(1.05);
+}
