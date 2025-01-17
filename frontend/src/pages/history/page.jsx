@@ -31,7 +31,7 @@ export default function History() {
             <TimelineConnector />
           </TimelineSeparator>
           <TimelineContent>
-            <Paper elevation={3} sx={{ padding: 2, textAlign: 'left' }}>
+            <Paper elevation={3} sx={{ padding: 2, textAlign: 'right' }}>
               <Typography variant="h6" color="secondary">2020</Typography>
               <Typography>Iniciamos nossa jornada de produção</Typography>
             </Paper>
@@ -58,14 +58,17 @@ export default function History() {
             </TimelineDot>
           </TimelineSeparator>
           <TimelineContent>
-            <Paper elevation={3} sx={{ padding: 2, textAlign: 'left' }}>
+            <Paper elevation={3} sx={{ padding: 2, textAlign: 'right' }}>
               <Typography variant="h6" color="error">2023/2024</Typography>
               <Typography>Nos aventuramos no mundo digital</Typography>
             </Paper>
           </TimelineContent>
         </TimelineItem>
       </Timeline>
-      <Box sx={{ marginTop: 4 }}>
+      <Box sx={{ marginTop: 4, padding: 2, backgroundColor: '#f5f5f5', borderRadius: 2 }}>
+        <Typography variant="h5" gutterBottom>
+          Sítio Campestre
+        </Typography>
         <Typography variant="body1" paragraph>
           O <strong>Sítio Campestre</strong> é uma unidade de produção da Agricultura Familiar, localizada na zona rural de São Sebastião do Caí. Produzimos cogumelos culinários de alta qualidade com técnicas cuidadosas que garantem sabor e frescor.
         </Typography>

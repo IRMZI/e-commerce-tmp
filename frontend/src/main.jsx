@@ -16,6 +16,8 @@ import AdminProducts from "./pages/adminPanel/products/products.jsx";
 import AdminLeads from "./pages/adminPanel/leads/leads.jsx";  
 import Ebook from "./pages/lpEbook/page.jsx";
 import History from "./pages/history/page.jsx";
+import { Terminal } from "@mui/icons-material";
+import Terms from "./pages/terms/terms.jsx";
 const pages = createBrowserRouter([
   {
     path: "/",
@@ -48,6 +50,10 @@ const pages = createBrowserRouter([
       {
         path: "/history",
         element: <History />,
+      },
+      {
+        path: "/terms",
+        element: <Terms />,
       },
       {
         path: "/admin", // Rota principal do admin

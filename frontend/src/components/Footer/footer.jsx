@@ -13,6 +13,7 @@ export default function Footer() {
             <li><Link to="/history" className="footer-link">História</Link></li>
             <li><Link to="/cart" className="footer-link">Carrinho</Link></li>
             <li><Link to="/profile" className="footer-link">Conta</Link></li>
+            <li><Link to="/terms" className="footer-link">Termos de Uso</Link></li>
           </ul>
         </div>
         <div className="logoContainer">
