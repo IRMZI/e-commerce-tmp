@@ -105,11 +105,30 @@ export default function usersServices() {
     }
   };
 
+  // Função para verificar se um email já existe
+  const checkEmailExists = async (email) => {
+    try {
+      const response = await fetch(`${url}/check-email/${email}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*",
+        },
+      });
+      const result = await response.json();
+      return result.body;
+    } catch (error) {
+      console.error("Erro ao verificar email:", error);
+      return { exists: false };
+    }
+  };
+
   return {
     getUsers,
     updateUser,
     deleteUser,
     getUserById,
+    checkEmailExists, // Adicionar a função ao retorno
     userLoading,
     refetchUsers,
     usersList,

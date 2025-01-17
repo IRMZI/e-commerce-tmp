@@ -45,6 +45,17 @@ export default class UsersControllers {
             return serverError(error); 
         }
     }
+    
+    // Método para verificar se um email já existe
+    async checkEmailExists(email) {
+        try {
+            const exists = await this.dataAccess.checkEmailExists(email);
+            return ok({ exists: exists });
+        } catch (error) {
+            return serverError(error);
+        }
+    }
+
      // Método para atualizar o endereço de um usuário
      async updateUserAddress(userId, addressData) {
         try {

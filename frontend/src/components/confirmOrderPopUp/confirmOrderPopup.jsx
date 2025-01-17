@@ -72,6 +72,15 @@ export default function ConfirmOrderPopup({ open, onClose, onConfirm }) {
               whatsapp.
             </strong>
           </p>
+          <p>
+            Método de pagamento: 
+            <strong className="tooltip">
+              Pix ou Dinheiro
+              <span className="tooltipText">
+                O pagamento é feito na hora da entrega.
+              </span>
+            </strong>
+          </p>
           <div className="confirmBtns">
             <button className="cancelBtn" onClick={onClose}>
               Cancelar

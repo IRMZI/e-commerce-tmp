@@ -12,6 +12,10 @@ usersRouter.get('/:id', async (req, res) => {
     const { success, statusCode, body } = await usersControllers.getUserById(req.params.id)
     res.status(statusCode).send({ success, statusCode, body })
 })
+usersRouter.get('/check-email/:email', async (req, res) => {
+    const { success, statusCode, body } = await usersControllers.checkEmailExists(req.params.email);
+    res.status(statusCode).send({ success, statusCode, body });
+});
 usersRouter.delete('/:id', async (req, res) => {
     const { success, statusCode, body } = await usersControllers.deleteUser(req.params.id)
     res.status(statusCode).send({ success, statusCode, body })

@@ -22,7 +22,7 @@ export default function Profile() {
   const { getUserOrders, orderLoading, refetchOrders, ordersList } =
     orderServices();
   const { validateAddress } = addressServices();
-  const { updateUser } = usersServices(); // Destructure updateUser from usersServices
+  const { updateUser, checkEmailExists } = usersServices();
   const navigate = useNavigate();
   const authData = JSON.parse(localStorage.getItem("auth"));
   const cepSchema = z
@@ -129,6 +129,14 @@ export default function Profile() {
 
   const handleSaveEmail = async () => {
     try {
+      if (editedEmail !== authData?.user?.email) {
+        const response = await checkEmailExists(editedEmail);
+        if (response.exists) {
+          setErrors({ email: "Este email já está em uso." });
+          return;
+        }
+      }
+
       const userId = authData?.user?._id;
       const result = await updateUser(userId, { email: editedEmail });
       if (result.success) {
@@ -151,6 +159,7 @@ export default function Profile() {
       setErrors((prev) => ({ ...prev, phone: null }));
     } else if (name === "email") {
       setEditedEmail(value);
+      setErrors((prev) => ({ ...prev, email: null }));
     } else {
       setEditedAddress((prev) => ({
         ...prev,
@@ -216,6 +225,9 @@ export default function Profile() {
                       placeholder="Email"
                       className="modern-input"
                     />
+                    {errors.email && (
+                      <span className="error-message">{errors.email}</span>
+                    )}
                     <button
                       type="button"
                       onClick={handleSaveEmail}

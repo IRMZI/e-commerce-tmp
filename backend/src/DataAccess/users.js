@@ -59,6 +59,15 @@ export default class usersDataAccess {
             return result;
         }
     }
+
+    // Método para verificar se um email já existe
+    async checkEmailExists(email) {
+        const result = await Mongo.db
+            .collection(collectionName)
+            .findOne({ email: email });
+        return result !== null;
+    }
+
     // Método para atualizar o endereço de um usuário
     async updateUserAddress(userId, addressData) {
     try {
