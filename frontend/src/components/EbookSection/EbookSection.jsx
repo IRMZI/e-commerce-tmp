@@ -149,7 +149,7 @@ const EbookSection = () => {
         </div>
       </div>
       <div className="ebook-image">
-        <img src={ebook} alt="E-book de Receitas" />
+        <img src={ebook} alt="E-book de Receitas" loading="lazy" />
       </div>
     </section>
   );

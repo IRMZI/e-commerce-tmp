@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, lazy, Suspense } from "react";
 import usersServices from "../../../services/users";
-import Loading from "../../loading/page";
+const Loading = lazy(() => import("../../loading/page"));
 import { Dialog, DialogTitle, DialogContent, DialogActions, Button, TextField, IconButton, FormControl, InputLabel, Select, MenuItem } from "@mui/material";
 import { Edit, Delete, Search } from "@mui/icons-material";
 import "./adminUsers.css";
@@ -30,7 +30,7 @@ export default function AdminUsers() {
   }, [refetchUsers]);
 
   useEffect(() => {
-    setEditedUsers(usersList); // Initialize users with original data
+    setEditedUsers(usersList);
   }, [usersList]);
 
   const handleInputChange = (id, field, value) => {
@@ -55,7 +55,7 @@ export default function AdminUsers() {
 
   const handleSave = async (id) => {
     const userToSave = selectedUser;
-    await updateUser(id, userToSave); // Call service to update user
+    await updateUser(id, userToSave);
     setEditedUsers((prev) =>
       prev.map((user) => (user._id === id ? userToSave : user))
     );
@@ -82,7 +82,7 @@ export default function AdminUsers() {
     const userToUpdate = editedUsers.find((user) => user._id === id);
     if (userToUpdate) {
       userToUpdate.isAdmin = !userToUpdate.isAdmin;
-      await updateUser(id, userToUpdate); // Call service to update user
+      await updateUser(id, userToUpdate);
       setEditedUsers((prev) =>
         prev.map((user) => (user._id === id ? userToUpdate : user))
       );
@@ -100,7 +100,11 @@ export default function AdminUsers() {
   });
 
   if (userLoading) {
-    return <Loading />;
+    return (
+      <Suspense fallback={<div>Loading...</div>}>
+        <Loading />
+      </Suspense>
+    );
   }
 
   return (
@@ -108,7 +112,6 @@ export default function AdminUsers() {
       <h2>Gerenciamento de Usuários</h2>
       <hr className="admin-users-separator" />
 
-      {/* Filters */}
       <div className="filters">
         <div className="search-bar">
           <input
@@ -134,7 +137,6 @@ export default function AdminUsers() {
         </select>
       </div>
 
-      {/* User Table */}
       <table className="admin-users-table">
         <thead>
           <tr>

@@ -60,6 +60,6 @@ const pages = createBrowserRouter([
 ]);
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <RouterProvider router={pages}></RouterProvider>
+    <RouterProvider router={pages} aria-label="Navegação principal"></RouterProvider>
   </StrictMode>
 );

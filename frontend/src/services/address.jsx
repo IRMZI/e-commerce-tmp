@@ -8,7 +8,6 @@ export default function addressServices() {
     try {
       setAddressLoading(true);
 
-      // Requisição à API BrasilAPI
       const response = await fetch(
         `https://brasilapi.com.br/api/cep/v1/${zipcode}`
       );
@@ -18,7 +17,6 @@ export default function addressServices() {
 
       const data = await response.json();
 
-      // Retorna os dados relevantes do endereço
       return {
         zipcode: data.zipcode || "",
         street: data.street || "",

@@ -33,13 +33,14 @@ export default function UserEditDialog({ open, onClose, user, onSave }) {
     <Dialog open={open} onClose={onClose}>
       <div className="dialogContainer">
         <h2>Editar Usuário</h2>
-        <form className="formContainer">
+        <form className="formContainer" aria-label="Formulário de edição de usuário">
           <TextField
             label="Nome"
             name="fullname"
             value={formData.fullname}
             onChange={handleChange}
             fullWidth
+            aria-required="true"
           />
           <TextField
             label="Email"
@@ -47,6 +48,7 @@ export default function UserEditDialog({ open, onClose, user, onSave }) {
             value={formData.email}
             onChange={handleChange}
             fullWidth
+            aria-required="true"
           />
           <TextField
             label="Telefone"
@@ -54,6 +56,7 @@ export default function UserEditDialog({ open, onClose, user, onSave }) {
             value={formData.phone}
             onChange={handleChange}
             fullWidth
+            aria-required="true"
           />
           <TextField
             label="Rua"
@@ -61,6 +64,7 @@ export default function UserEditDialog({ open, onClose, user, onSave }) {
             value={formData.address.street}
             onChange={handleChange}
             fullWidth
+            aria-required="true"
           />
           <TextField
             label="Número"
@@ -68,6 +72,7 @@ export default function UserEditDialog({ open, onClose, user, onSave }) {
             value={formData.address.number}
             onChange={handleChange}
             fullWidth
+            aria-required="true"
           />
           <TextField
             label="Cidade"
@@ -75,6 +80,7 @@ export default function UserEditDialog({ open, onClose, user, onSave }) {
             value={formData.address.city}
             onChange={handleChange}
             fullWidth
+            aria-required="true"
           />
           <TextField
             label="Status"
@@ -91,8 +97,8 @@ export default function UserEditDialog({ open, onClose, user, onSave }) {
             fullWidth
           />
           <div className="dialogActions">
-            <Button onClick={onClose}>Cancelar</Button>
-            <Button onClick={handleSave} color="primary">
+            <Button onClick={onClose} aria-label="Cancelar">Cancelar</Button>
+            <Button onClick={handleSave} color="primary" aria-label="Salvar">
               Salvar
             </Button>
           </div>

@@ -20,7 +20,6 @@ export default function authServices() {
             JSON.stringify({ token: result.body.token, user: result.body.user })
           );
         } else {
-          // Salva a mensagem de erro no localStorage
           localStorage.setItem(
             "authError",
             result.body.text || "Erro desconhecido"
@@ -33,7 +32,7 @@ export default function authServices() {
             error.response.data &&
             error.response.data.body.text) ||
           "Erro de conexão com o servidor";
-        localStorage.setItem("authError", errorMessage); // Salva a mensagem no localStorage
+        localStorage.setItem("authError", errorMessage);
       })
       .finally(() => {
         setAuthLoading(false);
@@ -58,7 +57,6 @@ export default function authServices() {
             JSON.stringify({ token: result.body.token, user: result.body.user })
           );
         } else {
-          // Salva a mensagem de erro no localStorage
           localStorage.setItem(
             "authError",
             result.body.text || "Erro desconhecido"
@@ -71,7 +69,7 @@ export default function authServices() {
             error.response.data &&
             error.response.data.body.text) ||
           "Erro de conexão com o servidor";
-        localStorage.setItem("authError", errorMessage); // Salva a mensagem no localStorage
+        localStorage.setItem("authError", errorMessage);
       })
       .finally(() => {
         setAuthLoading(false);

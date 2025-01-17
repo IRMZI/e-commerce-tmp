@@ -6,7 +6,6 @@ export default function orderServices() {
   const [refetchOrders, setRefetchOrders] = useState(true);
   const url = "http://localhost:3000/orders";
 
-  // Função para buscar todos os pedidos
   const getOrders = async () => {
     setOrderLoading(true);
     try {
@@ -30,7 +29,6 @@ export default function orderServices() {
     }
   };
 
-  // Função para buscar pedidos de um usuário específico
   const getUserOrders = async (userId) => {
     setOrderLoading(true);
     try {
@@ -54,7 +52,6 @@ export default function orderServices() {
     }
   };
 
-  // Função para criar um novo pedido
   const sendOrder = async (orderData) => {
     setOrderLoading(true);
     try {
@@ -78,7 +75,6 @@ export default function orderServices() {
     }
   };
 
-  // Função para atualizar um pedido
   const updateOrder = async (orderId, orderData) => {
     setOrderLoading(true);
     try {
@@ -102,7 +98,6 @@ export default function orderServices() {
     }
   };
 
-  // Função para excluir um pedido
   const deleteOrder = async (orderId) => {
     setOrderLoading(true);
     try {
@@ -125,7 +120,6 @@ export default function orderServices() {
     }
   };
 
-  // Função para adicionar um item ao pedido
   const addItemToOrder = async (orderId, itemData) => {
     setOrderLoading(true);
     try {
@@ -149,7 +143,6 @@ export default function orderServices() {
     }
   };
 
-  // Função para atualizar a quantidade de um item no pedido
   const updateItemQuantity = async (orderId, itemId, quantity) => {
     setOrderLoading(true);
     try {
@@ -173,7 +166,6 @@ export default function orderServices() {
     }
   };
 
-  // Função para remover um item de um pedido
   const removeItemFromOrder = async (orderId, itemId) => {
     setOrderLoading(true);
     try {

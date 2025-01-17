@@ -30,7 +30,7 @@ export default function Cart() {
       <div className="cartEmpty">
         <h1>Carrinho vazio!</h1>
         <Link to="/products">
-          <button className="btnSeeProducts">Veja nossos produtos</button>
+          <button className="btnSeeProducts" aria-label="Veja nossos produtos">Veja nossos produtos</button>
         </Link>
       </div>
     );
@@ -62,10 +62,11 @@ export default function Cart() {
               <div className="itemDetails">
                 <h2 className="itemName">{item.name}</h2>
                 <p className="itemPrice">Preço: R$ {item.price}</p>
-                <div className="itemQuantity">
+                <div className="itemQuantity" role="group" aria-label="Quantidade do item">
                   <button
                     className="quantityButton"
                     onClick={() => updateItemQuantity("less", item._id)}
+                    aria-label={`Diminuir quantidade de ${item.name}`}
                   >
                     -
                   </button>
@@ -73,6 +74,7 @@ export default function Cart() {
                   <button
                     className="quantityButton"
                     onClick={() => updateItemQuantity("more", item._id)}
+                    aria-label={`Aumentar quantidade de ${item.name}`}
                   >
                     +
                   </button>
@@ -82,6 +84,7 @@ export default function Cart() {
                 <button
                   className="quantityButton"
                   onClick={() => removeFromCart(item._id)}
+                  aria-label={`Remover ${item.name} do carrinho`}
                 >
                   <HiTrash className="trashIcon" />
                 </button>
@@ -91,7 +94,7 @@ export default function Cart() {
         </section>
         <div className="cartSummary">
           <h2>Total: R$ {totalPrice.toFixed(2)}</h2>
-          <button className="confirmButton" onClick={handleOpenPopup}>
+          <button className="confirmButton" onClick={handleOpenPopup} aria-label="Confirmar pedido">
             Confirmar pedido!
           </button>
         </div>

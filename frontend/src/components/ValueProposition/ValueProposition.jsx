@@ -27,8 +27,8 @@ const ValueProposition = () => {
   ];
 
   return (
-    <section className="value-proposition">
-      <h2>Nossos Diferenciais</h2>
+    <section className="value-proposition" aria-labelledby="value-proposition-heading">
+      <h2 id="value-proposition-heading">Nossos Diferenciais</h2>
       <div className="features-grid">
         {features.map((feature, index) => (
           <div key={index} className="feature-card">

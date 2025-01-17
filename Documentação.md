@@ -273,6 +273,16 @@ src/services
 
 : Serviços para comunicação com a API backend.
 
+## Acessibilidade
+
+Para garantir que a aplicação seja acessível, siga as diretrizes do WCAG (Web Content Accessibility Guidelines). Aqui estão algumas práticas recomendadas:
+
+- Use atributos `aria-*` para melhorar a acessibilidade.
+- Certifique-se de que todos os elementos interativos (botões, links, etc.) tenham rótulos descritivos.
+- Utilize HTML semântico para melhorar a navegação por leitores de tela.
+- Garanta que o contraste de cores seja suficiente para usuários com deficiência visual.
+- Teste a aplicação com ferramentas de acessibilidade, como o Lighthouse do Google Chrome.
+
 ## Executando o Projeto
 
 1. Certifique-se de que o MongoDB está em execução e acessível.

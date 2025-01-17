@@ -1,12 +1,13 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, lazy, Suspense } from "react";
 import { useNavigate } from "react-router-dom";
 import "./auth.css";
 import authServices from "../../services/auth";
 import addressServices from "../../services/address";
 import { HiLogin } from "react-icons/hi";
-import Loading from "../loading/page";
 import { z } from "zod";
 import { TextField } from "@mui/material";
+
+const Loading = lazy(() => import("../loading/page"));
 
 export default function Auth() {
   const [formType, setFormType] = useState("login");
@@ -194,7 +195,11 @@ export default function Auth() {
   };
 
   if (authLoading) {
-    return <Loading />;
+    return (
+      <Suspense fallback={<div>Loading...</div>}>
+        <Loading />
+      </Suspense>
+    );
   }
   return (
     <div className="authPageContainer">
@@ -202,7 +207,7 @@ export default function Auth() {
       {formType === "login" ? (
         <>
           <h1>Login</h1>
-          <button onClick={handleChangeFormType}>
+          <button onClick={handleChangeFormType} aria-label="Não possui uma conta? Clique aqui!">
             Não possui uma conta? Clique aqui!
           </button>
           <form onSubmit={handleSubmitForm}>
@@ -222,7 +227,7 @@ export default function Auth() {
               variant="outlined"
               onChange={handleFormDataChange}
             />
-            <button type="submit">
+            <button type="submit" aria-label="Entrar">
               Entrar <HiLogin />
             </button>
           </form>
@@ -231,7 +236,7 @@ export default function Auth() {
       ) : (
         <>
           <h1>Registre-se</h1>
-          <button onClick={handleChangeFormType}>
+          <button onClick={handleChangeFormType} aria-label="Já possui uma conta? Clique aqui">
             Já possui uma conta? Clique aqui
           </button>
           <form onSubmit={handleSubmitForm}>
@@ -303,7 +308,7 @@ export default function Auth() {
               value={formData.address.city}
               onChange={handleFormDataChange}
             />
-            <button type="submit">
+            <button type="submit" aria-label="Registrar">
               Registrar <HiLogin />
             </button>
           </form>
