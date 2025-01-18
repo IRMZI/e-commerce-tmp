@@ -25,6 +25,7 @@ backend/
 			...
 		database/
 		helpers/
+			logger.js
 		index.js
 		routes/
 		services/
@@ -233,7 +234,7 @@ src/database
 
 src/helpers
 
-: Funções auxiliares.
+: Funções auxiliares, incluindo o logger.
 - 
 
 src/routes

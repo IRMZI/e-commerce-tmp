@@ -1,28 +1,32 @@
 import LeadsDataAccess from "../DataAccess/leads.js";
-import { ok, serverError } from "../helpers/httpResponse.js"; // Supondo que há um helper para respostas HTTP
+import { ok, serverError } from "../helpers/httpResponse.js";
 import { ESTADOS_BRASIL } from "../helpers/constants.js";
 import { sendEmail } from "../services/mailservice.js";
-import fs from "fs";
+import { debug, info, error } from "../helpers/logger.js"; // Import logger
 
 export default class LeadsController {
   constructor() {
-    this.dataAccess = new LeadsDataAccess(); // Instancia a classe de acesso aos dados de leads
+    this.dataAccess = new LeadsDataAccess();
   }
 
   // Método para criar um lead
   async createLead(leadData) {
     try {
+      debug(`createLead called with data: ${JSON.stringify(leadData)}`);
       const { name, email, state } = leadData;
 
       // Validação dos campos obrigatórios
       if (!name || !email || !state) {
-        return error("Nome, email e estado são obrigatórios");
+        error("Nome, email e estado são obrigatórios");
+        return serverError("Nome, email e estado são obrigatórios");
       }
 
       // Validação do estado
       if (!ESTADOS_BRASIL.includes(state)) {
-        return error("Estado inválido");
+        error("Estado inválido");
+        return serverError("Estado inválido");
       }
+
       // Caminho do arquivo PDF
       const pdfPath = "./src/Data/ebook.pdf";
       // Enviar o e-mail
@@ -37,39 +41,50 @@ export default class LeadsController {
       await sendEmail(email, "Seu E-book Exclusivo!", emailContent, pdfPath);
 
       const result = await this.dataAccess.createLead({ name, email, state });
+      info(`Created new lead: ${email}`);
       return ok(result);
-    } catch (error) {
-      return serverError(error);
+    } catch (err) {
+      error(`Error creating lead: ${err.message}`);
+      return serverError(err);
     }
   }
 
   // Método para obter todos os leads
   async getLeads() {
     try {
+      debug('getLeads called');
       const leads = await this.dataAccess.getLeads();
+      info('Fetched all leads');
       return ok(leads);
-    } catch (error) {
-      return serverError(error);
+    } catch (err) {
+      error(`Error fetching leads: ${err.message}`);
+      return serverError(err);
     }
   }
 
   // Método para atualizar o status do lead
   async updateLeadStatus(leadId, status) {
     try {
+      debug(`updateLeadStatus called with leadId: ${leadId}, status: ${status}`);
       const result = await this.dataAccess.updateLeadStatus(leadId, status);
+      info(`Updated lead status for ID: ${leadId}`);
       return ok(result);
-    } catch (error) {
-      return serverError(error);
+    } catch (err) {
+      error(`Error updating lead status: ${err.message}`);
+      return serverError(err);
     }
   }
 
   // Método para deletar leads frios
   async deleteColdLeads() {
     try {
+      debug('deleteColdLeads called');
       const result = await this.dataAccess.deleteColdLeads();
+      info('Deleted cold leads');
       return ok(result);
-    } catch (error) {
-      return serverError(error);
+    } catch (err) {
+      error(`Error deleting cold leads: ${err.message}`);
+      return serverError(err);
     }
   }
 }

@@ -1,5 +1,6 @@
 import productsDataAccess from "../DataAccess/products.js";
 import { ok, serverError } from '../helpers/httpResponse.js';
+import { info, error } from '../helpers/logger.js'; // Import logger
 
 export default class ProductsControllers {
     constructor() {
@@ -10,9 +11,11 @@ export default class ProductsControllers {
     async getProducts() {
         try {
             const products = await this.dataAccess.getProducts(); // Obtém todos os produtos
+            info('Fetched all products');
             return ok(products); 
-        } catch (error) {
-            return serverError(error); 
+        } catch (err) {
+            error(`Error fetching products: ${err.message}`);
+            return serverError(err); 
         }
     }
 
@@ -20,9 +23,11 @@ export default class ProductsControllers {
     async getAvailableProducts() {
         try {
             const products = await this.dataAccess.getAvailableProducts(); // Obtém produtos disponíveis
+            info('Fetched available products');
             return ok(products); 
-        } catch (error) {
-            return serverError(error); 
+        } catch (err) {
+            error(`Error fetching available products: ${err.message}`);
+            return serverError(err); 
         }
     }
 
@@ -30,9 +35,11 @@ export default class ProductsControllers {
     async deleteProduct(productId) {
         try {
             const result = await this.dataAccess.deleteProduct(productId); // Exclui o produto pelo ID
+            info(`Deleted product with ID: ${productId}`);
             return ok(result); 
-        } catch (error) {
-            return serverError(error); 
+        } catch (err) {
+            error(`Error deleting product: ${err.message}`);
+            return serverError(err); 
         }
     }
 
@@ -40,9 +47,11 @@ export default class ProductsControllers {
     async addProducts(productData) {
         try {
             const result = await this.dataAccess.addProduct(productData); // Adiciona um novo produto
+            info('Added new product');
             return ok(result); 
-        } catch (error) {
-            return serverError(error); 
+        } catch (err) {
+            error(`Error adding product: ${err.message}`);
+            return serverError(err); 
         }
     }
 
@@ -50,9 +59,11 @@ export default class ProductsControllers {
     async updateProduct(productId, productData) {
         try {
             const result = await this.dataAccess.updateProduct(productId, productData); // Atualiza o produto pelo ID
+            info(`Updated product with ID: ${productId}`);
             return ok(result); 
-        } catch (error) {
-            return serverError(error); 
+        } catch (err) {
+            error(`Error updating product: ${err.message}`);
+            return serverError(err); 
         }
     }
 }

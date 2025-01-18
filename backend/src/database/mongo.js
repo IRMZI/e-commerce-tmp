@@ -1,23 +1,24 @@
-import { MongoClient } from 'mongodb'
+import { MongoClient } from 'mongodb';
+import { debug, info, error } from "../helpers/logger.js"; // Import logger
 
 export const Mongo = {
-    // cria função para conexão com o mongo, 
+    db: null,
     async connect({ mongoConnectionString, mongoDbName }) {
         try {
-            // cria o client do mongoDb recebendo um caminho
-            const client = new MongoClient(mongoConnectionString)
+            debug('Connecting to MongoDB');
+            const client = new MongoClient(mongoConnectionString, { useNewUrlParser: true, useUnifiedTopology: true });
 
-            // define o banco de dados
-            await client.connect()
-            const db = client.db(mongoDbName)
+            await client.connect();
+            info('Connected to MongoDB');
+            const db = client.db(mongoDbName);
 
-            this.client = client
-            this.db = db 
+            this.client = client;
+            this.db = db;
 
-            return 'connected to mongo'
-        } catch (error) {
-            return {  text: "Error during mongo connection - Erro durante conexão com o mongo", error}
+            return 'connected to mongo';
+        } catch (err) {
+            error(`Error connecting to MongoDB: ${err.message}`);
+            return { text: "Error during mongo connection - Erro durante conexão com o mongo", error: err };
         }
-        
     }
-}
+};

@@ -1,6 +1,7 @@
 import nodemailer from "nodemailer";
 import smtpconfig from "../config/smtp.js";
 import dotenv from "dotenv";
+import { debug, info, error } from "../helpers/logger.js"; // Import logger
 dotenv.config();
 const transporter = nodemailer.createTransport({
   host: smtpconfig.host,
@@ -12,6 +13,7 @@ const transporter = nodemailer.createTransport({
 });
 export const sendEmail = async (to, subject, htmlContent, attachmentPath) => {
   try {
+    debug(`sendEmail called with to: ${to}, subject: ${subject}`);
     await transporter.sendMail({
       from: `"Cogumelos Campestre" <${smtpconfig.user}>`, // Nome e e-mail do remetente
       to, // Destinatário
@@ -24,9 +26,11 @@ export const sendEmail = async (to, subject, htmlContent, attachmentPath) => {
         },
       ],
     });
+    info(`Email sent to: ${to}`);
     return { success: true };
-  } catch (error) {
-    console.error("Erro ao enviar e-mail:", error);
-    return { success: false, error: error.message };
+  } catch (err) {
+    error(`Error sending email to ${to}: ${err.message}`);
+    console.error("Erro ao enviar e-mail:", err);
+    return { success: false, error: err.message };
   }
 };

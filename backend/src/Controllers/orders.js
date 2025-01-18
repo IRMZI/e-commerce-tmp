@@ -1,5 +1,6 @@
 import OrdersDataAccess from '../DataAccess/orders.js';
 import { ok, serverError } from '../helpers/httpResponse.js';
+import { info, error } from '../helpers/logger.js'; // Import logger
 
 export default class OrdersControllers {
     constructor() {
@@ -10,9 +11,11 @@ export default class OrdersControllers {
     async getOrders() {
         try {
             const orders = await this.dataAccess.getOrders(); // Obtém todos os pedidos
+            info('Fetched all orders');
             return ok(orders); 
-        } catch (error) {
-            return serverError(error); 
+        } catch (err) {
+            error(`Error fetching orders: ${err.message}`);
+            return serverError(err); 
         }
     }
 
@@ -20,9 +23,11 @@ export default class OrdersControllers {
     async getOrdersByUserId(userId) {
         try {
             const orders = await this.dataAccess.getOrdersByUserId(userId); // Obtém todos os pedidos do usuário
+            info(`Fetched orders for user ID: ${userId}`);
             return ok(orders); 
-        } catch (error) {
-            return serverError(error); 
+        } catch (err) {
+            error(`Error fetching orders by user ID: ${err.message}`);
+            return serverError(err); 
         }
     }
 
@@ -30,9 +35,11 @@ export default class OrdersControllers {
     async deleteOrder(orderId) {
         try {
             const result = await this.dataAccess.deleteOrder(orderId); // Exclui o pedido pelo ID
+            info(`Deleted order with ID: ${orderId}`);
             return ok(result); 
-        } catch (error) {
-            return serverError(error); 
+        } catch (err) {
+            error(`Error deleting order: ${err.message}`);
+            return serverError(err); 
         }
     }
 
@@ -40,9 +47,11 @@ export default class OrdersControllers {
     async addOrders(orderData) {
         try {
             const result = await this.dataAccess.addOrder(orderData); // Adiciona um novo pedido
+            info('Added new order');
             return ok(result); 
-        } catch (error) {
-            return serverError(error); 
+        } catch (err) {
+            error(`Error adding order: ${err.message}`);
+            return serverError(err); 
         }
     }
 
@@ -50,9 +59,11 @@ export default class OrdersControllers {
     async updateOrder(orderId, orderData) {
         try {
             const result = await this.dataAccess.updateOrder(orderId, orderData); // Atualiza o pedido pelo ID
+            info(`Updated order with ID: ${orderId}`);
             return ok(result); 
-        } catch (error) {
-            return serverError(error); 
+        } catch (err) {
+            error(`Error updating order: ${err.message}`);
+            return serverError(err); 
         }
     }
 
@@ -60,9 +71,11 @@ export default class OrdersControllers {
     async addItemToOrder(orderId, itemData) {
         try {
             const result = await this.dataAccess.addItemToOrder(orderId, itemData); // Adiciona o item ao pedido
+            info(`Added item to order with ID: ${orderId}`);
             return ok(result);
-        } catch (error) {
-            return serverError(error);
+        } catch (err) {
+            error(`Error adding item to order: ${err.message}`);
+            return serverError(err);
         }
     }
 
@@ -70,10 +83,11 @@ export default class OrdersControllers {
     async updateItemQuantity(orderId, itemId, quantity) {
         try {
             const result = await this.dataAccess.updateItemQuantity(orderId, itemId, quantity); // Atualiza a quantidade do item
+            info(`Updated item quantity for order ID: ${orderId}, item ID: ${itemId}`);
             return ok(result);
-        } catch (error) {
-            console.error('Erro ao atualizar a quantidade do item:', error); // Log erro
-            return serverError(error);
+        } catch (err) {
+            error(`Error updating item quantity: ${err.message}`);
+            return serverError(err);
         }
     }
 
@@ -81,9 +95,11 @@ export default class OrdersControllers {
     async removeItemFromOrder(orderId, itemId) {
         try {
             const result = await this.dataAccess.removeItemFromOrder(orderId, itemId); // Remove o item do pedido
+            info(`Removed item from order ID: ${orderId}, item ID: ${itemId}`);
             return ok(result);
-        } catch (error) {
-            return serverError(error);
+        } catch (err) {
+            error(`Error removing item from order: ${err.message}`);
+            return serverError(err);
         }
     }
 }

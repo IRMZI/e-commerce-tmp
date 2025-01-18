@@ -1,5 +1,6 @@
 import usersDataAccess from "../DataAccess/users.js";
-import { ok, serverError } from '../helpers/httpResponse.js'
+import { ok, serverError } from '../helpers/httpResponse.js';
+import { info, error } from '../helpers/logger.js'; // Import logger
 
 export default class UsersControllers {
     constructor() {
@@ -10,9 +11,11 @@ export default class UsersControllers {
     async getUsers() {
         try {
             const users = await this.dataAccess.getUsers(); // Obtém os usuários
+            info('Fetched all users');
             return ok(users); 
-        } catch (error) {
-            return serverError(error); 
+        } catch (err) {
+            error(`Error fetching users: ${err.message}`);
+            return serverError(err); 
         }
     }
 
@@ -20,9 +23,11 @@ export default class UsersControllers {
     async getUserById(userId) {
         try {
             const user = await this.dataAccess.getUserById(userId); // Obtém o usuário pelo ID
+            info(`Fetched user with ID: ${userId}`);
             return ok(user); 
-        } catch (error) {
-            return serverError(error); 
+        } catch (err) {
+            error(`Error fetching user by ID: ${err.message}`);
+            return serverError(err); 
         }
     }
 
@@ -30,9 +35,11 @@ export default class UsersControllers {
     async deleteUser(userId) {
         try {
             const result = await this.dataAccess.deleteUser(userId); // Exclui o usuário pelo ID
+            info(`Deleted user with ID: ${userId}`);
             return ok(result); 
-        } catch (error) {
-            return serverError(error); 
+        } catch (err) {
+            error(`Error deleting user: ${err.message}`);
+            return serverError(err); 
         }
     }
 
@@ -40,9 +47,11 @@ export default class UsersControllers {
     async updateUser(userId, userData) {
         try {
             const result = await this.dataAccess.updateUser(userId, userData); // Atualiza os dados
+            info(`Updated user with ID: ${userId}`);
             return ok(result); 
-        } catch (error) {
-            return serverError(error); 
+        } catch (err) {
+            error(`Error updating user: ${err.message}`);
+            return serverError(err); 
         }
     }
     
@@ -50,9 +59,11 @@ export default class UsersControllers {
     async checkEmailExists(email) {
         try {
             const exists = await this.dataAccess.checkEmailExists(email);
+            info(`Checked if email exists: ${email}`);
             return ok({ exists: exists });
-        } catch (error) {
-            return serverError(error);
+        } catch (err) {
+            error(`Error checking email: ${err.message}`);
+            return serverError(err);
         }
     }
 
@@ -70,9 +81,11 @@ export default class UsersControllers {
                 return { success: false, statusCode: 404, body: { error: 'Usuário não encontrado.' } };
             }
 
+            info(`Updated address for user with ID: ${userId}`);
             return { success: true, statusCode: 200, body: { message: 'Endereço atualizado com sucesso.' } };
-        } catch (error) {
-            return { success: false, statusCode: 500, body: { error: error.message } };
+        } catch (err) {
+            error(`Error updating user address: ${err.message}`);
+            return { success: false, statusCode: 500, body: { error: err.message } };
         }
     }
 }
