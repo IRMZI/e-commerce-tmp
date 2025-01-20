@@ -1,0 +1,24 @@
+.sidebar {
+  background-color: var(--background-color);
+  color: var(--text-color);
+  font-family: var(--default-font);
+}
+
+.sidebarTitle {
+  font-family: var(--quaternary-font);
+}
+
+.sidebarMenu .menuItem {
+  color: var(--text-color);
+}
+
+.sidebarMenu .menuItem.active {
+  background-color: var(--primary-color);
+  color: var(--white-color);
+}
+
+.mainContent {
+  background-color: var(--white-color);
+  color: var(--text-color);
+  font-family: var(--default-font);
+}

@@ -6,6 +6,9 @@
     background: #f7f9fc;
     padding: 2rem;
     box-sizing: border-box;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    font-family: var(--default-font);
 }
 
 form {
@@ -43,6 +46,8 @@ button {
     align-items: center;
     justify-content: center;
     gap: 0.5rem;
+    background-color: var(--primary-color);
+    color: var(--white-color);
 }
 
 button:disabled {
@@ -55,6 +60,7 @@ button:disabled {
     margin-top: 10px;
     font-size: 0.9rem;
     text-align: center;
+    color: var(--error-color);
 }
 
 input,

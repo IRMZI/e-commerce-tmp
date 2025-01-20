@@ -1,7 +1,8 @@
 .admin-orders-container {
   padding: 20px;
-  font-family: Arial, sans-serif;
-  background-color: #f9f9f9;
+  font-family: var(--default-font);
+  background-color: var(--white-color);
+  color: var(--text-color);
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
@@ -90,4 +91,14 @@
     margin: 2px;
     font-size: 10px;
   }
+}
+
+.search-bar input {
+  background-color: var(--white-color);
+  color: var(--text-color);
+}
+
+.dialogContainer {
+  background-color: var(--white-color);
+  color: var(--text-color);
 }

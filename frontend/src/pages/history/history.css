@@ -55,3 +55,24 @@ h1 {
   margin-bottom: 16px;
   color: #2e7d32;
 }
+
+.historyContainer {
+  background-color: var(--background-color);
+  color: var(--text-color);
+  font-family: var(--default-font);
+}
+
+.historyHeader {
+  background-color: var(--primary-color);
+  color: var(--white-color);
+}
+
+.historyDetails {
+  background-color: var(--white-color);
+  color: var(--text-color);
+}
+
+.editButton {
+  background-color: var(--primary-color);
+  color: var(--white-color);
+}

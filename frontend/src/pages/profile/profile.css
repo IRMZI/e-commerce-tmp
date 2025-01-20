@@ -344,3 +344,24 @@
 .admin-button:hover {
     background-color: #0056b3;
 }
+
+.profileContainer {
+  background-color: var(--background-color);
+  color: var(--text-color);
+  font-family: var(--default-font);
+}
+
+.profileHeader {
+  background-color: var(--primary-color);
+  color: var(--white-color);
+}
+
+.profileDetails {
+  background-color: var(--white-color);
+  color: var(--text-color);
+}
+
+.editButton {
+  background-color: var(--primary-color);
+  color: var(--white-color);
+}

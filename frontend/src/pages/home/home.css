@@ -6,7 +6,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    color: white;
+    color: var(--white-color);
     background-image: url('../../assets/BG.jpg');
     text-shadow: 1px 2px 2px black;
     background-size: cover;
@@ -43,9 +43,10 @@
     padding: 1.5rem;
     gap: 1rem;
     margin-top: 1rem;
-    background-color: #f9f9f9;
+    background-color: var(--white-color);
     border-radius: 0.5rem;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    color: var(--text-color);
 }
 
 .about-us-image {
@@ -149,6 +150,8 @@
     transition: background-color 0.3s;
     margin-bottom: 1rem;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    background-color: var(--primary-color);
+    color: var(--white-color);
 }
 
 .contact-section .whatsapp-button {

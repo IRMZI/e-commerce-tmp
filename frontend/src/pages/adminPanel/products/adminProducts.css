@@ -1,5 +1,7 @@
 .admin-products-container {
-    background-color: #f9f9f9;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    font-family: var(--default-font);
     padding: 20px;
     margin: 0 auto;
     box-sizing: border-box;
@@ -110,6 +112,8 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    background-color: var(--white-color);
+    color: var(--text-color);
 }
 
 .admin-products-image {
@@ -140,8 +144,8 @@
 }
 
 .admin-products-save-button {
-    background-color: #4caf50;
-    color: white;
+    background-color: var(--primary-color);
+    color: var(--white-color);
     border: none;
     transition: background-color 0.3s ease;
 }
@@ -151,8 +155,8 @@
 }
 
 .admin-products-delete-button {
-    background-color: #e53935;
-    color: white;
+    background-color: var(--error-color);
+    color: var(--white-color);
     border: none;
     transition: background-color 0.3s ease;
 }
@@ -163,6 +167,7 @@
 
 .admin-products-separator {
     margin: 1em;
+    background-color: var(--primary-color);
 }
 
 /* Responsividade */
