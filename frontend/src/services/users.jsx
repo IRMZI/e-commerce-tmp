@@ -93,7 +93,6 @@ export default function usersServices() {
       });
       const result = await response.json();
       if (result.success) {
-        console.log("Usuário excluído com sucesso:", result);
         setRefetchUsers(true); // Marca para buscar novamente os usuários
       } else {
         console.error("Erro ao excluir usuário:", result.message);

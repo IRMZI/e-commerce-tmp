@@ -18,57 +18,67 @@ import Ebook from "./pages/lpEbook/page.jsx";
 import History from "./pages/history/page.jsx";
 import { Terminal } from "@mui/icons-material";
 import Terms from "./pages/terms/terms.jsx";
-const pages = createBrowserRouter([
+
+const pages = createBrowserRouter(
+  [
+    {
+      path: "/",
+      element: <App />,
+      children: [
+        {
+          path: "/",
+          element: <Home />,
+        },
+        {
+          path: "/cart",
+          element: <Cart />,
+        },
+        {
+          path: "/profile",
+          element: <Profile />,
+        },
+        {
+          path: "/products",
+          element: <Products />,
+        },
+        {
+          path: "/auth",
+          element: <Auth />,
+        },
+        {
+          path: "/ebook",
+          element: <Ebook />,
+        },
+        {
+          path: "/history",
+          element: <History />,
+        },
+        {
+          path: "/terms",
+          element: <Terms />,
+        },
+        {
+          path: "/admin", // Rota principal do admin
+          element: <AdminPanel />,
+          children: [
+            { path: "dashboard", element: <Dashboard /> }, // Rota relativa
+            { path: "users", element: <AdminUsers /> }, // Rota relativa
+            { path: "orders", element: <AdminOrders /> }, // Rota relativa
+            { path: "products", element: <AdminProducts /> }, // Rota relativa
+            { path: "leads", element: <AdminLeads /> }, // Rota relativa
+          ],
+        },
+      ],
+    },
+  ],
   {
-    path: "/",
-    element: <App />,
-    children: [
-      {
-        path: "/",
-        element: <Home />,
-      },
-      {
-        path: "/cart",
-        element: <Cart />,
-      },
-      {
-        path: "/profile",
-        element: <Profile />,
-      },
-      {
-        path: "/products",
-        element: <Products />,
-      },
-      {
-        path: "/auth",
-        element: <Auth />,
-      },
-      {
-        path: "/ebook",
-        element: <Ebook />,
-      },
-      {
-        path: "/history",
-        element: <History />,
-      },
-      {
-        path: "/terms",
-        element: <Terms />,
-      },
-      {
-        path: "/admin", // Rota principal do admin
-        element: <AdminPanel />,
-        children: [
-          { path: "dashboard", element: <Dashboard /> }, // Rota relativa
-          { path: "users", element: <AdminUsers /> }, // Rota relativa
-          { path: "orders", element: <AdminOrders /> }, // Rota relativa
-          { path: "products", element: <AdminProducts /> }, // Rota relativa
-          { path: "leads", element: <AdminLeads /> }, // Rota relativa
-        ],
-      },
-    ],
-  },
-]);
+    future: {
+      v7_startTransition: true,
+      v7_relativeSplatPath: true,
+    },
+  }
+);
+
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <RouterProvider router={pages} aria-label="Navegação principal"></RouterProvider>

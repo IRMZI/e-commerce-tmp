@@ -94,7 +94,6 @@ export default function Dashboard() {
   if (orderLoading || userLoading) {
     return <div className="loading-container">Loading...</div>;
   }
-  console.log(ordersList)
   return (
     <div className="dashboard-container">
       <h2>Bem-vindo ao Dashboard</h2>

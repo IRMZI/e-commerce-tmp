@@ -7,13 +7,20 @@
 .footerContainer {
     max-width: 1200px;
     margin: 0 auto;
-    display: grid;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
     align-items: center;
 }
 
 .logoContainer, .sectionsContainer, .ebookContainer, .linksContainer {
-    margin-bottom: 0.5rem;
+    margin-bottom: 20px;
+}
+
+.logoContainer {
+    text-align: center;
+    margin-bottom: 20px;
 }
 
 .logo {
@@ -24,6 +31,9 @@
     padding: 0;
     font-size: 0.75rem;
     text-align: left;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .sectionsList li {
@@ -53,7 +63,7 @@
 
 .linksContainer {
     display: flex;
-    gap: 0.5rem;
+    gap: 10px;
     justify-content: center;
     margin-top: 0.5rem; /* Adjusted margin */
 }
@@ -99,5 +109,20 @@
 
     .sectionsContainer, .ebookContainer, .linksContainer {
         text-align: center;
+    }
+}
+
+@media (min-width: 768px) {
+    .footerContainer {
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
+    .sectionsContainer, .logoContainer, .ebookContainer {
+        margin-bottom: 0;
+    }
+
+    .sectionsList {
+        flex-direction: row;
     }
 }
