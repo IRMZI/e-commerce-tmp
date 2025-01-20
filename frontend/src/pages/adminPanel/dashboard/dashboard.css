@@ -1,6 +1,8 @@
 .dashboard-container {
   padding: 20px;
-  background-color: #f4f4f9;
+  background-color: var(--white-color);
+  color: var(--text-color);
+  font-family: var(--default-font);
   min-height: 100vh;
 }
 
@@ -19,7 +21,7 @@
 }
 
 .kpi {
-  background-color: #ffffff;
+  background-color: var(--white-color);
   border: 1px solid #ddd;
   border-radius: 8px;
   padding: 20px;
@@ -46,7 +48,7 @@
 
 .kpi h3 {
   margin: 0 0 10px 0;
-  color: #333;
+  color: var(--text-color);
   font-size: 1.2rem;
 }
 
@@ -65,7 +67,7 @@
 .chart-container {
   flex: 1;
   min-width: 300px;
-  background-color: #ffffff;
+  background-color: var(--white-color);
   border: 1px solid #ddd;
   border-radius: 8px;
   padding: 20px;
@@ -74,7 +76,7 @@
 
 .chart-title {
   font-size: 1.5rem;
-  color: #333;
+  color: var(--text-color);
   margin-bottom: 20px;
   text-align: center;
 }
@@ -89,7 +91,7 @@
 }
 
 .top-products li {
-  background-color: #ffffff;
+  background-color: var(--white-color);
   border: 1px solid #ddd;
   border-radius: 8px;
   padding: 10px;
@@ -114,7 +116,7 @@
 }
 
 .tab.active {
-  border-bottom: 2px solid #333;
+  border-bottom: 2px solid var(--text-color);
   font-weight: bold;
 }
 
@@ -130,7 +132,7 @@
 .leads-section table {
   width: 100%;
   border-collapse: collapse;
-  background-color: #ffffff;
+  background-color: var(--white-color);
   border-radius: 8px;
   overflow: hidden;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -145,7 +147,7 @@
 
 .leads-section th {
   background-color: #f4f4f4;
-  color: #333;
+  color: var(--text-color);
   font-weight: bold;
 }
 
