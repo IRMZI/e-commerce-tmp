@@ -1,6 +1,15 @@
+@import '../../styles/global.css';
+
+:root {
+    --background-color: #fff;
+    --text-color: #333;
+    --secondary-color: #666;
+    --primary-color: #32cd32;
+}
+
 .card {
     padding: 1.5rem;
-    background: #fff;
+    background: var(--white-color);
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     max-width: 300px;
@@ -8,7 +17,6 @@
     overflow: hidden;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
-
 .card:hover {
     transform: translateY(-5px);
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
@@ -34,7 +42,7 @@
 }
 
 .card-description {
-    color: #666;
+    color: var(--text-color);
     font-size: 0.9rem;
     margin-bottom: 16px;
 }
@@ -42,13 +50,13 @@
 .card-price {
     font-size: 1.1rem;
     font-weight: bold;
-    color: #333;
+    color: var(--text-color);
     margin-bottom: 8px;
 }
 
 .card-weight {
     font-size: 0.9rem;
-    color: #666;
+    color: var(--secondary-color);
     margin-bottom: 16px;
 }
 
@@ -85,7 +93,7 @@
     display: flex;
     align-items: center;
     gap: 5px;
-    background: #32cd32;
+    background: var(--primary-color);
     color: #fff;
     border: none;
     padding: 10px 15px;
@@ -96,7 +104,7 @@
 }
 
 .add-to-cart-btn:hover {
-    background: #28a428;
+    background: darken(var(--primary-color), 10%);
 }
 
 .add-to-cart-btn:active {

@@ -38,6 +38,8 @@ frontend/
 	src/
 		App.jsx
 		assets/
+			styles/
+				global.css
 		components/
 		contexts/
 		index.css
@@ -255,6 +257,11 @@ src/assets
 : Arquivos estáticos, como imagens.
 - 
 
+src/assets/styles
+
+: Arquivos de estilo global.
+- 
+
 src/components
 
 : Componentes React reutilizáveis.
@@ -283,6 +290,65 @@ Para garantir que a aplicação seja acessível, siga as diretrizes do WCAG (Web
 - Utilize HTML semântico para melhorar a navegação por leitores de tela.
 - Garanta que o contraste de cores seja suficiente para usuários com deficiência visual.
 - Teste a aplicação com ferramentas de acessibilidade, como o Lighthouse do Google Chrome.
+
+## Fontes do Projeto
+
+Certifique-se de que as seguintes fontes estão incluídas no projeto:
+
+```css
+:root {
+  --default-font: 'Roboto, sans-serif'; /* Fonte padrão */
+  --secondary-font: 'Koulen, sans-serif'; /* Fonte secundária */
+  --tertiary-font: 'Teko, sans-serif'; /* Fonte terciária */
+  --quaternary-font: 'Cormorant, serif'; /* Fonte quaternária */
+}
+```
+
+## Estilos Globais
+
+Adicione o seguinte conteúdo ao arquivo `frontend/src/assets/styles/global.css`:
+
+```css
+:root {
+  --default-font: 'Roboto, sans-serif';
+  --secondary-font: 'Koulen, sans-serif';
+  --tertiary-font: 'Teko, sans-serif';
+  --quaternary-font: 'Cormorant, serif';
+  --primary-color: #22C55E;
+  --secondary-color: #8b5e3c;
+  --error-color: #e74c3c;
+  --background-color: #f9f9f9;
+  --text-color: #333;
+}
+
+body {
+  font-family: var(--default-font);
+  background-color: var(--background-color);
+  color: var(--text-color);
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--quaternary-font);
+}
+
+button {
+  font-family: var(--default-font);
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  padding: 0.75rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: darken(var(--primary-color), 10%);
+}
+```
 
 ## Executando o Projeto
 

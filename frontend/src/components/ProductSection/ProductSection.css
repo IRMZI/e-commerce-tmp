@@ -1,3 +1,5 @@
+@import "../../styles/global.css";
+
 /* Estilo Geral da Product Section */
 .product-section {
   display: flex;
@@ -9,6 +11,9 @@
   box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
   padding-bottom: 0.5em;
   padding-top: 0.5em;
+  background-color: var(--white-color);
+  font-family: var(--default-font);
+  color: var(--text-color);
 }
 
 /* Título da Seção */
@@ -109,10 +114,6 @@
   }
 
   .product-highlight-title {
-    font-size: 1.75rem;
-  }
-
-  .product-highlight-text p {
     font-size: 1.1rem;
     line-height: 1.6;
   }
@@ -121,4 +122,13 @@
     max-width: 90%;
     font-size: 1.25rem;
   }
+}
+
+.product-section h2 {
+  color: var(--text-color);
+}
+
+
+.product-section .product-card h3 {
+  color: var(--text-color);
 }

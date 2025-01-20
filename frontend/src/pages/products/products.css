@@ -1,3 +1,4 @@
+@import "../../styles/global.css";
 .grid-container {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -5,6 +6,7 @@
     gap: 1.5rem;
     padding: 2rem;
     justify-content: center;
+    background-color: var(--white-color);
 }
 
 @media screen and (max-width: 900px) {

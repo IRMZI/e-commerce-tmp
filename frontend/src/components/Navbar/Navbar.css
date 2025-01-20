@@ -1,7 +1,9 @@
+@import '../../styles/global.css';
+
 .NavbarContainer {
     display: flex;
     align-items: center;
-    background-color: rgb(229 231 235);
+    background-color: var(--background-color);
     height: 96px;
     font-family: 'Cormorant', serif;
 }
@@ -9,7 +11,6 @@
 .NavbarItems {
     display: flex;
     justify-content: center;
-    /* Centraliza os links horizontalmente */
     align-items: center;
     width: 100%;
     max-width: 1280px;
@@ -19,22 +20,19 @@
 .logo {
     width: 5em;
     margin-right: auto;
-    /* Mantém a logo à esquerda */
 }
 
 .navbarLink {
     font-weight: bold;
-    color: black;
+    color: var(--text-color);
     font-size: x-large;
 }
 
 .navbarLinksContainer {
     display: flex;
     justify-content: center;
-    /* Centraliza os links no container */
     align-items: center;
     gap: 1.5em;
-    /* Mais espaçamento entre os links */
     padding: 0.5em;
 }
 
@@ -57,9 +55,9 @@
     height: 100%;
     padding: 2em;
     gap: 1em;
-    background-color: rgb(229 231 235);
+    background-color: var(--background-color);
     font-weight: bold;
-    color: black;
+    color: var(--text-color);
     font-family: 'Cormorant', serif;
     font-size: x-large;
 }
@@ -67,7 +65,7 @@
 .navbarLink {
     position: relative;
     text-decoration: none;
-    color: black;
+    color: var(--text-color);
     transition: all 0.3s ease;
 }
 
@@ -78,7 +76,7 @@
     left: 0;
     width: 0;
     height: 2px;
-    background-color: #22C55E;
+    background-color: var(--primary-color);
     transition: width 0.3s ease;
 }
 
@@ -87,16 +85,17 @@
 }
 
 .ebook-button {
-    color: white;
+    color: var(--white-color);
     font-weight: bold;
-    background-color: #22C55E;
+    background-color: var(--primary-color);
     padding: 0.5em 1em;
     border-radius: 4px;
     text-decoration: none;
 }
 
 .ebook-button:hover {
-    background-color: #16A34A;
+    color: var(--error-color);
+    background-color: var(--primary-color);
 }
 
 .drawerLink {
@@ -104,7 +103,7 @@
     align-items: center;
     gap: 1em;
     text-decoration: none;
-    color: black;
+    color: var(--text-color);
     font-size: large;
     padding: 0.5em;
     border-radius: 5px;
@@ -112,7 +111,7 @@
 }
 
 .drawerLink:hover {
-    background-color: #22c55e;
+    background-color: var(--secondary-color);
     color: white;
 }
 
@@ -165,4 +164,15 @@
         width: 100%;
 
     }
+}
+
+.navbar {
+  font-family: var(--default-font);
+  background-color: var(--primary-color);
+  /* ...existing code... */
+}
+
+.navbar a {
+  color: var(--text-color);
+  /* ...existing code... */
 }
