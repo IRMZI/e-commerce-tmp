@@ -1,9 +1,9 @@
 /* Reset e estilos base */
 .orders-section {
     margin: 24px 0;
-    color: #2c3e50;
+    color: var(--text-color);
     padding: 20px;
-    background-color: #f9f9f9;
+    background-color: var(--background-color);
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     text-align: center;
@@ -20,7 +20,7 @@
 /* Estilos da tabela */
 .orders-table-container {
     display: none;
-    background: #ffffff;
+    background: var(--white-color);
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     overflow: hidden;
@@ -51,8 +51,7 @@
 }
 
 .order-card {
-    max-width: 94%;
-    background: #ffffff;
+    background: var(--white-color);
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     padding: 16px;
@@ -115,7 +114,7 @@
 .address-section {
     margin: 20px;
     padding: 20px;
-    background-color: #f9f9f9;
+    background-color: var(--background-color);
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
@@ -134,14 +133,14 @@
 
 .section-header h2 {
     font-size: 20px;
-    color: #333;
+    color: var(--text-color);
     margin: 0;
 }
 
 .logout-button {
     float: right;
-    background-color: #e40c0c;
-    color: white;
+    background-color: var(--primary-color);
+    color: var(--white-color);
     border: none;
     padding: 10px 15px;
     border-radius: 5px;
@@ -154,7 +153,7 @@
 }
 
 .logout-button:hover {
-    background-color: #ff6347;
+    background-color: darken(var(--primary-color), 10%);
 }
 
 /* Estilo do formulário */
@@ -176,18 +175,18 @@
     border: 1px solid #ddd;
     border-radius: 5px;
     font-size: 14px;
-    background-color: #fff;
+    background-color: var(--white-color);
 }
 
 .modern-input:focus {
-    border-color: #1e90ff;
+    border-color: var(--primary-color);
     outline: none;
     box-shadow: 0 0 5px rgba(30, 144, 255, 0.5);
 }
 
 .save-button {
-    background-color: #32cd32;
-    color: white;
+    background-color: var(--primary-color);
+    color: var(--white-color);
     border: none;
     padding: 10px 15px;
     border-radius: 5px;
@@ -197,7 +196,7 @@
 }
 
 .save-button:hover {
-    background-color: #3cb371;
+    background-color: darken(var(--primary-color), 10%);
 }
 
 /* Estilo da exibição do endereço */
@@ -211,13 +210,13 @@
 
 .address-text {
     font-size: 16px;
-    color: #333;
+    color: var(--text-color);
     margin: 0;
 }
 
 .edit-button {
-    background-color: #32cd32;
-    color: white;
+    background-color: var(--primary-color);
+    color: var(--white-color);
     border: none;
     padding: 10px 15px;
     border-radius: 5px;
@@ -230,7 +229,7 @@
 }
 
 .edit-button:hover {
-    background-color: #30b81e;
+    background-color: darken(var(--primary-color), 10%);
 }
 
 /* Media Queries */
@@ -241,6 +240,65 @@
 
     .order-card-container {
         display: none;
+    }
+}
+
+@media screen and (max-width: 767px) {
+    .edit-button,
+    .save-button {
+        width: fit-content;
+        margin-top: 10px;
+    }
+
+    .form-group {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .profile-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    .user-avatar {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .user-avatar h1 {
+        font-size: 1.2rem;
+    }
+
+    .logout-button {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .info-item {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .address-display {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .address-text {
+        margin-bottom: 10px;
+    }
+
+    .orders-section h2 {
+        text-align: center;
+    }
+
+    .orders-table-container {
+        display: none;
+    }
+
+    .order-card-container {
+        display: grid;
     }
 }
 
@@ -266,7 +324,7 @@
     max-width: 1200px;
     margin: 0 auto;
     padding: 20px;
-    background-color: #f4f4f9;
+    background-color: var(--background-color);
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
@@ -276,7 +334,7 @@
     align-items: center;
     justify-content: space-between;
     padding: 20px;
-    background-color: #fff;
+    background-color: var(--white-color);
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     margin-bottom: 20px;
@@ -290,7 +348,7 @@
 
 .user-avatar h1 {
     font-size: 1.5rem;
-    color: #333;
+    color: var(--text-color);
 }
 
 .profile-content {
@@ -301,7 +359,7 @@
 
 .info-card {
     padding: 20px;
-    background-color: #fff;
+    background-color: var(--white-color);
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
@@ -330,8 +388,8 @@
 }
 
 .admin-button {
-    background-color: #007bff;
-    color: white;
+    background-color: var(--primary-color);
+    color: var(--white-color);
     border: none;
     padding: 10px 15px;
     border-radius: 5px;
@@ -342,7 +400,7 @@
 }
 
 .admin-button:hover {
-    background-color: #0056b3;
+    background-color: darken(var(--primary-color), 10%);
 }
 
 .profileContainer {
@@ -364,4 +422,27 @@
 .editButton {
   background-color: var(--primary-color);
   color: var(--white-color);
+}
+
+.logout-button,
+.save-button,
+.edit-button {
+    background-color: var(--primary-color);
+    color: var(--white-color);
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-weight: bold;
+    width: fit-content;
+}
+
+.logout-button:hover,
+.save-button:hover,
+.edit-button:hover {
+    background-color: darken(var(--primary-color), 10%);
 }

@@ -100,11 +100,12 @@
     font-size: 1rem;
     border-radius: 5px;
     cursor: pointer;
-    transition: background 0.3s ease, transform 0.2s;
+
 }
 
 .add-to-cart-btn:hover {
-    background: darken(var(--primary-color), 10%);
+    transition: none;
+    background-color: #339f4c;
 }
 
 .add-to-cart-btn:active {

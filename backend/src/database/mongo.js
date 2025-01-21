@@ -6,7 +6,7 @@ export const Mongo = {
     async connect({ mongoConnectionString, mongoDbName }) {
         try {
             debug('Connecting to MongoDB');
-            const client = new MongoClient(mongoConnectionString, { useNewUrlParser: true, useUnifiedTopology: true });
+            const client = new MongoClient(mongoConnectionString);
 
             await client.connect();
             info('Connected to MongoDB');

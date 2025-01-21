@@ -4,11 +4,17 @@
     gap: 1em;
     padding: 1em;
     color: #004643;
+    max-width: 90%;
+    max-height: 80vh;
+    overflow-y: auto;
+    margin: auto;
+    width: fit-content;
 }
 
 .confirmBtns {
     display: flex;
     gap: .5em;
+    flex-wrap: wrap;
 }
 
 .tooltip {
@@ -20,8 +26,8 @@
 
 .tooltipText {
     visibility: hidden;
-    width: 250px;
-    /* Ajuste conforme necessário */
+    width: fit-content;
+    max-width: 250px;
     background-color: #555;
     color: #fff;
     text-align: center;
@@ -30,7 +36,6 @@
     position: absolute;
     z-index: 1;
     top: 125%;
-    /* Posiciona abaixo do texto */
     left: 50%;
     transform: translateX(-50%);
     opacity: 0;
@@ -40,4 +45,19 @@
 .tooltip:hover .tooltipText {
     visibility: visible;
     opacity: 1;
+}
+
+@media (max-width: 600px) {
+    .popupContainer {
+        padding: 0.5em;
+    }
+
+    .tooltipText {
+        max-width: 200px;
+    }
+
+    .confirmBtns {
+        flex-direction: column;
+        gap: 0.5em;
+    }
 }

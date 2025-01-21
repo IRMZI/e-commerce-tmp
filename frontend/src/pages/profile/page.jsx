@@ -17,6 +17,13 @@ import {
 } from "react-icons/fa";
 import { z } from "zod";
 
+const statusLabels = {
+  pending: "Pendente",
+  completed: "Entregue",
+  processing: "Processando",
+  cancelled: "Cancelado",
+};
+
 export default function Profile() {
   const { logout } = authServices();
   const { getUserOrders, orderLoading, refetchOrders, ordersList } =
@@ -193,7 +200,6 @@ export default function Profile() {
       }
     }
   };
-  console.log(ordersList)
   return (
     <div className="modern-profile-container">
       <div className="profile-header">
@@ -390,7 +396,7 @@ export default function Profile() {
                     <td className="order-id">{order._id}</td>
                     <td>
                       <span className={`status-badge ${order.pickupStatus}`}>
-                        {order.pickupStatus}
+                        {statusLabels[order.pickupStatus] || order.pickupStatus}
                       </span>
                     </td>
                     <td>{order.pickupTime || "Não informado"}</td>
@@ -424,7 +430,7 @@ export default function Profile() {
                 <p>
                   <strong>Status:</strong>{" "}
                   <span className={`status-badge ${order.pickupStatus}`}>
-                    {order.pickupStatus}
+                    {statusLabels[order.pickupStatus] || order.pickupStatus}
                   </span>
                 </p>
                 <p>
