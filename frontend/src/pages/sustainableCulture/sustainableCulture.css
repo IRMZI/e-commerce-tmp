@@ -20,30 +20,55 @@
 .dialogBox {
   border: 1px solid var(--primary-color);
   border-radius: 10px;
-  margin: 1em 0;
+  margin: 0.5em 0; /* Reduced margin */
   background-color: var(--secondary-background-color);
   cursor: pointer;
 }
 
 .dialogBoxTitle {
-  padding: 1em;
+  padding: 0.5em; /* Reduced padding */
   background-color: var(--primary-color);
-  color: var(--background-color);
+  color: var(--white-color);
   border-radius: 10px 10px 0 0;
+  display: flex;
+  justify-content: space-between;
 }
 
 .dialogBoxContent {
-  padding: 1em;
+  padding: 0 1em; /* Initial padding for smooth transition */
   border-top: 1px solid var(--primary-color);
   max-height: 0;
   overflow: hidden;
-  transition: max-height 0.3s ease-out;
+  transition: max-height 0.5s ease, padding 0.5s ease; /* Smoother transition */
 }
 
 .dialogBoxContent p {
   margin: 0;
 }
 
+.dialogBoxContent-enter {
+  max-height: 0;
+  padding: 0 1em;
+}
+
+.dialogBoxContent-enter-active {
+  max-height: 1000px; /* Adjust as needed */
+  padding: 1em;
+  transition: max-height 0.5s ease, padding 0.5s ease;
+}
+
+.dialogBoxContent-exit {
+  max-height: 1000px; /* Adjust as needed */
+  padding: 1em;
+}
+
+.dialogBoxContent-exit-active {
+  max-height: 0;
+  padding: 0 1em;
+  transition: max-height 0.5s ease, padding 0.5s ease;
+}
+
 .dialogBox.open .dialogBoxContent {
-  max-height: 500px; /* Adjust as needed */
+  max-height: 1000px; /* Adjust as needed */
+  padding: 1em; /* Ensure padding is applied during transition */
 }

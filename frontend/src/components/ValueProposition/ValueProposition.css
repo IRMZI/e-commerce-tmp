@@ -1,14 +1,14 @@
 .value-proposition {
   padding: 4rem 2rem;
-  background-color: var(--white-color);
+  background-color: var(--secondary-color);;
   font-family: var(--default-font);
   color: var(--text-color);
 }
 
 .value-proposition h2 {
   text-align: center;
-  color: #333;
   margin-bottom: 3rem;
+  color: black;
 }
 
 .features-grid {
