@@ -176,3 +176,27 @@
   color: var(--text-color);
   /* ...existing code... */
 }
+
+.dropdownMenu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: var(--background-color);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+  overflow: hidden;
+  z-index: 1000;
+}
+
+.dropdownItem {
+  display: block;
+  padding: 0.5em 1em;
+  color: var(--text-color);
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+
+.dropdownItem:hover {
+  background-color: var(--secondary-color);
+  color: white;
+}

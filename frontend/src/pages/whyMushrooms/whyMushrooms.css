@@ -1,0 +1,41 @@
+@import '../../styles/global.css';
+
+.whyMushroomsContainer {
+  padding: 2em;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  font-family: var(--default-font);
+}
+
+.whyMushroomsContainer h1 {
+  font-family: var(--quaternary-font);
+  color: var(--primary-color);
+  text-align: center;
+}
+
+.headerImage {
+  width: 100%;
+  height: auto;
+  margin: 1em 0;
+}
+.highlightSection,.cultivationSectio{
+  display: flex;  
+  align-items: center;
+}
+.introSection, .highlightSection, .cultivationSection, .didYouKnowSection {
+  margin-bottom: 2em;
+}
+
+.whyMushroomsContainer p {
+  margin: 1em 0;
+  line-height: 1.6;
+}
+
+.whyMushroomsContainer ul {
+  list-style-type: disc;
+  margin-left: 2em;
+}
+
+.whyMushroomsContainer li {
+  margin-bottom: 0.5em;
+}

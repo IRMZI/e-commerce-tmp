@@ -6,12 +6,12 @@ import { GiMushroom } from 'react-icons/gi';
 
 export default function History() {
   return (
-    <Box sx={{ maxHeight: '80vh', overflowY: 'auto', padding: 2 }}>
+    <Box sx={{ maxHeight: '80vh', overflowY: 'auto', padding: 2, backgroundColor: '#f8f6f6' }}>
       <Typography variant="h4" gutterBottom>Nossa Jornada</Typography>
       <Timeline position="alternate">
         <TimelineItem>
           <TimelineSeparator>
-            <TimelineDot color="primary">
+            <TimelineDot color="primary" aria-label="Spa Icon">
               <FaSpa />
             </TimelineDot>
             <TimelineConnector />
@@ -25,7 +25,7 @@ export default function History() {
         </TimelineItem>
         <TimelineItem>
           <TimelineSeparator>
-            <TimelineDot color="secondary">
+            <TimelineDot color="secondary" aria-label="Mushroom Icon">
               <GiMushroom />
             </TimelineDot>
             <TimelineConnector />
@@ -39,7 +39,7 @@ export default function History() {
         </TimelineItem>
         <TimelineItem>
           <TimelineSeparator>
-            <TimelineDot color="success">
+            <TimelineDot color="success" aria-label="Leaf Icon">
               <FaLeaf />
             </TimelineDot>
             <TimelineConnector />
@@ -53,7 +53,7 @@ export default function History() {
         </TimelineItem>
         <TimelineItem>
           <TimelineSeparator>
-            <TimelineDot color="error">
+            <TimelineDot color="error" aria-label="Globe Icon">
               <FaGlobe />
             </TimelineDot>
           </TimelineSeparator>
@@ -65,26 +65,6 @@ export default function History() {
           </TimelineContent>
         </TimelineItem>
       </Timeline>
-      <Box sx={{ marginTop: 4, padding: 2, backgroundColor: '#f5f5f5', borderRadius: 2 }}>
-        <Typography variant="h5" gutterBottom>
-          Sítio Campestre
-        </Typography>
-        <Typography variant="body1" paragraph>
-          O <strong>Sítio Campestre</strong> é uma unidade de produção da Agricultura Familiar, localizada na zona rural de São Sebastião do Caí. Produzimos cogumelos culinários de alta qualidade com técnicas cuidadosas que garantem sabor e frescor.
-        </Typography>
-        <Typography variant="body1" paragraph>
-          Nossa produção é sustentável e artesanal, unindo tradição e inovação. Vendemos diretamente aos consumidores, garantindo frescura e sabor.
-        </Typography>
-        <Typography variant="body1" paragraph>
-          Atendemos clientes em várias cidades da região, incluindo Porto Alegre, Canoas, São Leopoldo e Novo Hamburgo. Nosso compromisso é com a qualidade e a satisfação dos clientes.
-        </Typography>
-        <Typography variant="body1" paragraph>
-          Acreditamos no valor da agricultura familiar e no impacto positivo nas comunidades locais. Cada etapa do nosso processo respeita a natureza e oferece alimentos saudáveis e saborosos.
-        </Typography>
-        <Typography variant="body1" paragraph>
-          Venha descobrir o sabor dos nossos cogumelos e apoiar a agricultura familiar!
-        </Typography>
-      </Box>
     </Box>
   );
 }

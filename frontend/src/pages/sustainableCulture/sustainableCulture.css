@@ -1,0 +1,49 @@
+@import '../../styles/global.css';
+
+.sustainableCultureContainer {
+  padding: 2em;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  font-family: var(--default-font);
+}
+
+.sustainableCultureContainer h1 {
+  font-family: var(--quaternary-font);
+  color: var(--primary-color);
+}
+
+.sustainableCultureContainer p {
+  margin: 1em 0;
+  line-height: 1.6;
+}
+
+.dialogBox {
+  border: 1px solid var(--primary-color);
+  border-radius: 10px;
+  margin: 1em 0;
+  background-color: var(--secondary-background-color);
+  cursor: pointer;
+}
+
+.dialogBoxTitle {
+  padding: 1em;
+  background-color: var(--primary-color);
+  color: var(--background-color);
+  border-radius: 10px 10px 0 0;
+}
+
+.dialogBoxContent {
+  padding: 1em;
+  border-top: 1px solid var(--primary-color);
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease-out;
+}
+
+.dialogBoxContent p {
+  margin: 0;
+}
+
+.dialogBox.open .dialogBoxContent {
+  max-height: 500px; /* Adjust as needed */
+}

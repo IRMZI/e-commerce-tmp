@@ -350,6 +350,36 @@ button:hover {
 }
 ```
 
+## Melhorias de UI/UX e Acessibilidade
+
+### Design Visual
+
+- Ajuste de cores para melhor contraste e legibilidade.
+- Uso de tipografia consistente e espaçamentos adequados.
+- Adição de efeitos de hover para elementos interativos.
+
+### Usabilidade
+
+- Simplificação das interações e navegação intuitiva.
+- Adição de labels descritivos para ícones e botões.
+
+### Acessibilidade
+
+- Uso de atributos `aria-*` para melhorar a acessibilidade.
+- Garantia de contraste de cores suficiente para usuários com deficiência visual.
+- Testes com ferramentas de acessibilidade, como o Lighthouse do Google Chrome.
+
+### Tempo de Carregamento
+
+- Otimização de imagens e recursos estáticos.
+- Uso de técnicas de lazy loading para componentes pesados.
+
+### Chamadas para Ação (CTAs)
+
+- Posicionamento estratégico de CTAs para aumentar a visibilidade.
+- Texto claro e direto para incentivar cliques.
+- Design atraente e consistente com o restante da página.
+
 ## Executando o Projeto
 
 1. Certifique-se de que o MongoDB está em execução e acessível.

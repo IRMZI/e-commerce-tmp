@@ -9,6 +9,7 @@ import { Link } from "react-router-dom";
 import { useCartContext } from "../../contexts/useCartContext";
 export default function Navbar() {
   const [openMenu, setOpenMenu] = useState(false);
+  const [openDropdown, setOpenDropdown] = useState(false);
   const handlerOpenMenu = () => {
     setOpenMenu(!openMenu);
   };
@@ -32,9 +33,26 @@ export default function Navbar() {
           <Link to="/products" className="navbarLink">
             Cogumelos
           </Link>
-          <Link to="/history" className="navbarLink">
-            História
-          </Link>
+          <div
+            className="navbarLink"
+            onMouseEnter={() => setOpenDropdown(true)}
+            onMouseLeave={() => setOpenDropdown(false)}
+          >
+            Sobre nós
+            {openDropdown && (
+              <div className="dropdownMenu">
+                <Link to="/history" className="dropdownItem">
+                  História
+                </Link>
+                <Link to="/why-mushrooms" className="dropdownItem">
+                  Por que consumir cogumelos?
+                </Link>
+                <Link to="/sustainable-culture" className="dropdownItem">
+                  Cultura sustentável
+                </Link>
+              </div>
+            )}
+          </div>
           <Link to="/cart" className="navbarLink">
             <div className="cartIconWithBadge">
               <HiShoppingCart />
@@ -81,7 +99,7 @@ export default function Navbar() {
           </Link>
           <Link to="/history" className="drawerLink" onClick={handlerOpenMenu}>
             <BiHistory className="drawerIcon" />
-            História
+            Sobre nós
           </Link>
           <Link to="/profile" className="drawerLink" onClick={handlerOpenMenu}>
             <HiUserCircle className="drawerIcon" />

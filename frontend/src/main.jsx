@@ -16,8 +16,9 @@ import AdminProducts from "./pages/adminPanel/products/products.jsx";
 import AdminLeads from "./pages/adminPanel/leads/leads.jsx";  
 import Ebook from "./pages/lpEbook/page.jsx";
 import History from "./pages/history/page.jsx";
-import { Terminal } from "@mui/icons-material";
+import WhyMushrooms from "./pages/whyMushrooms/page.jsx";
 import Terms from "./pages/terms/terms.jsx";
+import SustainableCulture from "./pages/sustainableCulture/page.jsx"
 
 const pages = createBrowserRouter(
   [
@@ -54,11 +55,19 @@ const pages = createBrowserRouter(
           element: <History />,
         },
         {
+          path: "/why-mushrooms",
+          element: <WhyMushrooms />,
+        },
+        {
+          path: "/sustainable-culture",
+          element: <SustainableCulture />,
+        },
+        {
           path: "/terms",
           element: <Terms />,
         },
         {
-          path: "/admin", // Rota principal do admin
+          path: "/admin",
           element: <AdminPanel />,
           children: [
             { path: "dashboard", element: <Dashboard /> }, // Rota relativa
