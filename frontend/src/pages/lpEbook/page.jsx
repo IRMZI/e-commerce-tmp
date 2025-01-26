@@ -8,8 +8,8 @@ export default function Ebook() {
     <div>
       <HeroSection />
       <ValueProposition />
-      <ProductSection />
       <EbookSection />
+      <ProductSection />
     </div>
   );
 }
