@@ -7,6 +7,7 @@ import usersRouter from "./routes/users.js";
 import productsRouter from "./routes/products.js";
 import ordersRouter from "./routes/orders.js";
 import leadsRouter from "./routes/leads.js";
+import tokenRouter from "./routes/token.js"; // Import token router
 import { info, error, debug } from "./helpers/logger.js"; // Import logger
 
 config();
@@ -23,7 +24,7 @@ async function Main() {
       mongoConnectionString: process.env.MONGO_CS,
       mongoDbName: process.env.MONGO_DB_NAME,
     });
-    info('MongoDB connected'); // Log successful connection
+    info("MongoDB connected"); // Log successful connection
   } catch (err) {
     error(`MongoDB connection error: ${err.message}`);
     process.exit(1); // Exit process on connection error
@@ -48,11 +49,15 @@ async function Main() {
   app.use("/orders", ordersRouter);
   // Utiliza a rota "/Leads"
   app.use("/leads", leadsRouter);
-  app.listen(port, () => {
-    debug(`Server is running on port ${port}`);
-  }).on('error', (err) => {
-    error(`Server failed to start: ${err.message}`);
-  });
+  // Utiliza a rota "/token"
+  app.use("/token", tokenRouter);
+  app
+    .listen(port, () => {
+      debug(`Server is running on port ${port}`);
+    })
+    .on("error", (err) => {
+      error(`Server failed to start: ${err.message}`);
+    });
 }
 
 Main();

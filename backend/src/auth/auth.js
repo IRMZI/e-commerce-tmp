@@ -5,6 +5,7 @@ import crypto from "crypto";
 import { Mongo } from "../database/mongo.js";
 import jwt from "jsonwebtoken";
 import { ObjectId } from "mongodb";
+import { info, error } from "../helpers/logger.js"; // Import logger
 
 // Nome da coleção onde os usuários são armazenados
 const collectionName = "users";
@@ -64,6 +65,7 @@ authRouter.post("/signup", async (req, res) => {
     .findOne({ email: req.body.email });
 
   if (checkUser) {
+    error("Usuário já existente");
     return res.status(500).send({
       success: false,
       statusCode: 500,
@@ -84,6 +86,7 @@ authRouter.post("/signup", async (req, res) => {
     "sha256",
     async (err, hashedPassword) => {
       if (err) {
+        error("Erro na encryptação da senha");
         return res.status(500).send({
           success: false,
           statusCode: 500,
@@ -114,15 +117,22 @@ authRouter.post("/signup", async (req, res) => {
         const user = await Mongo.db
           .collection(collectionName)
           .findOne({ _id: new ObjectId(result.insertedId) });
-        // Cria um token JWT com as informações do usuário
-        const token = jwt.sign(user, "secret");
-
+        // Cria tokens de acesso e refresh com as informações do usuário
+        const accessToken = jwt.sign(user, "access_secret", {
+          expiresIn: "60m",
+        });
+        const refreshToken = jwt.sign(user, "refresh_secret", {
+          expiresIn: "15m",
+        });
+        await Mongo.storeRefreshToken(user._id, refreshToken);
+        info("Usuário registrado com sucesso");
         return res.send({
           success: true,
           statusCode: 200,
           body: {
             text: "Usuário registrado",
-            token,
+            accessToken,
+            refreshToken,
             user,
             logged: true,
           },
@@ -135,9 +145,10 @@ authRouter.post("/signup", async (req, res) => {
 // Rota de login
 authRouter.post("/login", (req, res) => {
   // Define que vai utilizar a estratégia local para authenticar
-  passport.authenticate("local", (error, user) => {
+  passport.authenticate("local", async (error, user) => {
     // Erro de authenticação
     if (error) {
+      error("Erro durante a authenticação de login");
       return res.status(500).send({
         success: false,
         statusCode: 500,
@@ -149,6 +160,7 @@ authRouter.post("/login", (req, res) => {
     }
     // Erro de usuário não existente
     if (!user) {
+      error("Credenciais incorretas");
       return res.status(400).send({
         success: false,
         statusCode: 400,
@@ -157,18 +169,46 @@ authRouter.post("/login", (req, res) => {
         },
       });
     }
-    // Define o token e retorna o usuário logado
-    const token = jwt.sign(user, "secret");
+    // Define tokens de acesso e refresh e retorna o usuário logado
+    const accessToken = jwt.sign(user, "access_secret", { expiresIn: "60m" });
+    const refreshToken = jwt.sign(user, "refresh_secret", { expiresIn: "15m" });
+    await Mongo.storeRefreshToken(user._id, refreshToken);
+    info("Usuário logado com sucesso");
     return res.status(200).send({
       success: true,
       statusCode: 200,
       body: {
         text: "Usuário logado ",
         user,
-        token,
+        accessToken,
+        refreshToken,
       },
     });
   })(req, res);
+});
+
+// Rota de logout
+authRouter.post("/logout", async (req, res) => {
+  const { refreshToken } = req.body;
+  if (!refreshToken) {
+    return res.status(400).send({
+      success: false,
+      statusCode: 400,
+      body: {
+        text: "Refresh token não fornecido",
+      },
+    });
+  }
+
+  await Mongo.deleteRefreshToken(refreshToken);
+  info("Usuário deslogado com sucesso");
+  return res.status(200).send({
+    success: true,
+    statusCode: 200,
+    body: {
+      text: "Usuário deslogado",
+    },
+  });
 });
 
 export default authRouter;
