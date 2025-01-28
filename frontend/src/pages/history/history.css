@@ -60,3 +60,10 @@ h1 {
   margin-bottom: 16px;
   color: #2e7d32;
 }
+
+.micro-text {
+  font-size: 0.8rem;
+  color: #333;
+  margin: 0;
+  padding: 0;
+}

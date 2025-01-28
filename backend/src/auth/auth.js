@@ -145,16 +145,16 @@ authRouter.post("/signup", async (req, res) => {
 // Rota de login
 authRouter.post("/login", (req, res) => {
   // Define que vai utilizar a estratégia local para authenticar
-  passport.authenticate("local", async (error, user) => {
+  passport.authenticate("local", async (err, user) => {
     // Erro de authenticação
-    if (error) {
+    if (err) {
       error("Erro durante a authenticação de login");
       return res.status(500).send({
         success: false,
         statusCode: 500,
         body: {
           text: "Erro durante a authenticação de login",
-          error,
+          error: err,
         },
       });
     }
