@@ -31,6 +31,7 @@ export default function Auth() {
   const { login, signup, authLoading } = authServices();
   const authData = JSON.parse(localStorage.getItem("auth"));
   const { validateAddress } = addressServices();
+
   useEffect(() => {
     if (authData) {
       navigate("/profile");
@@ -169,20 +170,24 @@ export default function Auth() {
           email: formData.email,
           password: formData.password,
         };
-        login(loginData).catch((err) => {
-          localStorage.setItem(
-            "authError",
-            err.response?.data || "Erro desconhecido"
-          );
-        });
+        login(loginData)
+          .then(() => navigate("/profile"))
+          .catch((err) => {
+            localStorage.setItem(
+              "authError",
+              err.response?.data || "Erro desconhecido"
+            );
+          });
       } else {
         const validatedData = formSchema.parse(formData);
-        signup(validatedData).catch((err) => {
-          localStorage.setItem(
-            "authError",
-            err.response?.data || "Erro desconhecido"
-          );
-        });
+        signup(validatedData)
+          .then(() => navigate("/profile"))
+          .catch((err) => {
+            localStorage.setItem(
+              "authError",
+              err.response?.data || "Erro desconhecido"
+            );
+          });
       }
     } catch (error) {
       if (formType === "signup" && error instanceof z.ZodError) {
@@ -207,7 +212,10 @@ export default function Auth() {
       {formType === "login" ? (
         <>
           <h1>Login</h1>
-          <button onClick={handleChangeFormType} aria-label="Não possui uma conta? Clique aqui!">
+          <button
+            onClick={handleChangeFormType}
+            aria-label="Não possui uma conta? Clique aqui!"
+          >
             Não possui uma conta? Clique aqui!
           </button>
           <form onSubmit={handleSubmitForm}>
@@ -236,7 +244,10 @@ export default function Auth() {
       ) : (
         <>
           <h1>Registre-se</h1>
-          <button onClick={handleChangeFormType} aria-label="Já possui uma conta? Clique aqui">
+          <button
+            onClick={handleChangeFormType}
+            aria-label="Já possui uma conta? Clique aqui"
+          >
             Já possui uma conta? Clique aqui
           </button>
           <form onSubmit={handleSubmitForm}>

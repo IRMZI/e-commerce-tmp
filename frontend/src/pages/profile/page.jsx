@@ -25,7 +25,7 @@ const statusLabels = {
 };
 
 export default function Profile() {
-  const { logout } = authServices();
+  const { logout, refreshToken } = authServices();
   const { getUserOrders, orderLoading, refetchOrders, ordersList } =
     orderServices();
   const { validateAddress } = addressServices();
@@ -39,7 +39,10 @@ export default function Profile() {
   const phoneSchema = z
     .string()
     .nonempty("O telefone é obrigatório.")
-    .regex(/^\d{2} \d{4,5}-\d{4}$/, "O telefone deve estar no formato 51 XXXXX-XXXX ou 51 XXXX-XXXX");
+    .regex(
+      /^\d{2} \d{4,5}-\d{4}$/,
+      "O telefone deve estar no formato 51 XXXXX-XXXX ou 51 XXXX-XXXX"
+    );
 
   const addressSchema = z.object({
     street: z.string().nonempty("A rua é obrigatória."),
@@ -65,12 +68,15 @@ export default function Profile() {
   const [errors, setErrors] = useState({});
 
   useEffect(() => {
-    if (!authData) {
-      return navigate("/auth");
-    } else if (refetchOrders) {
-      getUserOrders(authData?.user?._id);
-    }
-  }, [authData, refetchOrders]);
+    const fetchData = async () => {
+      if (!authData) {
+        return navigate("/auth");
+      } else if (refetchOrders) {
+        await getUserOrders(authData?.user?._id);
+      }
+    };
+    fetchData();
+  }, [authData, refetchOrders, navigate, getUserOrders]);
 
   if (orderLoading) {
     return <Loading />;
@@ -93,7 +99,7 @@ export default function Profile() {
       const result = await updateUser(userId, { address: editedAddress });
       if (result.success) {
         setIsEditingAddress(false);
-        alert("Endereço atualizado com sucesso! faça login novamente");
+        alert("Endereço atualizado com sucesso! Faça login novamente.");
         logout();
         return navigate("/auth");
       } else {
@@ -119,7 +125,7 @@ export default function Profile() {
       const result = await updateUser(userId, { phone: editedPhone });
       if (result.success) {
         setIsEditingPhone(false);
-        alert("Telefone atualizado com sucesso! faça login novamente");
+        alert("Telefone atualizado com sucesso! Faça login novamente.");
         logout();
         return navigate("/auth");
       } else {
@@ -181,7 +187,10 @@ export default function Profile() {
     try {
       const formattedCep = value.replace(/^(\d{5})(\d{3})$/, "$1-$2");
       if (formattedCep !== editedAddress.zipcode) {
-        setEditedAddress((prev) => ({ ...prev, zipcode: formattedCep }));
+        setEditedAddress((prev) => ({
+          ...prev,
+          zipcode: formattedCep,
+        }));
       }
 
       cepSchema.parse(formattedCep);
@@ -194,12 +203,11 @@ export default function Profile() {
       }));
     } catch (error) {
       if (error instanceof z.ZodError) {
-        setErrors((prev) => ({ ...prev, zipcode: error.errors[0]?.message }));
-      } else {
-        console.error("Erro ao buscar informações do CEP:", error);
+        setErrors({ zipcode: error.errors[0]?.message });
       }
     }
   };
+
   return (
     <div className="modern-profile-container">
       <div className="profile-header">
@@ -245,7 +253,10 @@ export default function Profile() {
                 ) : (
                   <p>
                     {authData?.user?.email || "Email não disponível"}
-                    <button onClick={() => setIsEditingEmail(true)} className="edit-button">
+                    <button
+                      onClick={() => setIsEditingEmail(true)}
+                      className="edit-button"
+                    >
                       <FaEdit /> Editar Email
                     </button>
                   </p>
@@ -280,7 +291,10 @@ export default function Profile() {
                 ) : (
                   <p>
                     {authData?.user?.phone || "Telefone não disponível"}
-                    <button onClick={() => setIsEditingPhone(true)} className="edit-button">
+                    <button
+                      onClick={() => setIsEditingPhone(true)}
+                      className="edit-button"
+                    >
                       <FaEdit /> Editar Telefone
                     </button>
                   </p>
