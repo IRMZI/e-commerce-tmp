@@ -22,8 +22,17 @@ import SearchIcon from "@mui/icons-material/Search";
 import "./AdminOrders.css";
 
 export default function AdminOrders() {
-  const { getOrders, ordersList, orderLoading, addItemToOrder, updateItemQuantity, removeItemFromOrder, updateOrder } = ordersService();
-  const { getAvailablesProducts, productsList, getProductNameById } = productsServices();
+  const {
+    getOrders,
+    ordersList,
+    orderLoading,
+    addItemToOrder,
+    updateItemQuantity,
+    removeItemFromOrder,
+    updateOrder,
+  } = ordersService();
+  const { getAvailablesProducts, productsList, getProductNameById } =
+    productsServices();
 
   const [selectedOrder, setSelectedOrder] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
@@ -93,10 +102,17 @@ export default function AdminOrders() {
       for (const action of actions) {
         switch (action.type) {
           case "add":
-            await addItemToOrder(selectedOrder._id, { productId: action.productId, quantity: 1 }); // Ensure quantity is set to 1
+            await addItemToOrder(selectedOrder._id, {
+              productId: action.productId,
+              quantity: 1,
+            }); // Ensure quantity is set to 1
             break;
           case "update":
-            await updateItemQuantity(selectedOrder._id, action.itemId, action.quantity);
+            await updateItemQuantity(
+              selectedOrder._id,
+              action.itemId,
+              action.quantity
+            );
             break;
           case "remove":
             await removeItemFromOrder(selectedOrder._id, action.itemId);
@@ -110,7 +126,7 @@ export default function AdminOrders() {
       const cleanedOrder = {
         pickupStatus: selectedOrder.pickupStatus,
         pickupTime: selectedOrder.pickupTime,
-        deliveryDate: formatDate(selectedOrder.deliveryDate), 
+        deliveryDate: formatDate(selectedOrder.deliveryDate),
       };
       await updateOrder(selectedOrder._id, cleanedOrder);
 
@@ -135,7 +151,6 @@ export default function AdminOrders() {
   if (orderLoading) {
     return <Loading />;
   }
-  console.log(ordersList)
   return (
     <div className="admin-orders-container">
       <h2>Gerenciamento de Pedidos</h2>
@@ -165,19 +180,29 @@ export default function AdminOrders() {
             key={order._id}
             onClick={() => handleOpenEditDialog(order)}
           >
-            <ListItemText primary={`Pedido ID: ${order._id} - Data de Criação: ${order.createDate ? order.createDate : "Data não disponível"}`} />
+            <ListItemText
+              primary={`Pedido ID: ${order._id} - Data de Criação: ${
+                order.createDate ? order.createDate : "Data não disponível"
+              }`}
+            />
           </ListItem>
         ))}
       </List>
 
       {/* Diálogo de Edição */}
-      <Dialog open={!!selectedOrder} onClose={handleCloseEditDialog} maxWidth="sm" fullWidth>
+      <Dialog
+        open={!!selectedOrder}
+        onClose={handleCloseEditDialog}
+        maxWidth="sm"
+        fullWidth
+      >
         <DialogTitle>Editar Pedido</DialogTitle>
         <DialogContent>
           {selectedOrder && (
             <div>
               <p>
-                <strong>Usuário:</strong> {selectedOrder.userDetails[0]?.fullname} (
+                <strong>Usuário:</strong>{" "}
+                {selectedOrder.userDetails[0]?.fullname} (
                 {selectedOrder.userDetails[0]?.email})
               </p>
               <p>
@@ -189,15 +214,23 @@ export default function AdminOrders() {
                 type="time"
                 fullWidth
                 value={selectedOrder.pickupTime || ""}
-                onChange={(e) => handleInputChange("pickupTime", e.target.value)}
+                onChange={(e) =>
+                  handleInputChange("pickupTime", e.target.value)
+                }
                 margin="normal"
               />
               <TextField
                 label="Data de Entrega"
                 type="date"
                 fullWidth
-                value={selectedOrder.deliveryDate ? selectedOrder.deliveryDate.split("/").reverse().join("-") : ""} 
-                onChange={(e) => handleInputChange("deliveryDate", e.target.value)}
+                value={
+                  selectedOrder.deliveryDate
+                    ? selectedOrder.deliveryDate.split("/").reverse().join("-")
+                    : ""
+                }
+                onChange={(e) =>
+                  handleInputChange("deliveryDate", e.target.value)
+                }
                 margin="normal"
                 InputLabelProps={{
                   shrink: true,
@@ -208,7 +241,9 @@ export default function AdminOrders() {
               <h4>Status do pedido:</h4>
               <Select
                 value={selectedOrder.pickupStatus || ""}
-                onChange={(e) => handleInputChange("pickupStatus", e.target.value)}
+                onChange={(e) =>
+                  handleInputChange("pickupStatus", e.target.value)
+                }
                 fullWidth
                 margin="dense"
               >
@@ -229,7 +264,10 @@ export default function AdminOrders() {
                       type="number"
                       value={item.quantity || ""}
                       onChange={(e) =>
-                        handleOrderItemChange(index, Math.max(1, parseInt(e.target.value, 10)))
+                        handleOrderItemChange(
+                          index,
+                          Math.max(1, parseInt(e.target.value, 10))
+                        )
                       }
                       style={{ width: "60px", marginRight: "10px" }}
                       inputProps={{ min: 1 }}

@@ -29,8 +29,7 @@ export const sendEmail = async (to, subject, htmlContent, attachmentPath) => {
     info(`Email sent to: ${to}`);
     return { success: true };
   } catch (err) {
-    error(`Error sending email to ${to}: ${err.message}`);
-    console.error("Erro ao enviar e-mail:", err);
+    error(` Erro ao enviar e-mail: ${to}: ${err.message}`);
     return { success: false, error: err.message };
   }
 };

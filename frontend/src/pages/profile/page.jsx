@@ -14,6 +14,8 @@ import {
   FaPhone,
   FaEnvelope,
   FaEdit,
+  FaEye,
+  FaEyeSlash,
 } from "react-icons/fa";
 import { z } from "zod";
 
@@ -24,12 +26,27 @@ const statusLabels = {
   cancelled: "Cancelado",
 };
 
+const passwordSchema = z
+  .object({
+    currentPassword: z.string().nonempty("A senha atual é obrigatória"),
+    newPassword: z
+      .string()
+      .min(6, "A nova senha deve ter pelo menos 6 caracteres")
+      .regex(/[A-Z]/, "A nova senha deve conter pelo menos uma letra maiúscula")
+      .regex(/\d/, "A nova senha deve conter pelo menos um número"),
+    confirmPassword: z.string(),
+  })
+  .refine((data) => data.newPassword === data.confirmPassword, {
+    message: "As senhas não coincidem",
+    path: ["confirmPassword"],
+  });
+
 export default function Profile() {
   const { logout, refreshToken } = authServices();
   const { getUserOrders, orderLoading, refetchOrders, ordersList } =
     orderServices();
   const { validateAddress } = addressServices();
-  const { updateUser, checkEmailExists } = usersServices();
+  const { updateUser, checkEmailExists, updateUserPass } = usersServices();
   const navigate = useNavigate();
   const authData = JSON.parse(localStorage.getItem("auth"));
   const cepSchema = z
@@ -57,6 +74,7 @@ export default function Profile() {
   const [isEditingAddress, setIsEditingAddress] = useState(false);
   const [isEditingPhone, setIsEditingPhone] = useState(false);
   const [isEditingEmail, setIsEditingEmail] = useState(false);
+  const [isEditingPassword, setIsEditingPassword] = useState(false);
   const [editedAddress, setEditedAddress] = useState({
     street: authData?.user?.address?.street || "",
     number: authData?.user?.address?.number || "",
@@ -65,7 +83,13 @@ export default function Profile() {
   });
   const [editedPhone, setEditedPhone] = useState(authData?.user?.phone || "");
   const [editedEmail, setEditedEmail] = useState(authData?.user?.email || "");
+  const [passwordData, setPasswordData] = useState({
+    currentPassword: "",
+    newPassword: "",
+    confirmPassword: "",
+  });
   const [errors, setErrors] = useState({});
+  const [showPassword, setShowPassword] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -114,6 +138,7 @@ export default function Profile() {
         setErrors(fieldErrors);
       } else {
         console.log("Houve um problema ao salvar o endereço.", error);
+        alert("Erro ao salvar o endereço. Tente novamente.");
       }
     }
   };
@@ -136,6 +161,7 @@ export default function Profile() {
         setErrors({ phone: error.errors[0]?.message });
       } else {
         console.log("Houve um problema ao salvar o telefone.", error);
+        alert("Erro ao salvar o telefone. Tente novamente.");
       }
     }
   };
@@ -162,6 +188,36 @@ export default function Profile() {
       }
     } catch (error) {
       console.log("Houve um problema ao salvar o email.", error);
+      alert("Erro ao salvar o email. Tente novamente.");
+    }
+  };
+
+  const handleSavePassword = async () => {
+    try {
+      passwordSchema.parse(passwordData);
+      const userId = authData?.user?._id;
+      const result = await updateUserPass(
+        userId,
+        passwordData.currentPassword,
+        passwordData.newPassword
+      );
+      if (result?.success) {
+        alert("Senha atualizada com sucesso! Faça login novamente.");
+        logout();
+        return navigate("/auth");
+      } else {
+        alert(result.body.error || "Erro ao atualizar a senha.");
+      }
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        const fieldErrors = error.errors.reduce((acc, err) => {
+          acc[err.path[0]] = err.message;
+          return acc;
+        }, {});
+        setErrors(fieldErrors);
+      } else {
+        alert("Erro ao salvar a senha. Tente novamente.");
+      }
     }
   };
 
@@ -180,6 +236,12 @@ export default function Profile() {
       }));
       setErrors((prev) => ({ ...prev, [name]: null }));
     }
+  };
+
+  const handleChangePassword = (e) => {
+    const { name, value } = e.target;
+    setPasswordData((prev) => ({ ...prev, [name]: value }));
+    setErrors((prev) => ({ ...prev, [name]: undefined }));
   };
 
   const handleCepBlur = async (e) => {
@@ -387,6 +449,63 @@ export default function Profile() {
             </Link>
           )}
         </section>
+
+        <button onClick={() => setIsEditingPassword(!isEditingPassword)}>
+          {isEditingPassword ? "Cancelar" : "Alterar Senha"}
+        </button>
+        {isEditingPassword && (
+          <div className="password-form">
+            <div className="form-group">
+              <input
+                type={showPassword ? "text" : "password"}
+                name="currentPassword"
+                placeholder="Senha Atual"
+                value={passwordData.currentPassword}
+                onChange={handleChangePassword}
+                className="modern-input"
+              />
+              {errors.currentPassword && (
+                <span className="error-message">{errors.currentPassword}</span>
+              )}
+            </div>
+            <div className="form-group">
+              <input
+                type={showPassword ? "text" : "password"}
+                name="newPassword"
+                placeholder="Nova Senha"
+                value={passwordData.newPassword}
+                onChange={handleChangePassword}
+                className="modern-input"
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="show-password-button"
+              >
+                {showPassword ? <FaEyeSlash /> : <FaEye />}
+              </button>
+              {errors.newPassword && (
+                <span className="error-message">{errors.newPassword}</span>
+              )}
+            </div>
+            <div className="form-group">
+              <input
+                type={showPassword ? "text" : "password"}
+                name="confirmPassword"
+                placeholder="Repetir Nova Senha"
+                value={passwordData.confirmPassword}
+                onChange={handleChangePassword}
+                className="modern-input"
+              />
+              {errors.confirmPassword && (
+                <span className="error-message">{errors.confirmPassword}</span>
+              )}
+            </div>
+            <button onClick={handleSavePassword} className="save-button">
+              Salvar Senha
+            </button>
+          </div>
+        )}
 
         <section className="orders-section">
           <h2>Seus Pedidos</h2>

@@ -122,15 +122,45 @@ export default function usersServices() {
     }
   };
 
+  // Função para atualizar a senha de um usuário
+  const updateUserPass = async (userId, currentPassword, newPassword) => {
+    setUserLoading(true);
+    try {
+      if (!currentPassword || !newPassword) {
+        throw new Error("Senhas não fornecidas.");
+      }
+
+      const response = await fetch(`${url}/${userId}/password`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*",
+        },
+        body: JSON.stringify({ currentPassword, newPassword }),
+      });
+      const result = await response.json();
+      if (response.ok) {
+        return result; // Retorna o resultado da atualização
+      } else {
+        console.error("Erro ao atualizar senha:", result);
+        return;
+      }
+    } catch (error) {
+      console.error("Erro na requisição:", error);
+    } finally {
+      setUserLoading(false);
+    }
+  };
+
   return {
     getUsers,
     updateUser,
     deleteUser,
     getUserById,
     checkEmailExists, // Adicionar a função ao retorno
+    updateUserPass, // Adicionar a função ao retorno
     userLoading,
     refetchUsers,
     usersList,
   };
 }
-

@@ -8,6 +8,7 @@ import productsRouter from "./routes/products.js";
 import ordersRouter from "./routes/orders.js";
 import leadsRouter from "./routes/leads.js";
 import tokenRouter from "./routes/token.js"; // Import token router
+import passChangeRouter from "./routes/passchange.js"; // Import passChange router
 import { info, error, debug } from "./helpers/logger.js"; // Import logger
 
 config();
@@ -51,6 +52,8 @@ async function Main() {
   app.use("/leads", leadsRouter);
   // Utiliza a rota "/token"
   app.use("/token", tokenRouter);
+  // Utiliza a rota "/api/passchange"
+  app.use("/api/passchange", passChangeRouter);
   app
     .listen(port, () => {
       debug(`Server is running on port ${port}`);

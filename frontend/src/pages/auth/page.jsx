@@ -3,9 +3,20 @@ import { useNavigate } from "react-router-dom";
 import "./auth.css";
 import authServices from "../../services/auth";
 import addressServices from "../../services/address";
+import passwordServices from "../../services/password";
 import { HiLogin } from "react-icons/hi";
 import { z } from "zod";
-import { TextField } from "@mui/material";
+import {
+  TextField,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  Button,
+  IconButton,
+  InputAdornment,
+} from "@mui/material";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 
 const Loading = lazy(() => import("../loading/page"));
 
@@ -26,11 +37,20 @@ export default function Auth() {
   });
   const [errorMessage, setErrorMessage] = useState(""); // Erros do formulário
   const [authErrorMessage, setAuthErrorMessage] = useState("");
+  const [forgotPasswordOpen, setForgotPasswordOpen] = useState(false);
+  const [forgotPasswordData, setForgotPasswordData] = useState({
+    email: "",
+    fullname: "",
+    newPassword: "",
+    confirmNewPassword: "",
+  });
+  const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
   const authError = localStorage.getItem("authError");
   const { login, signup, authLoading } = authServices();
   const authData = JSON.parse(localStorage.getItem("auth"));
   const { validateAddress } = addressServices();
+  const { changePassword } = passwordServices();
 
   useEffect(() => {
     if (authData) {
@@ -120,6 +140,44 @@ export default function Auth() {
     localStorage.removeItem("authError");
   };
 
+  const handleForgotPasswordOpen = () => {
+    setForgotPasswordOpen(true);
+  };
+
+  const handleForgotPasswordClose = () => {
+    setForgotPasswordOpen(false);
+    setForgotPasswordData({
+      email: "",
+      fullname: "",
+      newPassword: "",
+      confirmNewPassword: "",
+    });
+  };
+
+  const handleForgotPasswordChange = (e) => {
+    const { name, value } = e.target;
+    setForgotPasswordData((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
+
+  const handleForgotPasswordSubmit = async (e) => {
+    e.preventDefault();
+    if (
+      forgotPasswordData.newPassword !== forgotPasswordData.confirmNewPassword
+    ) {
+      setErrorMessage("As senhas não coincidem.");
+      return;
+    }
+    try {
+      await changePassword(forgotPasswordData);
+      handleForgotPasswordClose();
+    } catch (error) {
+      setErrorMessage("Erro ao solicitar mudança de senha.");
+    }
+  };
+
   const formSchema = z
     .object({
       fullname: z
@@ -199,6 +257,10 @@ export default function Auth() {
     }
   };
 
+  const handleClickShowPassword = () => {
+    setShowPassword(!showPassword);
+  };
+
   if (authLoading) {
     return (
       <Suspense fallback={<div>Loading...</div>}>
@@ -239,6 +301,88 @@ export default function Auth() {
               Entrar <HiLogin />
             </button>
           </form>
+          <button
+            onClick={handleForgotPasswordOpen}
+            aria-label="Esqueci minha senha"
+          >
+            Esqueci minha senha
+          </button>
+          <Dialog open={forgotPasswordOpen} onClose={handleForgotPasswordClose}>
+            <div className="dialogContainer">
+              <DialogTitle className="dialogTitle">Redefinir Senha</DialogTitle>
+              <DialogContent className="dialogContent">
+                <form onSubmit={handleForgotPasswordSubmit}>
+                  <TextField
+                    required
+                    label="Email"
+                    name="email"
+                    variant="outlined"
+                    onChange={handleForgotPasswordChange}
+                  />
+                  <TextField
+                    required
+                    label="Nome"
+                    name="fullname"
+                    variant="outlined"
+                    onChange={handleForgotPasswordChange}
+                  />
+                  <TextField
+                    required
+                    label="Nova Senha"
+                    name="newPassword"
+                    type={showPassword ? "text" : "password"}
+                    variant="outlined"
+                    onChange={handleForgotPasswordChange}
+                    InputProps={{
+                      endAdornment: (
+                        <InputAdornment position="end">
+                          <IconButton
+                            aria-label="toggle password visibility"
+                            onClick={handleClickShowPassword}
+                            edge="end"
+                          >
+                            {showPassword ? <VisibilityOff /> : <Visibility />}
+                          </IconButton>
+                        </InputAdornment>
+                      ),
+                    }}
+                  />
+                  <TextField
+                    required
+                    label="Confirmar Nova Senha"
+                    name="confirmNewPassword"
+                    type={showPassword ? "text" : "password"}
+                    variant="outlined"
+                    onChange={handleForgotPasswordChange}
+                    InputProps={{
+                      endAdornment: (
+                        <InputAdornment position="end">
+                          <IconButton
+                            aria-label="toggle password visibility"
+                            onClick={handleClickShowPassword}
+                            edge="end"
+                          >
+                            {showPassword ? <VisibilityOff /> : <Visibility />}
+                          </IconButton>
+                        </InputAdornment>
+                      ),
+                    }}
+                  />
+                  <DialogActions className="dialogActions">
+                    <Button
+                      className="dialogButton"
+                      onClick={handleForgotPasswordClose}
+                    >
+                      Cancelar
+                    </Button>
+                    <Button className="dialogButton" type="submit">
+                      Enviar
+                    </Button>
+                  </DialogActions>
+                </form>
+              </DialogContent>
+            </div>
+          </Dialog>
           {errorMessage && <p className="error-message">{errorMessage}</p>}
         </>
       ) : (

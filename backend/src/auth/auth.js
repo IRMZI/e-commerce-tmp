@@ -6,9 +6,12 @@ import { Mongo } from "../database/mongo.js";
 import jwt from "jsonwebtoken";
 import { ObjectId } from "mongodb";
 import { info, error } from "../helpers/logger.js"; // Import logger
+import usersDataAccess from "../DataAccess/users.js"; // Importar usersDataAccess
 
 // Nome da coleção onde os usuários são armazenados
 const collectionName = "users";
+
+const usersDAO = new usersDataAccess(); // Instanciar usersDataAccess
 
 passport.use(
   new localStrategy(
@@ -209,6 +212,47 @@ authRouter.post("/logout", async (req, res) => {
       text: "Usuário deslogado",
     },
   });
+});
+
+// Rota para atualizar a senha do usuário
+authRouter.put("/update-password", async (req, res) => {
+  const { userId, currentPassword, newPassword } = req.body;
+  try {
+    const result = await usersDAO.updateUserPass(
+      userId,
+      currentPassword,
+      newPassword
+    );
+    if (result.success) {
+      info("Senha atualizada com sucesso");
+      return res.status(200).send({
+        success: true,
+        statusCode: 200,
+        body: {
+          text: "Senha atualizada com sucesso",
+        },
+      });
+    } else {
+      error("Erro ao atualizar a senha");
+      return res.status(500).send({
+        success: false,
+        statusCode: 500,
+        body: {
+          text: result.message,
+        },
+      });
+    }
+  } catch (err) {
+    error("Erro ao atualizar a senha");
+    return res.status(500).send({
+      success: false,
+      statusCode: 500,
+      body: {
+        text: "Erro ao atualizar a senha",
+        error: err.message,
+      },
+    });
+  }
 });
 
 export default authRouter;
